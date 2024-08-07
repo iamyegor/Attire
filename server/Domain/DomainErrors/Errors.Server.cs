@@ -4,6 +4,6 @@ public static partial class Errors
 {
     public class Server
     {
-        public static Error InternalServerError => new("internal.server.error");
+        public static Error InternalServerError => new("internal.server.error", "Internal server error.");
     }
 }

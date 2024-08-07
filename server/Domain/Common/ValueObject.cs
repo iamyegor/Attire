@@ -2,7 +2,7 @@ namespace Domain.Common;
 
 public abstract class ValueObject
 {
-    protected abstract IEnumerable<object?> GetPropertiesForComparison();
+    protected abstract IEnumerable<object?> GetEqualityComponents();
 
     public override bool Equals(object? obj)
     {
@@ -15,12 +15,12 @@ public abstract class ValueObject
             return false;
         }
 
-        return GetPropertiesForComparison().SequenceEqual(valueObject.GetPropertiesForComparison());
+        return GetEqualityComponents().SequenceEqual(valueObject.GetEqualityComponents());
     }
 
     public override int GetHashCode()
     {
-        return GetPropertiesForComparison()
+        return GetEqualityComponents()
             .Aggregate(
                 1,
                 (acc, obj) =>

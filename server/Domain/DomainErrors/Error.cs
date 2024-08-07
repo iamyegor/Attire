@@ -7,10 +7,14 @@ namespace Domain.DomainErrors;
 public class Error : ValueObject
 {
     public string Code { get; set; }
+    public string Message { get; set; }
+    public Dictionary<string, object?> Details { get; set; }
 
-    public Error(string code)
+    internal Error(string code, string message, Dictionary<string, object?>? details = null)
     {
         Code = code;
+        Message = message;
+        Details = details ?? new Dictionary<string, object?>();
     }
 
     public string Serialize()
@@ -34,7 +38,7 @@ public class Error : ValueObject
         return error;
     }
 
-    protected override IEnumerable<object?> GetPropertiesForComparison()
+    protected override IEnumerable<object?> GetEqualityComponents()
     {
         yield return Code;
     }
