@@ -11,7 +11,7 @@ public class Category : AggregateRoot<Guid>
 
     public string Name { get; }
     public Gender Gender { get; }
-    public IReadOnlyList<Product.Product> Products => _products;
+    public virtual IReadOnlyList<Product.Product> Products => _products;
 
     private Category()
         : base(Guid.NewGuid()) { }

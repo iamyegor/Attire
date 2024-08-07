@@ -20,7 +20,7 @@ public class ApplicationContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql(_connectionString);
+        optionsBuilder.UseLazyLoadingProxies().UseNpgsql(_connectionString);
 
         if (_useLogger)
         {

@@ -1,7 +1,12 @@
-﻿namespace Domain.Product.ValueObject;
+﻿using Domain.DomainErrors;
+using XResults;
 
-public abstract class Size : Common.ValueObject
+namespace Domain.Product.ValueObject;
+
+public class Size : Common.ValueObject
 {
+    public string Value { get; }
+
     protected Size() { }
 
     protected override IEnumerable<object?> GetEqualityComponents()
@@ -9,5 +14,20 @@ public abstract class Size : Common.ValueObject
         return new object?[] { ToString() };
     }
 
-    public abstract override string ToString();
+    private Size(string value)
+    {
+        Value = value;
+    }
+
+    public static Result<Size, Error> Create(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return Errors.Errors.Size.IsRequired();
+        }
+
+        value = value.Trim();
+
+        return new Size(value);
+    }
 }
