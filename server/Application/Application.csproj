@@ -24,7 +24,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Categories\Queries\GetMaleCategories\" />
       <Folder Include="Products\" />
       <Folder Include="User\" />
     </ItemGroup>
