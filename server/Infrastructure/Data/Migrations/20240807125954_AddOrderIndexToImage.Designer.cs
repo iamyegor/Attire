@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20240807125954_AddOrderIndexToImage")]
+    partial class AddOrderIndexToImage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -202,17 +205,17 @@ namespace Infrastructure.Data.Migrations
                                 .HasColumnType("text")
                                 .HasColumnName("path");
 
-                            b1.Property<Guid>("product_id")
+                            b1.Property<Guid>("ProductId")
                                 .HasColumnType("uuid");
 
                             b1.HasKey("Id");
 
-                            b1.HasIndex("product_id");
+                            b1.HasIndex("ProductId");
 
                             b1.ToTable("product_images", (string)null);
 
                             b1.WithOwner()
-                                .HasForeignKey("product_id");
+                                .HasForeignKey("ProductId");
                         });
 
                     b.OwnsMany("Domain.Product.Entities.Review", "Reviews", b1 =>
@@ -240,6 +243,9 @@ namespace Infrastructure.Data.Migrations
                                 .HasColumnType("text")
                                 .HasColumnName("disadvantages");
 
+                            b1.Property<Guid>("ProductId")
+                                .HasColumnType("uuid");
+
                             b1.Property<int>("ShelfLife")
                                 .HasColumnType("integer")
                                 .HasColumnName("shelf_life");
@@ -256,17 +262,14 @@ namespace Infrastructure.Data.Migrations
                                 .HasColumnType("uuid")
                                 .HasColumnName("user_id");
 
-                            b1.Property<Guid>("product_id")
-                                .HasColumnType("uuid");
-
                             b1.HasKey("Id");
 
-                            b1.HasIndex("product_id");
+                            b1.HasIndex("ProductId");
 
                             b1.ToTable("product_reviews", (string)null);
 
                             b1.WithOwner()
-                                .HasForeignKey("product_id");
+                                .HasForeignKey("ProductId");
                         });
 
                     b.OwnsMany("Domain.Product.ValueObject.Color", "Colors", b1 =>

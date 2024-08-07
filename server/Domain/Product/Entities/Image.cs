@@ -8,15 +8,22 @@ public class Image : Entity<Guid>
 {
     private static readonly string[] _allowedExtensions = { ".jpg", ".jpeg", ".png" };
     public string Path { get; }
+    public int OrderIndex { get; }
 
-    private Image(Guid imageId, string path)
+    private Image(Guid imageId, string path, int orderIndex)
         : base(imageId)
     {
         Path = path;
+        OrderIndex = orderIndex;
     }
 
-    public static Result<Image, Error> Create(string path)
+    public static Result<Image, Error> Create(string path, int orderIndex)
     {
+        if (orderIndex <= 0)
+        {
+            return Errors.Errors.Image.OrderIndexMustBeGreaterThanZero(orderIndex);
+        }
+
         string extension = System.IO.Path.GetExtension(path).ToLowerInvariant();
 
         if (Array.Exists(_allowedExtensions, ext => ext.Equals(extension)))
@@ -27,7 +34,7 @@ public class Image : Entity<Guid>
         Guid imageId = Guid.NewGuid();
         string imagePath = imageId + extension;
 
-        return new Image(imageId, imagePath);
+        return new Image(imageId, imagePath, orderIndex);
     }
 
     protected Image()

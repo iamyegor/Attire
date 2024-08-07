@@ -101,6 +101,9 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
                 builder.Property(r => r.CreationDate).HasColumnName("creation_date");
 
                 builder.Property(r => r.Stars).HasColumnName("stars");
+
+                builder.WithOwner().HasForeignKey("product_id");
+                builder.Property("product_id").IsRequired();
             }
         );
 
@@ -114,6 +117,11 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
                 builder.Property(i => i.Id).ValueGeneratedNever().HasColumnName("image_id");
 
                 builder.Property(i => i.Path).HasColumnName("path");
+
+                builder.Property(i => i.OrderIndex).HasColumnName("order_index");
+
+                builder.WithOwner().HasForeignKey("product_id");
+                builder.Property("product_id").IsRequired();
             }
         );
     }
