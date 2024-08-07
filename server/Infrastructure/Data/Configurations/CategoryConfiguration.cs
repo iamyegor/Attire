@@ -14,7 +14,6 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
         builder.Property(c => c.Id).ValueGeneratedNever().HasColumnName("category_id");
 
         builder.Property(c => c.Name).HasColumnName("name");
-        builder.HasIndex(c => c.Name).IsUnique();
 
         builder.Property(c => c.Gender).HasColumnName("gender");
 
