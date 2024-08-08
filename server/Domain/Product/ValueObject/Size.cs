@@ -7,8 +7,6 @@ public class Size : Common.ValueObject
 {
     public string Value { get; }
 
-    protected Size() { }
-
     protected override IEnumerable<object?> GetEqualityComponents()
     {
         return new object?[] { ToString() };
@@ -18,6 +16,8 @@ public class Size : Common.ValueObject
     {
         Value = value;
     }
+
+    protected Size() { }
 
     public static Result<Size, Error> Create(string value)
     {

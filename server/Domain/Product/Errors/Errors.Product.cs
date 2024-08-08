@@ -11,5 +11,15 @@ public static partial class Errors
             var details = new Dictionary<string, object?>() { ["productId"] = productId };
             return new Error("product.with.id.not.found", "Product with id not found.", details);
         }
+
+        public static Error ReviewWithUserIdAlreadyExists(Guid userId)
+        {
+            var details = new Dictionary<string, object?>() { ["userId"] = userId };
+            return new Error(
+                "product.review.from.this.user.already.exists",
+                "Product review from this user already exists.",
+                details
+            );
+        }
     }
 }

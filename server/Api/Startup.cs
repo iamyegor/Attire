@@ -17,6 +17,9 @@ public static class Startup
             .AddInfrastructureServices(builder.Configuration, builder.Environment.IsDevelopment())
             .AddApplicationValidation();
 
+        builder.Services.AddAuthentication();
+        builder.Services.AddAuthorization();
+
         return builder.Build();
     }
 

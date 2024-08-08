@@ -31,6 +31,7 @@ public class ProductsController : ApplicationController
         return FromResult(result);
     }
 
+    // errorCodes: product.with.id.not.found
     [HttpGet("{productId:guid}/statistics")]
     public async Task<IResult> GetProductStatistics(Guid productId)
     {

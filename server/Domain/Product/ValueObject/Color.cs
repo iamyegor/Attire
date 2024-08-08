@@ -15,6 +15,8 @@ public class Color : Common.ValueObject
         Name = name;
     }
 
+    protected Color() { }
+
     public static Result<Color, Error> Create(string hex, string name)
     {
         if (string.IsNullOrWhiteSpace(hex))

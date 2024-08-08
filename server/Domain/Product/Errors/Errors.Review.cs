@@ -1,4 +1,5 @@
 ﻿using Domain.DomainErrors;
+using XResults;
 
 namespace Domain.Product.Errors;
 
@@ -30,6 +31,16 @@ public static partial class Errors
             return new Error(
                 "review.stars.must.not.be.less.one.and.greater.five",
                 "Review stars must not be less one and greater five.",
+                details
+            );
+        }
+
+        public static Error ShelfLifeNotFound(int shelfLife)
+        {
+            var details = new Dictionary<string, object?>() { ["shelfLife"] = shelfLife };
+            return new Error(
+                "review.shelf.life.not.found",
+                "Review shelf life not found.",
                 details
             );
         }

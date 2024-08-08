@@ -31,6 +31,9 @@ public class User : AggregateRoot<Guid>
         Address = address;
     }
 
+    protected User()
+        : base(Guid.NewGuid()) { }
+
     public static Result<User, Error> Crete(
         string firstName,
         string lastName,
@@ -54,7 +57,4 @@ public class User : AggregateRoot<Guid>
 
         return new User(firstName, lastName, phone, email, address);
     }
-
-    protected User()
-        : base(Guid.NewGuid()) { }
 }

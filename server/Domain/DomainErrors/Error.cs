@@ -10,6 +10,8 @@ public class Error : ValueObject
     public string Message { get; set; }
     public Dictionary<string, object?> Details { get; set; }
 
+    private Error() { }
+
     internal Error(string code, string message, Dictionary<string, object?>? details = null)
     {
         Code = code;

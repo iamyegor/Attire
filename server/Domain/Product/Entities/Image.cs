@@ -17,6 +17,9 @@ public class Image : Entity<Guid>
         OrderIndex = orderIndex;
     }
 
+    protected Image()
+        : base(Guid.NewGuid()) { }
+
     public static Result<Image, Error> Create(string path, int orderIndex)
     {
         if (orderIndex <= 0)
@@ -36,7 +39,4 @@ public class Image : Entity<Guid>
 
         return new Image(imageId, imagePath, orderIndex);
     }
-
-    protected Image()
-        : base(Guid.NewGuid()) { }
 }

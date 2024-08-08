@@ -1,6 +1,8 @@
 ﻿using Domain.Common;
+using Domain.DomainErrors;
 using Domain.Product.Entities;
 using Domain.Product.ValueObject;
+using XResults;
 
 namespace Domain.Product;
 
@@ -20,7 +22,7 @@ public class Product : AggregateRoot<Guid>
     public bool IsNew { get; }
     public Guid CategoryId { get; }
     public IReadOnlyList<Review> Reviews => _reviews;
-    public virtual IReadOnlyList<Image> Images => _images;
+    public IReadOnlyList<Image> Images => _images;
     public IReadOnlyList<Color> Colors => _colors;
 
     public IReadOnlyList<Size> Sizes => _sizes;
@@ -53,4 +55,16 @@ public class Product : AggregateRoot<Guid>
 
     protected Product()
         : base(Guid.NewGuid()) { }
+
+    public SuccessOr<Error> AddReview(Review createdReview)
+    {
+        if (_reviews.FirstOrDefault(x => x.UserId == createdReview.UserId) != null)
+        {
+            return Errors.Errors.Product.ReviewWithUserIdAlreadyExists(createdReview.UserId);
+        }
+
+        _reviews.Add(createdReview);
+
+        return Result.Ok();
+    }
 }

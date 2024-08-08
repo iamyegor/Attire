@@ -24,12 +24,12 @@ public class PhoneNumber : Common.ValueObject
 
         value = value.Trim();
 
-        if (!Regex.IsMatch(value, @"^(\d{10})$"))
+        if (!Regex.IsMatch(value, @"^(\+7\d{10})$"))
         {
             return Errors.Errors.PhoneNumber.IsInvalid(value);
         }
 
-        return new PhoneNumber("+7" + value);
+        return new PhoneNumber(value);
     }
 
     protected override IEnumerable<object?> GetEqualityComponents()

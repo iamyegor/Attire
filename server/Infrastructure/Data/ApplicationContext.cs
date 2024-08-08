@@ -1,4 +1,6 @@
 using System.Reflection;
+using Domain.Product;
+using Domain.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Serilog;
@@ -7,6 +9,9 @@ namespace Infrastructure.Data;
 
 public class ApplicationContext : DbContext
 {
+    public DbSet<User> Users => Set<User>();
+    public DbSet<Product> Products => Set<Product>();
+
     private readonly string _connectionString;
     private readonly bool _useLogger;
 

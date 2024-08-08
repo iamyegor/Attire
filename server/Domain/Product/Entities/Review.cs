@@ -36,9 +36,12 @@ public class Review : Entity<Guid>
         Stars = stars;
     }
 
+    protected Review()
+        : base(Guid.NewGuid()) { }
+
     public static Result<Review, Error> Create(
         Guid userId,
-        ShelfLife shelfLife,
+        int shelfLife,
         bool sizeMatches,
         string content,
         string advantages,
@@ -46,6 +49,11 @@ public class Review : Entity<Guid>
         int stars
     )
     {
+        if (!Enum.IsDefined(typeof(ShelfLife), shelfLife))
+        {
+            return Errors.Errors.Review.ShelfLifeNotFound(shelfLife);
+        }
+
         if (string.IsNullOrWhiteSpace(content))
         {
             return Errors.Errors.Review.ContentIsRequired();
@@ -72,7 +80,7 @@ public class Review : Entity<Guid>
 
         return new Review(
             userId,
-            shelfLife,
+            (ShelfLife)shelfLife,
             sizeMatches,
             content,
             advantages,
@@ -80,7 +88,4 @@ public class Review : Entity<Guid>
             stars
         );
     }
-
-    protected Review()
-        : base(Guid.NewGuid()) { }
 }
