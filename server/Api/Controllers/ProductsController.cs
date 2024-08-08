@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using Api.Controllers.Common;
 using Application.Products.Queries.GetProductDetails;
+using Application.Products.Queries.GetProductStatistics;
 using Domain.DomainErrors;
 using Infrastructure.Authentication;
 using MediatR;
@@ -26,6 +27,16 @@ public class ProductsController : ApplicationController
         var query = new GetProductDetailsQuery(productId, User.FindFirstValue(JwtClaims.UserId));
 
         Result<ProductDetailsDto, Error> result = await _sender.Send(query);
+
+        return FromResult(result);
+    }
+
+    [HttpGet("{productId:guid}/statistics")]
+    public async Task<IResult> GetProductStatistics(Guid productId)
+    {
+        var query = new GetProductStatisticsQuery(productId);
+
+        Result<ProductStatisticsDto, Error> result = await _sender.Send(query);
 
         return FromResult(result);
     }
