@@ -24,12 +24,18 @@ public record GetProductsFromCategoryQuery(
     Guid CategoryId,
     string? UserId,
     SortParameters SortParameters,
-    FilterParameters FilterParameters
-) : IRequest<Result<IEnumerable<ProductShortDto>, Error>>;
+    FilterParameters FilterParameters,
+    int Page
+) : IRequest<Result<GetProductFromCategoryPaginationResultDto, Error>>;
 
 public class GetProductsFromCategoryQueryHandler
-    : IRequestHandler<GetProductsFromCategoryQuery, Result<IEnumerable<ProductShortDto>, Error>>
+    : IRequestHandler<
+        GetProductsFromCategoryQuery,
+        Result<GetProductFromCategoryPaginationResultDto, Error>
+    >
 {
+    private const int PageLimit = 10;
+
     private readonly Dictionary<string, Func<ProductShortDto, dynamic>> _sortBy =
         new() { ["popularity"] = product => product.Id, ["price"] = product => product.Price };
 
@@ -47,7 +53,7 @@ public class GetProductsFromCategoryQueryHandler
         _dapperConnectionFactory = dapperConnectionFactory;
     }
 
-    public async Task<Result<IEnumerable<ProductShortDto>, Error>> Handle(
+    public async Task<Result<GetProductFromCategoryPaginationResultDto, Error>> Handle(
         GetProductsFromCategoryQuery request,
         CancellationToken cancellationToken
     )
@@ -68,11 +74,17 @@ public class GetProductsFromCategoryQueryHandler
 
         if (request.UserId == null)
         {
-            sqlQuery = GetProductsFromCategoriesWithUnauthorizedUser(request.FilterParameters);
+            sqlQuery = GetProductsFromCategoriesWithUnauthorizedUser(
+                request.FilterParameters,
+                request.Page
+            );
         }
         else
         {
-            sqlQuery = GetProductsFromCategoriesWithAuthorizedUser(request.FilterParameters);
+            sqlQuery = GetProductsFromCategoriesWithAuthorizedUser(
+                request.FilterParameters,
+                request.Page
+            );
         }
 
         IEnumerable<ProductShortDto> productsFromCategory =
@@ -109,10 +121,35 @@ public class GetProductsFromCategoryQueryHandler
             productsFromCategory = productsFromCategory.OrderByDescending(sortByDescending);
         }
 
-        return Result.Ok(productsFromCategory);
+        int? nextPageNumber = await GetNextPageNumberOrNull(
+            connection,
+            request.CategoryId,
+            request.Page
+        );
+
+        return new GetProductFromCategoryPaginationResultDto(productsFromCategory, nextPageNumber);
     }
 
-    private string GetProductsFromCategoriesWithUnauthorizedUser(FilterParameters filterParameters)
+    private async Task<int?> GetNextPageNumberOrNull(
+        NpgsqlConnection connection,
+        Guid categoryId,
+        int page
+    )
+    {
+        int productTotalCount = await connection.QuerySingleAsync<int>(
+            "SELECT COUNT(1) FROM products WHERE category_id = @CategoryId",
+            new { CategoryId = categoryId }
+        );
+
+        int? nextPage = PageLimit * page >= productTotalCount ? null : page + 1;
+
+        return nextPage;
+    }
+
+    private string GetProductsFromCategoriesWithUnauthorizedUser(
+        FilterParameters filterParameters,
+        int page
+    )
     {
         var sqlQuery = new StringBuilder(
             @"
@@ -131,12 +168,15 @@ public class GetProductsFromCategoryQueryHandler
 
         AddFilterToSqlQuery(filterParameters, sqlQuery);
 
-        sqlQuery.Append(" GROUP BY p.product_id, pi.path");
+        AddGroupByAndGetRangeOrProducts(sqlQuery, page);
 
         return sqlQuery.ToString();
     }
 
-    private string GetProductsFromCategoriesWithAuthorizedUser(FilterParameters filterParameters)
+    private string GetProductsFromCategoriesWithAuthorizedUser(
+        FilterParameters filterParameters,
+        int page
+    )
     {
         var sqlQuery = new StringBuilder(
             @"
@@ -161,9 +201,15 @@ public class GetProductsFromCategoryQueryHandler
 
         AddFilterToSqlQuery(filterParameters, sqlQuery);
 
-        sqlQuery.Append(" GROUP BY p.product_id, pi.path");
+        AddGroupByAndGetRangeOrProducts(sqlQuery, page);
 
         return sqlQuery.ToString();
+    }
+
+    private void AddGroupByAndGetRangeOrProducts(StringBuilder sqlQuery, int page)
+    {
+        sqlQuery.Append(" GROUP BY p.product_id, pi.path");
+        sqlQuery.Append($" LIMIT {PageLimit} OFFSET {(page - 1) * PageLimit}");
     }
 
     private void AddFilterToSqlQuery(FilterParameters filterParameters, StringBuilder sqlQuery)

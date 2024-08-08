@@ -6,7 +6,6 @@ using Application.Categories.Queries.GetMaleCategories;
 using Application.Categories.Queries.GetProductFilterFromCategory;
 using Application.Categories.Queries.GetProductsFromCategory;
 using Application.Common.Models;
-using Contracts.Products;
 using Domain.DomainErrors;
 using Infrastructure.Authentication;
 using Mapster;
@@ -52,17 +51,19 @@ public class CategoriesController : ApplicationController
     public async Task<IResult> GetProductsFromCategory(
         Guid categoryId,
         [AsParameters] SortParameters sortParameters,
-        [AsParameters] FilterParameters filterParameters
+        [AsParameters] FilterParameters filterParameters,
+        int page = 1
     )
     {
         var query = new GetProductsFromCategoryQuery(
             categoryId,
             User.FindFirstValue(JwtClaims.UserId),
             sortParameters.Adapt<Application.Categories.Queries.GetProductsFromCategory.SortParameters>(),
-            filterParameters.Adapt<Application.Categories.Queries.GetProductsFromCategory.FilterParameters>()
+            filterParameters.Adapt<Application.Categories.Queries.GetProductsFromCategory.FilterParameters>(),
+            page
         );
 
-        Result<IEnumerable<ProductShortDto>, Error> result = await _sender.Send(query);
+        Result<GetProductFromCategoryPaginationResultDto, Error> result = await _sender.Send(query);
 
         return FromResult(result);
     }
