@@ -1,5 +1,4 @@
 ﻿using Domain.DomainErrors;
-using XResults;
 
 namespace Domain.Product.Errors;
 
@@ -41,6 +40,26 @@ public static partial class Errors
             return new Error(
                 "review.shelf.life.not.found",
                 "Review shelf life not found.",
+                details
+            );
+        }
+
+        public static Error WithIdNotFound(Guid reviewId)
+        {
+            var details = new Dictionary<string, object?>() { ["reviewId"] = reviewId };
+            return new Error("review.with.id.not.found", "Review with id not found.", details);
+        }
+
+        public static Error DoesNotBelongToThisUser(Guid reviewId, Guid userId)
+        {
+            var details = new Dictionary<string, object?>()
+            {
+                ["reviewId"] = reviewId,
+                ["userId"] = userId
+            };
+            return new Error(
+                "review.does.not.belong.to.this.user",
+                "Review does not belong to this user.",
                 details
             );
         }

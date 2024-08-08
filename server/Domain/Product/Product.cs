@@ -17,7 +17,7 @@ public class Product : AggregateRoot<Guid>
     public string Title { get; }
     public string Description { get; }
     public ProductDetails Details { get; }
-    public double Stars { get; }
+    public double Stars { get; private set; }
     public DateTime CreationDate { get; }
     public bool IsNew { get; }
     public Guid CategoryId { get; }
@@ -65,6 +65,36 @@ public class Product : AggregateRoot<Guid>
 
         _reviews.Add(createdReview);
 
+        CalculateStars();
+
         return Result.Ok();
+    }
+
+    public SuccessOr<Error> RemoveReview(Guid removedReviewId, Guid userId)
+    {
+        Review? removedReview = _reviews.FirstOrDefault(x => x.Id == removedReviewId);
+
+        if (removedReview == null)
+        {
+            return Errors.Errors.Review.WithIdNotFound(removedReviewId);
+        }
+
+        if (removedReview.UserId != userId)
+        {
+            return Errors.Errors.Review.DoesNotBelongToThisUser(removedReview.Id, userId);
+        }
+
+        _reviews.Remove(removedReview);
+
+        CalculateStars();
+
+        return Result.Ok();
+    }
+
+    private void CalculateStars()
+    {
+        double stars = _reviews.Sum(x => x.Stars) / _reviews.Count;
+
+        Stars = Math.Round(stars, 2);
     }
 }

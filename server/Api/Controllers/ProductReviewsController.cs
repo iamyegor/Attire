@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using Api.Controllers.Common;
 using Application.Products.Commands.CreateProductReview;
+using Application.Products.Commands.RemoveProductReview;
 using Application.Products.Queries.GetProductReviews;
 using Contracts.Products.Reviews;
 using Domain.DomainErrors;
@@ -45,13 +46,31 @@ public class ProductReviewsController : ApplicationController
         [FromBody] ReviewForCreate reviewForCreate
     )
     {
+        Guid userId = Guid.Parse(User.FindFirstValue(JwtClaims.UserId)!);
         CreateProductReviewCommand command = (
             productId,
-            Guid.Parse(User.FindFirstValue(JwtClaims.UserId)!),
+            userId,
             reviewForCreate
         ).Adapt<CreateProductReviewCommand>();
 
         Result<Guid, Error> result = await _sender.Send(command);
+
+        return FromResult(result);
+    }
+
+    // errorCodes:
+    // product.with.id.not.found
+    // user.with.id.not.found
+    // review.with.id.not.found
+    // review.does.not.belong.to.this.user
+    [Authorize]
+    [HttpDelete("{reviewId:guid}")]
+    public async Task<IResult> RemoveProductReview(Guid productId, Guid reviewId)
+    {
+        Guid userId = Guid.Parse(User.FindFirstValue(JwtClaims.UserId)!);
+        var command = new RemoveProductReviewCommand(productId, reviewId, userId);
+
+        SuccessOr<Error> result = await _sender.Send(command);
 
         return FromResult(result);
     }
