@@ -87,13 +87,15 @@ public class GetProductsFromCategoryQueryHandler
             );
         }
 
+        Guid? userId = request.UserId == null ? null : Guid.Parse(request.UserId);
+
         IEnumerable<ProductShortDto> productsFromCategory =
             await connection.QueryAsync<ProductShortDto>(
                 sqlQuery,
                 new
                 {
                     request.CategoryId,
-                    request.UserId,
+                    UserId = userId,
                     FilterColors = request.FilterParameters.Colors,
                     FilterSizes = request.FilterParameters.Sizes,
                     FilterCompositions = request.FilterParameters.Compositions,

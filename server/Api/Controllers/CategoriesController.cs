@@ -47,6 +47,7 @@ public class CategoriesController : ApplicationController
         return result;
     }
 
+    // errorCodes: category.with.id.not.found
     [HttpGet("{categoryId:guid}/products")]
     public async Task<IResult> GetProductsFromCategory(
         Guid categoryId,
@@ -68,6 +69,7 @@ public class CategoriesController : ApplicationController
         return FromResult(result);
     }
 
+    // errorCodes: category.with.id.not.found
     [HttpGet("{categoryId:guid}/products/filter")]
     public async Task<IResult> GetProductFilterFromCategory(Guid categoryId)
     {

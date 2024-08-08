@@ -24,7 +24,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Products\" />
       <Folder Include="User\" />
     </ItemGroup>
 

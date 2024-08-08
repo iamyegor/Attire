@@ -11,7 +11,7 @@ public static class Startup
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
         builder.Host.AddSerilog();
-        
+
         builder
             .Services.AddBaseServices(CorsPolicy)
             .AddInfrastructureServices(builder.Configuration, builder.Environment.IsDevelopment())
@@ -36,6 +36,8 @@ public static class Startup
 
         app.UseHttpsRedirection();
         app.MapControllers();
+
+        app.UseStaticFiles();
 
         return app;
     }
