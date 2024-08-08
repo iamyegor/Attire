@@ -56,6 +56,10 @@ public class GetProductDetailsQueryHandler
 
             SELECT value
             FROM product_sizes
+            WHERE product_id = @ProductId;
+        
+            SELECT COUNT(1)
+            FROM product_reviews
             WHERE product_id = @ProductId;";
 
         Guid? userId = request.UserId == null ? null : Guid.Parse(request.UserId);
@@ -80,6 +84,8 @@ public class GetProductDetailsQueryHandler
         List<ColorDto> productColors = (await reader.ReadAsync<ColorDto>()).ToList();
 
         List<string> productSizes = (await reader.ReadAsync<string>()).ToList();
+
+        productDetails.CountOfReviews = await reader.ReadSingleAsync<int>();
 
         productDetails.ImagePaths = productImagePaths;
         productDetails.Colors = productColors;

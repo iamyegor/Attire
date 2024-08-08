@@ -15,6 +15,7 @@ public class ProductDetailsDto
     public string Brand { get; set; }
     public string SKU { get; set; }
     public string Composition { get; set; }
+    public int CountOfReviews { get; set; }
 
     public List<string> ImagePaths { get; set; }
     public List<ColorDto> Colors { get; set; }
