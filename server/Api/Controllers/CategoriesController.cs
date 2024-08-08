@@ -5,9 +5,13 @@ using Application.Categories.Queries.GetFemaleCategories;
 using Application.Categories.Queries.GetMaleCategories;
 using Application.Categories.Queries.GetProductsFromCategory;
 using Application.Common.Models;
+using Contracts.Products;
 using Infrastructure.Authentication;
+using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using FilterParameters = Contracts.Products.FilterParameters;
+using SortParameters = Contracts.Products.SortParameters;
 
 namespace Api.Controllers;
 
@@ -42,9 +46,18 @@ public class CategoriesController : ApplicationController
     }
 
     [HttpGet("{categoryId:guid}/products")]
-    public async Task<IEnumerable<ProductShortDto>> GetProductsFromCategory(Guid categoryId)
+    public async Task<IEnumerable<ProductShortDto>> GetProductsFromCategory(
+        Guid categoryId,
+        [AsParameters] SortParameters sortParameters,
+        [AsParameters] FilterParameters filterParameters
+    )
     {
-        var query = new GetProductsFromCategoryQuery(categoryId, User.FindFirstValue(JwtClaims.UserId));
+        var query = new GetProductsFromCategoryQuery(
+            categoryId,
+            User.FindFirstValue(JwtClaims.UserId),
+            sortParameters.Adapt<Application.Categories.Queries.GetProductsFromCategory.SortParameters>(),
+            filterParameters.Adapt<Application.Categories.Queries.GetProductsFromCategory.FilterParameters>()
+        );
 
         IEnumerable<ProductShortDto> result = await _sender.Send(query);
 
