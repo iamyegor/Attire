@@ -7,25 +7,23 @@ namespace Api.Controllers.Common;
 
 public class ApplicationController : ControllerBase
 {
-    protected IActionResult Problem(Error error)
+    protected IResult Problem(Error error)
     {
-        return new ErrorResult(error, HttpStatusCode.BadRequest);
+        return new ErrorResult(error);
     }
 
-    protected IActionResult FromResult(SuccessOr<Error> result)
+    protected IResult FromResult(SuccessOr<Error> result)
     {
-        return result.IsSuccess ? Ok() : Problem(result.Error);
+        return result.IsSuccess ? Results.Ok() : Problem(result.Error);
     }
 
-    protected IActionResult FromResult<TValue>(
-        Result<TValue, Error> result
-    )
+    protected IResult FromResult<TValue>(Result<TValue, Error> result)
     {
         if (result.IsFailure)
         {
             return Problem(result.Error);
         }
 
-        return Ok(result.Value);
+        return Results.Ok(result.Value);
     }
 }

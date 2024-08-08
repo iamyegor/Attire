@@ -1,30 +1,32 @@
-using System.Net;
 using Domain.DomainErrors;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.Common;
 
-public class ErrorResult : IActionResult
+public class ErrorResult : IResult
 {
     private readonly Error _error;
-    private readonly HttpStatusCode _statusCode;
 
-    public ErrorResult(Error error, HttpStatusCode statusCode)
+    public ErrorResult(Error error)
     {
         _error = error;
-        _statusCode = statusCode;
     }
 
-    public Task ExecuteResultAsync(ActionContext context)
+    public async Task ExecuteAsync(HttpContext httpContext)
     {
-        var payload = new Dictionary<string, object?>() { ["errorCode"] = _error.Code, };
-
-        ObjectResult objectResult = new ObjectResult(payload)
+        var payload = new Dictionary<string, object?>()
         {
-            StatusCode = (int)_statusCode,
-            ContentTypes = ["application/vnd.yegor.problem+json"]
+            ["errorCode"] = _error.Code,
+            ["errorMessage"] = _error.Message
         };
 
-        return objectResult.ExecuteResultAsync(context);
+        foreach ((string key, object? value) in _error.Details)
+        {
+            payload.Add(key, value);
+        }
+
+        httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+        httpContext.Response.ContentType = "application/vnd.problem+json";
+
+        await httpContext.Response.WriteAsJsonAsync(payload);
     }
 }

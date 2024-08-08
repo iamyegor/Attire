@@ -1,9 +1,12 @@
 ﻿using System.Text;
 using Application.Common.Models;
 using Dapper;
+using Domain.DomainErrors;
 using Infrastructure.Data;
 using MediatR;
 using Npgsql;
+using XResults;
+using Errors = Domain.Category.Errors.Errors;
 
 namespace Application.Categories.Queries.GetProductsFromCategory;
 
@@ -22,10 +25,10 @@ public record GetProductsFromCategoryQuery(
     string? UserId,
     SortParameters SortParameters,
     FilterParameters FilterParameters
-) : IRequest<IEnumerable<ProductShortDto>>;
+) : IRequest<Result<IEnumerable<ProductShortDto>, Error>>;
 
 public class GetProductsFromCategoryQueryHandler
-    : IRequestHandler<GetProductsFromCategoryQuery, IEnumerable<ProductShortDto>>
+    : IRequestHandler<GetProductsFromCategoryQuery, Result<IEnumerable<ProductShortDto>, Error>>
 {
     private readonly Dictionary<string, Func<ProductShortDto, dynamic>> _sortBy =
         new() { ["popularity"] = product => product.Id, ["price"] = product => product.Price };
@@ -44,12 +47,22 @@ public class GetProductsFromCategoryQueryHandler
         _dapperConnectionFactory = dapperConnectionFactory;
     }
 
-    public async Task<IEnumerable<ProductShortDto>> Handle(
+    public async Task<Result<IEnumerable<ProductShortDto>, Error>> Handle(
         GetProductsFromCategoryQuery request,
         CancellationToken cancellationToken
     )
     {
         NpgsqlConnection connection = _dapperConnectionFactory.Create();
+
+        if (
+            await connection.QuerySingleOrDefaultAsync(
+                "SELECT 1 FROM categories WHERE category_id = @CategoryId",
+                new { request.CategoryId }
+            ) == null
+        )
+        {
+            return Errors.Category.WithIdNotFound(request.CategoryId);
+        }
 
         string sqlQuery;
 
@@ -96,7 +109,7 @@ public class GetProductsFromCategoryQueryHandler
             productsFromCategory = productsFromCategory.OrderByDescending(sortByDescending);
         }
 
-        return productsFromCategory;
+        return Result.Ok(productsFromCategory);
     }
 
     private string GetProductsFromCategoriesWithUnauthorizedUser(FilterParameters filterParameters)

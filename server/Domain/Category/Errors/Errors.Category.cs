@@ -10,5 +10,11 @@ public static partial class Errors
         {
             return new Error("category.name.is.required", "Category name is required.");
         }
+
+        public static Error WithIdNotFound(Guid categoryId)
+        {
+            var details = new Dictionary<string, object?>() { ["categoryId"] = categoryId };
+            return new Error("category.with.id.not.found", "Category with id not found.", details);
+        }
     }
 }

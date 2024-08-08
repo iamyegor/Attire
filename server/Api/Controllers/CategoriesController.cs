@@ -3,13 +3,16 @@ using Api.Controllers.Common;
 using Application.Categories.Queries.Common;
 using Application.Categories.Queries.GetFemaleCategories;
 using Application.Categories.Queries.GetMaleCategories;
+using Application.Categories.Queries.GetProductFilterFromCategory;
 using Application.Categories.Queries.GetProductsFromCategory;
 using Application.Common.Models;
 using Contracts.Products;
+using Domain.DomainErrors;
 using Infrastructure.Authentication;
 using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using XResults;
 using FilterParameters = Contracts.Products.FilterParameters;
 using SortParameters = Contracts.Products.SortParameters;
 
@@ -46,7 +49,7 @@ public class CategoriesController : ApplicationController
     }
 
     [HttpGet("{categoryId:guid}/products")]
-    public async Task<IEnumerable<ProductShortDto>> GetProductsFromCategory(
+    public async Task<IResult> GetProductsFromCategory(
         Guid categoryId,
         [AsParameters] SortParameters sortParameters,
         [AsParameters] FilterParameters filterParameters
@@ -59,8 +62,18 @@ public class CategoriesController : ApplicationController
             filterParameters.Adapt<Application.Categories.Queries.GetProductsFromCategory.FilterParameters>()
         );
 
-        IEnumerable<ProductShortDto> result = await _sender.Send(query);
+        Result<IEnumerable<ProductShortDto>, Error> result = await _sender.Send(query);
 
-        return result;
+        return FromResult(result);
+    }
+
+    [HttpGet("{categoryId:guid}/products/filter")]
+    public async Task<IResult> GetProductFilterFromCategory(Guid categoryId)
+    {
+        var query = new GetProductFilterFromCategoryQuery(categoryId);
+
+        Result<ProductFilterDto, Error> result = await _sender.Send(query);
+
+        return FromResult(result);
     }
 }
