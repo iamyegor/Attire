@@ -35,7 +35,8 @@ public class UserCartsController : ApplicationController
     [HttpPost]
     public async Task<IResult> AddCartItem(CartItemForCreate cartItemForCreate)
     {
-        Guid userId = Guid.Parse("b0b95618-3427-4183-8f2f-3eb7ecd8fda2");
+        // Guid userId = Guid.Parse("b0b95618-3427-4183-8f2f-3eb7ecd8fda2");
+        Guid userId = Guid.Parse(User.FindFirstValue(JwtClaims.UserId)!);
         AddItemToTheCartCommand command = (
             userId,
             cartItemForCreate
@@ -49,7 +50,8 @@ public class UserCartsController : ApplicationController
     [HttpGet]
     public async Task<GetCartItemsPaginationResult> GetCartItems(int page = 1)
     {
-        Guid userId = Guid.Parse("b0b95618-3427-4183-8f2f-3eb7ecd8fda2");
+        // Guid userId = Guid.Parse("b0b95618-3427-4183-8f2f-3eb7ecd8fda2");
+        Guid userId = Guid.Parse(User.FindFirstValue(JwtClaims.UserId)!);
         var query = new GetCartItemsQuery(userId, page);
 
         GetCartItemsPaginationResult result = await _sender.Send(query);

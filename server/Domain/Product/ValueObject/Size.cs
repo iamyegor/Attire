@@ -9,7 +9,7 @@ public class Size : Common.ValueObject
 
     protected override IEnumerable<object?> GetEqualityComponents()
     {
-        return new object?[] { ToString() };
+        yield return Value;
     }
 
     private Size(string value)

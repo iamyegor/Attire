@@ -107,19 +107,37 @@ public class FindProductsQueryHandler
     {
         var sqlQuery =
             @"
-            SELECT p.product_id as id, p.creation_date, p.price, p.title, pi.path as image_path, 
+            SELECT p.product_id as id,
+                p.creation_date, p.price, p.title, pi.path as image_path,
                 CASE
-                    WHEN uf.user_id IS NOT NULL THEN true
+                    WHEN 
+                    (
+                    SELECT COUNT(2)
+                    FROM user_favorite_product_ids uf
+                    WHERE 
+                        uf.product_id = p.product_id AND
+                        uf.user_id = @UserId
+                    LIMIT 1
+                    ) > 0 THEN true
                     ELSE false
-                END AS liked
+                END AS liked,
+                CASE
+                    WHEN 
+                    (
+                    SELECT COUNT(1)
+                    FROM user_cart_items uci 
+                    WHERE 
+                        uci.product_id = p.product_id AND 
+                        uci.user_id = @UserId
+                    LIMIT 1
+                    ) > 0 THEN true
+                ELSE false
+                END AS is_in_cart
             FROM products p
             INNER JOIN product_images pi
                 ON p.product_id = pi.product_id
-            LEFT JOIN user_favorite_product_ids uf
-                ON p.product_id = uf.product_id
             WHERE pi.order_index = 1 AND
-                  p.title ILIKE @SearchText AND
-                  uf.user_id = @UserId
+                  p.title ILIKE @SearchText
             LIMIT @PageLimit
             OFFSET @Skip";
 

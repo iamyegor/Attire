@@ -102,7 +102,9 @@ public class GetProductsFromCategoryQueryHandler
                     FilterSizes = request.FilterParameters.Sizes,
                     FilterCompositions = request.FilterParameters.Compositions,
                     request.FilterParameters.MinPrice,
-                    request.FilterParameters.MaxPrice
+                    request.FilterParameters.MaxPrice,
+                    PageLimit,
+                    Skip = (currentPage - 1) * PageLimit
                 }
             );
 
@@ -158,7 +160,7 @@ public class GetProductsFromCategoryQueryHandler
         var sqlQuery = new StringBuilder(
             @"
             SELECT p.product_id as id, 
-            p.creation_date, p.price, p.title, pi.path as image_path, false AS liked
+            p.creation_date, p.price, p.title, pi.path as image_path, false AS liked, false AS is_in_cart
             FROM products p
             INNER JOIN product_images pi
                 ON p.product_id = pi.product_id
@@ -172,7 +174,7 @@ public class GetProductsFromCategoryQueryHandler
 
         AddFilterToSqlQuery(filterParameters, sqlQuery);
 
-        AddGroupByAndGetRangeOrProducts(sqlQuery, page);
+        AddGroupByAndGetRangeOrProducts(sqlQuery);
 
         return sqlQuery.ToString();
     }
@@ -184,11 +186,32 @@ public class GetProductsFromCategoryQueryHandler
     {
         var sqlQuery = new StringBuilder(
             @"
-            SELECT p.product_id as id, p.creation_date, p.price, p.title, pi.path as image_path, 
+            SELECT p.product_id as id,
+                p.creation_date, p.price, p.title, pi.path as image_path,
                 CASE
-                    WHEN uf.user_id IS NOT NULL THEN true
+                    WHEN 
+                    (
+                    SELECT COUNT(2)
+                    FROM user_favorite_product_ids uf
+                    WHERE 
+                        uf.product_id = p.product_id AND
+                        uf.user_id = @UserId
+                    LIMIT 1
+                    ) > 0 THEN true
                     ELSE false
-                END AS liked
+                END AS liked,
+                CASE
+                    WHEN 
+                    (
+                    SELECT COUNT(1)
+                    FROM user_cart_items uci 
+                    WHERE 
+                        uci.product_id = p.product_id AND 
+                        uci.user_id = @UserId
+                    LIMIT 1
+                    ) > 0 THEN true
+                ELSE false
+                END AS is_in_cart
             FROM products p
             INNER JOIN product_images pi
                 ON p.product_id = pi.product_id
@@ -196,24 +219,23 @@ public class GetProductsFromCategoryQueryHandler
                 ON p.product_id = pc.product_id
             LEFT JOIN product_sizes ps
                 ON p.product_id = ps.product_id
-            LEFT JOIN user_favorite_product_ids uf
-                ON p.product_id = uf.product_id
+            LEFT JOIN user_cart_items uci
+                ON p.product_id = uci.product_id
             WHERE pi.order_index = 1 AND
-                  p.category_id = @CategoryId AND
-                  uf.user_id = @UserId"
+                  p.category_id = @CategoryId"
         );
 
         AddFilterToSqlQuery(filterParameters, sqlQuery);
 
-        AddGroupByAndGetRangeOrProducts(sqlQuery, page);
+        AddGroupByAndGetRangeOrProducts(sqlQuery);
 
         return sqlQuery.ToString();
     }
 
-    private void AddGroupByAndGetRangeOrProducts(StringBuilder sqlQuery, int page)
+    private void AddGroupByAndGetRangeOrProducts(StringBuilder sqlQuery)
     {
         sqlQuery.Append(" GROUP BY p.product_id, pi.path");
-        sqlQuery.Append($" LIMIT {PageLimit} OFFSET {(page - 1) * PageLimit}");
+        sqlQuery.Append($" LIMIT @PageLimit OFFSET @Skip");
     }
 
     private void AddFilterToSqlQuery(FilterParameters filterParameters, StringBuilder sqlQuery)
