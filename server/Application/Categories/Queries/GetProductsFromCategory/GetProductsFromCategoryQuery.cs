@@ -58,6 +58,8 @@ public class GetProductsFromCategoryQueryHandler
         CancellationToken cancellationToken
     )
     {
+        int currentPage = request.Page <= 0 ? 1 : request.Page;
+
         NpgsqlConnection connection = _dapperConnectionFactory.Create();
 
         if (
@@ -76,14 +78,14 @@ public class GetProductsFromCategoryQueryHandler
         {
             sqlQuery = GetProductsFromCategoriesWithUnauthorizedUser(
                 request.FilterParameters,
-                request.Page
+                currentPage
             );
         }
         else
         {
             sqlQuery = GetProductsFromCategoriesWithAuthorizedUser(
                 request.FilterParameters,
-                request.Page
+                currentPage
             );
         }
 
@@ -126,7 +128,7 @@ public class GetProductsFromCategoryQueryHandler
         int? nextPageNumber = await GetNextPageNumberOrNull(
             connection,
             request.CategoryId,
-            request.Page
+            currentPage
         );
 
         return new GetProductFromCategoryPaginationResultDto(productsFromCategory, nextPageNumber);

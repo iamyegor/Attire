@@ -31,13 +31,18 @@ public class GetProductDetailsQueryHandler
         string sqlQuery =
             @"
             SELECT 
-                title, 
-                price,
-                description,
-                brand,
-                sku as s_k_u,
-                composition
-            FROM products
+                p.title, 
+                p.price,
+                p.description,
+                p.brand,
+                p.sku as s_k_u,
+                p.composition,
+                c.category_id,
+                c.name as category_name,
+                c.gender
+            FROM products p
+            LEFT JOIN categories c
+                ON p.category_id = c.category_id
             WHERE product_id = @ProductId
             LIMIT 1;
             

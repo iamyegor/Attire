@@ -1,5 +1,7 @@
 ﻿using System.Security.Claims;
 using Api.Controllers.Common;
+using Application.Common.Models;
+using Application.Products.Queries.FindProducts;
 using Application.Products.Queries.GetProductDetails;
 using Application.Products.Queries.GetProductStatistics;
 using Domain.DomainErrors;
@@ -40,5 +42,15 @@ public class ProductsController : ApplicationController
         Result<ProductStatisticsDto, Error> result = await _sender.Send(query);
 
         return FromResult(result);
+    }
+
+    [HttpGet]
+    public async Task<FindProductsPaginationResult> FindProducts(string searchText, int page = 1)
+    {
+        var query = new FindProductsQuery(searchText, page, User.FindFirstValue(JwtClaims.UserId));
+
+        FindProductsPaginationResult result = await _sender.Send(query);
+
+        return result;
     }
 }

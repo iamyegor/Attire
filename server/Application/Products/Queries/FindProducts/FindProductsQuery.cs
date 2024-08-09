@@ -1,0 +1,128 @@
+﻿using Application.Common.Models;
+using Dapper;
+using Infrastructure.Data;
+using MediatR;
+using Npgsql;
+
+namespace Application.Products.Queries.FindProducts;
+
+public record FindProductsQuery(string SearchText, int Page, string? UserId)
+    : IRequest<FindProductsPaginationResult>;
+
+public class FindProductsQueryHandler
+    : IRequestHandler<FindProductsQuery, FindProductsPaginationResult>
+{
+    private const int PageLimit = 10;
+    private readonly DapperConnectionFactory _dapperConnectionFactory;
+
+    public FindProductsQueryHandler(DapperConnectionFactory dapperConnectionFactory)
+    {
+        _dapperConnectionFactory = dapperConnectionFactory;
+    }
+
+    public async Task<FindProductsPaginationResult> Handle(
+        FindProductsQuery request,
+        CancellationToken cancellationToken
+    )
+    {
+        int currentPage = request.Page <= 0 ? 1 : request.Page;
+
+        NpgsqlConnection connection = _dapperConnectionFactory.Create();
+
+        string sqlQuery;
+
+        if (request.UserId == null)
+        {
+            sqlQuery = FindProductsWithUnauthorizedUser();
+        }
+        else
+        {
+            sqlQuery = FindProductsWithAuthorizedUser();
+        }
+
+        Guid? userId = request.UserId == null ? null : Guid.Parse(request.UserId);
+
+        IEnumerable<ProductShortDto> filteredProducts =
+            await connection.QueryAsync<ProductShortDto>(
+                sqlQuery,
+                new
+                {
+                    SearchText = "%" + request.SearchText + "%",
+                    userId,
+                    PageLimit,
+                    Skip = (currentPage - 1) * PageLimit
+                }
+            );
+
+        int? nextPageNumber = await GetNextPageNumberOrNull(
+            connection,
+            request.SearchText,
+            currentPage
+        );
+
+        return new FindProductsPaginationResult(filteredProducts, nextPageNumber);
+    }
+
+    private async Task<int?> GetNextPageNumberOrNull(
+        NpgsqlConnection connection,
+        string searchText,
+        int page
+    )
+    {
+        int productTotalCount = await connection.QuerySingleAsync<int>(
+            "SELECT COUNT(1) FROM products WHERE title ILIKE @SearchText",
+            new { SearchText = "%" + searchText + "%" }
+        );
+
+        int? nextPage = PageLimit * page >= productTotalCount ? null : page + 1;
+
+        return nextPage;
+    }
+
+    private string FindProductsWithUnauthorizedUser()
+    {
+        string sqlQuery =
+            @"
+            SELECT 
+                p.product_id as id,
+                p.creation_date, 
+                p.price, 
+                p.title, 
+                pi.path as image_path, 
+                false AS liked
+            FROM products p
+            INNER JOIN product_images pi
+                ON p.product_id = pi.product_id
+            WHERE 
+                pi.order_index = 1 AND
+                p.title ILIKE @SearchText
+            LIMIT @PageLimit
+            OFFSET @Skip
+            ";
+
+        return sqlQuery;
+    }
+
+    private string FindProductsWithAuthorizedUser()
+    {
+        var sqlQuery =
+            @"
+            SELECT p.product_id as id, p.creation_date, p.price, p.title, pi.path as image_path, 
+                CASE
+                    WHEN uf.user_id IS NOT NULL THEN true
+                    ELSE false
+                END AS liked
+            FROM products p
+            INNER JOIN product_images pi
+                ON p.product_id = pi.product_id
+            LEFT JOIN user_favorite_product_ids uf
+                ON p.product_id = uf.product_id
+            WHERE pi.order_index = 1 AND
+                  p.title ILIKE @SearchText AND
+                  uf.user_id = @UserId
+            LIMIT @PageLimit
+            OFFSET @Skip";
+
+        return sqlQuery;
+    }
+}
