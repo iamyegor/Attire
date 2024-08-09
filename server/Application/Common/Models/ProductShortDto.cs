@@ -9,4 +9,5 @@ public class ProductShortDto
     public string Title { get; set; }
     public bool Liked { get; set; }
     public bool IsInCart { get; set; }
+    public bool IsNew { get; set; }
 }

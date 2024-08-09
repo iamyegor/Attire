@@ -1,9 +1,9 @@
 ﻿using System.Security.Claims;
 using Api.Controllers.Common;
-using Application.Common.Models;
 using Application.Products.Queries.FindProducts;
 using Application.Products.Queries.GetNewProductsWithGender;
 using Application.Products.Queries.GetProductDetails;
+using Application.Products.Queries.GetProductsByGender;
 using Application.Products.Queries.GetProductStatistics;
 using Domain.DomainErrors;
 using Infrastructure.Authentication;
@@ -72,6 +72,25 @@ public class ProductsController : ApplicationController
         );
 
         Result<GetNewProductsWithGenderPaginationResult, Error> result = await _sender.Send(query);
+
+        return FromResult(result);
+    }
+
+    [HttpGet("genders/{gender}")]
+    public async Task<IResult> GetProductsByGender(
+        string gender,
+        [AsParameters] SortParameters sortParameters,
+        int page = 1
+    )
+    {
+        var query = new GetProductsByGenderQuery(
+            gender,
+            sortParameters.Adapt<Application.Products.Queries.GetProductsByGender.SortParameters>(),
+            page,
+            User.FindFirstValue(JwtClaims.UserId)
+        );
+
+        Result<GetProductsByGenderPaginationResult, Error> result = await _sender.Send(query);
 
         return FromResult(result);
     }

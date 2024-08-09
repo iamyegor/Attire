@@ -1,4 +1,5 @@
 ﻿using Application.Common.Models;
+using Application.Products.Queries.GetNewProductsWithGender;
 using Dapper;
 using Domain.Category.ValueObject;
 using Domain.DomainErrors;
@@ -8,22 +9,19 @@ using MediatR;
 using Npgsql;
 using XResults;
 
-namespace Application.Products.Queries.GetNewProductsWithGender;
+namespace Application.Products.Queries.GetProductsByGender;
 
 public record SortParameters(string? SortBy, string? SortByDescending);
 
-public record GetNewProductsWithGenderQuery(
+public record GetProductsByGenderQuery(
     string Gender,
     SortParameters SortParameters,
     int Page,
     string? UserId
-) : IRequest<Result<GetNewProductsWithGenderPaginationResult, Error>>;
+) : IRequest<Result<GetProductsByGenderPaginationResult, Error>>;
 
-public class GetNewProductsWithGenderQueryHandler
-    : IRequestHandler<
-        GetNewProductsWithGenderQuery,
-        Result<GetNewProductsWithGenderPaginationResult, Error>
-    >
+public class GetProductsByGenderQueryHandler
+    : IRequestHandler<GetProductsByGenderQuery, Result<GetProductsByGenderPaginationResult, Error>>
 {
     private readonly DapperConnectionFactory _dapperConnectionFactory;
 
@@ -38,13 +36,13 @@ public class GetNewProductsWithGenderQueryHandler
             ["price"] = product => product.Price
         };
 
-    public GetNewProductsWithGenderQueryHandler(DapperConnectionFactory dapperConnectionFactory)
+    public GetProductsByGenderQueryHandler(DapperConnectionFactory dapperConnectionFactory)
     {
         _dapperConnectionFactory = dapperConnectionFactory;
     }
 
-    public async Task<Result<GetNewProductsWithGenderPaginationResult, Error>> Handle(
-        GetNewProductsWithGenderQuery request,
+    public async Task<Result<GetProductsByGenderPaginationResult, Error>> Handle(
+        GetProductsByGenderQuery request,
         CancellationToken cancellationToken
     )
     {
@@ -56,33 +54,34 @@ public class GetNewProductsWithGenderQueryHandler
 
         if (request.UserId == null)
         {
-            sqlQuery = GetNewProductsWithGenderWithUnauthorizedUser();
+            sqlQuery = GetProductsByGenderWithUnauthorizedUser();
         }
         else
         {
-            sqlQuery = GetNewProductsWithGenderWithAuthorizedUser();
+            sqlQuery = GetProductsByGenderWithAuthorizedUser();
         }
 
         Guid? userId = request.UserId == null ? null : Guid.Parse(request.UserId);
         Gender gender = GenderConverter.Convert(request.Gender);
 
-        IEnumerable<ProductShortDto> newProducts = await connection.QueryAsync<ProductShortDto>(
-            sqlQuery,
-            new
-            {
-                UserId = userId,
-                PageLimit,
-                Skip = (currentPage - 1) * PageLimit,
-                Gender = gender
-            }
-        );
+        IEnumerable<ProductShortDto> productsByGender =
+            await connection.QueryAsync<ProductShortDto>(
+                sqlQuery,
+                new
+                {
+                    UserId = userId,
+                    PageLimit,
+                    Skip = (currentPage - 1) * PageLimit,
+                    Gender = gender
+                }
+            );
 
         if (
             request.SortParameters.SortBy != null
             && _sortBy.TryGetValue(request.SortParameters.SortBy, out var sortBy)
         )
         {
-            newProducts = newProducts.OrderBy(sortBy);
+            productsByGender = productsByGender.OrderBy(sortBy);
         }
 
         if (
@@ -93,12 +92,12 @@ public class GetNewProductsWithGenderQueryHandler
             )
         )
         {
-            newProducts = newProducts.OrderByDescending(sortByDescending);
+            productsByGender = productsByGender.OrderByDescending(sortByDescending);
         }
 
         int? nextPageNumber = await GetNextPageNumberOrNull(connection, gender, currentPage);
 
-        return new GetNewProductsWithGenderPaginationResult(newProducts, nextPageNumber);
+        return new GetProductsByGenderPaginationResult(productsByGender, nextPageNumber);
     }
 
     private async Task<int?> GetNextPageNumberOrNull(
@@ -107,52 +106,22 @@ public class GetNewProductsWithGenderQueryHandler
         int page
     )
     {
-        int newProductTotalCount = await connection.QuerySingleAsync<int>(
+        int productsByGenderTotalCount = await connection.QuerySingleAsync<int>(
             @"
             SELECT COUNT(1) 
             FROM products p
             LEFT JOIN categories c
                 ON p.category_id = c.category_id
-            WHERE 
-                is_new = true AND
-                gender = @Gender",
+            WHERE gender = @Gender",
             new { Gender = gender }
         );
 
-        int? nextPage = PageLimit * page >= newProductTotalCount ? null : page + 1;
+        int? nextPage = PageLimit * page >= productsByGenderTotalCount ? null : page + 1;
 
         return nextPage;
     }
 
-    private string GetNewProductsWithGenderWithUnauthorizedUser()
-    {
-        string sqlQuery =
-            @"
-            SELECT 
-                p.product_id as id,
-                p.creation_date, 
-                p.price, 
-                p.title, 
-                pi.path as image_path, 
-                false AS liked,
-                false AS is_in_cart,
-                p.is_new
-            FROM products p
-            LEFT JOIN categories c
-                ON p.category_id = c.category_id
-            INNER JOIN product_images pi
-                ON p.product_id = pi.product_id
-            WHERE 
-                pi.order_index = 1 AND
-                p.is_new = true AND
-                c.gender = @Gender
-            LIMIT @PageLimit
-            OFFSET @Skip";
-
-        return sqlQuery;
-    }
-
-    private string GetNewProductsWithGenderWithAuthorizedUser()
+    private string GetProductsByGenderWithAuthorizedUser()
     {
         string sqlQuery =
             @"
@@ -193,7 +162,33 @@ public class GetNewProductsWithGenderQueryHandler
                 ON p.product_id = pi.product_id
             WHERE 
                 pi.order_index = 1 AND
-                p.is_new = true AND
+                c.gender = @Gender
+            LIMIT @PageLimit
+            OFFSET @Skip";
+
+        return sqlQuery;
+    }
+
+    private string GetProductsByGenderWithUnauthorizedUser()
+    {
+        string sqlQuery =
+            @"
+            SELECT 
+                p.product_id as id,
+                p.creation_date, 
+                p.price, 
+                p.title, 
+                pi.path as image_path, 
+                false AS liked,
+                false AS is_in_cart,
+                p.is_new
+            FROM products p
+            LEFT JOIN categories c
+                ON p.category_id = c.category_id
+            INNER JOIN product_images pi
+                ON p.product_id = pi.product_id
+            WHERE 
+                pi.order_index = 1 AND
                 c.gender = @Gender
             LIMIT @PageLimit
             OFFSET @Skip";

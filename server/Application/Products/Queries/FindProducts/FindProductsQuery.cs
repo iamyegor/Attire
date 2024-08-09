@@ -90,7 +90,8 @@ public class FindProductsQueryHandler
                 p.title, 
                 pi.path as image_path, 
                 false AS liked,
-                false AS is_in_cart 
+                false AS is_in_cart,
+                p.is_new
             FROM products p
             INNER JOIN product_images pi
                 ON p.product_id = pi.product_id
@@ -109,7 +110,11 @@ public class FindProductsQueryHandler
         var sqlQuery =
             @"
             SELECT p.product_id as id,
-                p.creation_date, p.price, p.title, pi.path as image_path,
+                p.creation_date, 
+                p.price, 
+                p.title, 
+                pi.path as image_path,
+                p.is_new,
                 CASE
                     WHEN 
                     (
