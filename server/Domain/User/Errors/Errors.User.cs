@@ -32,5 +32,31 @@ public static partial class Errors
                 details
             );
         }
+
+        public static Error FavoriteProductIdWithValueAlreadyExists(Guid favoriteProductId)
+        {
+            var details = new Dictionary<string, object?>()
+            {
+                ["favoriteProductId"] = favoriteProductId
+            };
+            return new Error(
+                "user.favorite.product.id.with.value.already.exists",
+                "User favorite product id with value already exists.",
+                details
+            );
+        }
+
+        public static Error FavoriteProductIdWithValueNotFound(Guid favoriteProductId)
+        {
+            var details = new Dictionary<string, object?>()
+            {
+                ["favoriteProductId"] = favoriteProductId
+            };
+            return new Error(
+                "user.favorite.product.id.with.value.not.found",
+                "User favorite product id with value not found.",
+                details
+            );
+        }
     }
 }

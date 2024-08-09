@@ -108,4 +108,36 @@ public class User : AggregateRoot<Guid>
 
         return Result.Ok();
     }
+
+    public SuccessOr<Error> AddFavoriteProductId(FavoriteProductId addedFavoriteProductId)
+    {
+        if (_favoriteProductIds.Contains(addedFavoriteProductId))
+        {
+            return Errors.Errors.User.FavoriteProductIdWithValueAlreadyExists(
+                addedFavoriteProductId.Value
+            );
+        }
+
+        _favoriteProductIds.Add(addedFavoriteProductId);
+
+        return Result.Ok();
+    }
+
+    public SuccessOr<Error> RemoveFavoriteProductId(FavoriteProductId removedFavoriteProductId)
+    {
+        FavoriteProductId? favoriteProductId = _favoriteProductIds.FirstOrDefault(x =>
+            x.Value == removedFavoriteProductId.Value
+        );
+
+        if (favoriteProductId == null)
+        {
+            return Errors.Errors.User.FavoriteProductIdWithValueNotFound(
+                removedFavoriteProductId.Value
+            );
+        }
+
+        _favoriteProductIds.Remove(favoriteProductId);
+
+        return Result.Ok();
+    }
 }
