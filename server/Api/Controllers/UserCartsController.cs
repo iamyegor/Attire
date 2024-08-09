@@ -47,16 +47,18 @@ public class UserCartsController : ApplicationController
         return FromResult(result);
     }
 
+    // errorCodes:
+    // user.with.id.not.found
     [HttpGet]
-    public async Task<GetCartItemsPaginationResult> GetCartItems(int page = 1)
+    public async Task<IResult> GetCartItems(int page = 1)
     {
         // Guid userId = Guid.Parse("b0b95618-3427-4183-8f2f-3eb7ecd8fda2");
         Guid userId = Guid.Parse(User.FindFirstValue(JwtClaims.UserId)!);
         var query = new GetCartItemsQuery(userId, page);
 
-        GetCartItemsPaginationResult result = await _sender.Send(query);
+        Result<GetCartItemsPaginationResult, Error> result = await _sender.Send(query);
 
-        return result;
+        return FromResult(result);
     }
 
     // errorCodes

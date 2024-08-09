@@ -1,14 +1,18 @@
 ﻿using Dapper;
+using Domain.DomainErrors;
 using Infrastructure.Data;
 using MediatR;
 using Npgsql;
+using XResults;
+using Errors = Domain.User.Errors.Errors;
 
 namespace Application.Users.Queries.GetCartItems;
 
-public record GetCartItemsQuery(Guid UserId, int Page) : IRequest<GetCartItemsPaginationResult>;
+public record GetCartItemsQuery(Guid UserId, int Page)
+    : IRequest<Result<GetCartItemsPaginationResult, Error>>;
 
 public class GetCartItemsQueryHandler
-    : IRequestHandler<GetCartItemsQuery, GetCartItemsPaginationResult>
+    : IRequestHandler<GetCartItemsQuery, Result<GetCartItemsPaginationResult, Error>>
 {
     private const int PageLimit = 10;
     private readonly DapperConnectionFactory _dapperConnectionFactory;
@@ -18,7 +22,7 @@ public class GetCartItemsQueryHandler
         _dapperConnectionFactory = dapperConnectionFactory;
     }
 
-    public async Task<GetCartItemsPaginationResult> Handle(
+    public async Task<Result<GetCartItemsPaginationResult, Error>> Handle(
         GetCartItemsQuery request,
         CancellationToken cancellationToken
     )
@@ -26,6 +30,16 @@ public class GetCartItemsQueryHandler
         int currentPage = request.Page <= 0 ? 1 : request.Page;
 
         NpgsqlConnection connection = _dapperConnectionFactory.Create();
+
+        if (
+            await connection.QuerySingleOrDefaultAsync(
+                "SELECT 1 FROM users WHERE user_id = @UserId LIMIT 1",
+                new { request.UserId }
+            ) == null
+        )
+        {
+            return Errors.User.WithIdNofFound(request.UserId);
+        }
 
         string sqlQuery =
             @"
