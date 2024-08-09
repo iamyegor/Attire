@@ -48,7 +48,7 @@ public class FindProductsQueryHandler
                 new
                 {
                     SearchText = "%" + request.SearchText + "%",
-                    userId,
+                    UserId = userId,
                     PageLimit,
                     Skip = (currentPage - 1) * PageLimit
                 }
@@ -89,7 +89,8 @@ public class FindProductsQueryHandler
                 p.price, 
                 p.title, 
                 pi.path as image_path, 
-                false AS liked
+                false AS liked,
+                false AS is_in_cart 
             FROM products p
             INNER JOIN product_images pi
                 ON p.product_id = pi.product_id

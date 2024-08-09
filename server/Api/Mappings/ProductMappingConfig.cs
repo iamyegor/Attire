@@ -1,6 +1,9 @@
 ﻿using Application.Products.Commands.CreateProductReview;
+using Application.Products.Queries.GetNewProductsWithGender;
 using Contracts.Products.Reviews;
+using Domain.Category.ValueObject;
 using Mapster;
+using SortParameters = Contracts.Products.SortParameters;
 
 namespace Api.Mappings;
 

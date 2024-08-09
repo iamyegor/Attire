@@ -2,13 +2,16 @@
 using Api.Controllers.Common;
 using Application.Common.Models;
 using Application.Products.Queries.FindProducts;
+using Application.Products.Queries.GetNewProductsWithGender;
 using Application.Products.Queries.GetProductDetails;
 using Application.Products.Queries.GetProductStatistics;
 using Domain.DomainErrors;
 using Infrastructure.Authentication;
+using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using XResults;
+using SortParameters = Application.Categories.Queries.GetProductsFromCategory.SortParameters;
 
 namespace Api.Controllers;
 
@@ -52,5 +55,24 @@ public class ProductsController : ApplicationController
         FindProductsPaginationResult result = await _sender.Send(query);
 
         return result;
+    }
+
+    [HttpGet("new")]
+    public async Task<IResult> GetNewProductsWithGender(
+        string gender,
+        [AsParameters] SortParameters sortParameters,
+        int page = 1
+    )
+    {
+        var query = new GetNewProductsWithGenderQuery(
+            gender,
+            sortParameters.Adapt<Application.Products.Queries.GetNewProductsWithGender.SortParameters>(),
+            page,
+            User.FindFirstValue(JwtClaims.UserId)
+        );
+
+        Result<GetNewProductsWithGenderPaginationResult, Error> result = await _sender.Send(query);
+
+        return FromResult(result);
     }
 }
