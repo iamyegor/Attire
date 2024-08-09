@@ -22,5 +22,15 @@ public static partial class Errors
             var details = new Dictionary<string, object?>() { ["userId"] = userId };
             return new Error("user.with.id.not.found", "User with id not found.", details);
         }
+
+        public static Error CartItemWithIdNotFound(Guid cartItemId)
+        {
+            var details = new Dictionary<string, object?>() { ["cartItemId"] = cartItemId };
+            return new Error(
+                "user.cart.item.with.id.not.found",
+                "User cart item with id not found.",
+                details
+            );
+        }
     }
 }

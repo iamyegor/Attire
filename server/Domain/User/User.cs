@@ -57,4 +57,55 @@ public class User : AggregateRoot<Guid>
 
         return new User(firstName, lastName, phone, email, address);
     }
+
+    public SuccessOr<Error> AddCartItem(Product.Product product, CartItem newCartItem)
+    {
+        if (product.Sizes.FirstOrDefault(x => x.Value == newCartItem.Size.Value) == null)
+        {
+            return Product.Errors.Errors.Product.SizeWithValueNotFound(newCartItem.Size.Value);
+        }
+
+        if (
+            _cart.FirstOrDefault(x =>
+                x.ProductId == newCartItem.ProductId
+                && x.Size == newCartItem.Size
+                && x.Color == newCartItem.Color
+            ) != null
+        )
+        {
+            return Errors.Errors.CartItem.WithParametersAlreadyExists(newCartItem);
+        }
+
+        _cart.Add(newCartItem);
+
+        return Result.Ok();
+    }
+
+    public SuccessOr<Error> ChangeQuantityOfProductsInCartItem(Guid cartItemId, int changedQuantity)
+    {
+        CartItem? cartItem = _cart.FirstOrDefault(x => x.Id == cartItemId);
+
+        if (cartItem == null)
+        {
+            return Errors.Errors.User.CartItemWithIdNotFound(cartItemId);
+        }
+
+        SuccessOr<Error> result = cartItem.SetQuantity(changedQuantity);
+
+        return result;
+    }
+
+    public SuccessOr<Error> RemoveCartItem(Guid removedCartItemId)
+    {
+        CartItem? cartItem = _cart.FirstOrDefault(x => x.Id == removedCartItemId);
+
+        if (cartItem == null)
+        {
+            return Errors.Errors.User.CartItemWithIdNotFound(removedCartItemId);
+        }
+
+        _cart.Remove(cartItem);
+
+        return Result.Ok();
+    }
 }
