@@ -4,9 +4,9 @@ import { useInView } from "react-intersection-observer";
 import { ProductsResponse } from "@/pages/HomePage/types/ProductsResponse.ts";
 import api from "@/lib/api.ts";
 
-export function useLoadProducts(queryKey: string, getEndpoint: (page: number) => string) {
-    const { data, status, fetchNextPage } = useInfiniteQuery({
-        queryKey: [queryKey],
+export function useLoadProducts(queryKey: string[], getEndpoint: (page: number) => string) {
+    const { data, isLoading, fetchNextPage } = useInfiniteQuery({
+        queryKey: queryKey,
         queryFn: fetchProducts,
         initialPageParam: 0,
         getNextPageParam: (lastPage) => lastPage.nextPage,
@@ -29,7 +29,7 @@ export function useLoadProducts(queryKey: string, getEndpoint: (page: number) =>
     const products = data?.pages.flatMap((page) => page.products) ?? [];
     return {
         products,
-        isLoading: status === "pending",
+        isLoading,
         ref,
     };
 }

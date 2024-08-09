@@ -21,9 +21,15 @@ function SearchComponent({ onClose }: SearchComponentProps) {
 
     return (
         <div className="w-full min-h-screen sm:min-h-full md:max-w-[700px] px-2 xs:px-8 mx-auto py-4">
-            <div className="flex">
+            <button
+                className="text-neutral-700 mb-3 font-medium block sm:hidden"
+                onClick={onClose}
+            >
+                Закрыть
+            </button>
+            <div className="flex space-x-3">
                 <div className="text-lg font-semibold text-neutral-600 hover:text-neutral-700 bg-neutral-100 pl-3 p-2 pr-3 rounded-full flex items-center space-x-4 w-full">
-                    <SearchSvg className="w-6 h-6 flex-shrink-0" />
+                    <SearchSvg className="w-5 h-5 flex-shrink-0" />
                     <input
                         className="text-sm xs:text-base focus:outline-none bg-transparent w-full placeholder:text-neutral-400"
                         type="text"
@@ -35,12 +41,13 @@ function SearchComponent({ onClose }: SearchComponentProps) {
                     />
                     {searchTerm.length > 0 && (
                         <button onClick={clearSearchTerm}>
-                            <CrossSvg className="w-5 h-5 text-neutral-500" />
+                            <CrossSvg className="w-4 h-4 text-neutral-500" />
                         </button>
                     )}
                 </div>
+                <button className="bg-blue-500 text-white p-2 px-3 rounded-full">Поиск</button>
                 <button
-                    className="lg:absolute top-4 right-2 flex-shrink-0 border-transparent border-4 text-neutral-700 py-1 px-2 rounded font-medium"
+                    className="lg:absolute hidden sm:block top-4 right-4 text-neutral-700 font-medium"
                     onClick={onClose}
                 >
                     Закрыть

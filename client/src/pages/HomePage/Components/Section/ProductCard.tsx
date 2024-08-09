@@ -26,43 +26,78 @@ export default function ProductCard({
 
     return (
         <Link
-            className="w-full max-w-[255px] sm:hover:bg-neutral-100 p-4 pb-0 rounded-xl group flex-shrink-0"
+            className="flex w-full flex-col bg-white rounded-xl hover:bg-neutral-100 p-4"
             to={`/products/${product.id}}`}
+            style={{ aspectRatio: "9/16"}}
             draggable={false}
         >
-            <div
-                className="flex flex-col bg-white rounded-lg sm:group-hover:bg-neutral-100"
+            <img
+                className="w-full object-cover rounded-lg"
+                src={product.imageSrc}
+                alt={product.description}
+                style={{ userSelect: "none",  }}
                 draggable={false}
+            />
+            <div
+                className="p-3 px-0 flex flex-col justify-start h-[90px]"
+                style={{ userSelect: "none" }}
             >
-                <img
-                    className="xs:h-[790px] sm:h-[340px] w-full object-cover rounded-lg"
-                    src={product.imageSrc}
-                    alt={product.description}
-                    style={{ userSelect: "none" }}
-                    draggable={false}
-                />
-                <div
-                    className="p-3 px-0 flex flex-col justify-start h-[90px]"
-                    style={{ userSelect: "none" }}
-                >
-                    <div className="flex justify-between items-center">
-                        <p className="font-medium text-gray-900">{product.price} ₽</p>
-                        <button
-                            className="hover:cursor-pointer w-7 h-7 hover:scale-110 transition"
-                            onClick={(e) => handleLikeButtonClick(e)}
-                        >
-                            {product.isFavorite ? (
-                                <RedHeartIcon className="w-[90%] h-[90%]" />
-                            ) : (
-                                <EmptyHeartIcon className="w-[90%] h-[90%]" />
-                            )}
-                        </button>
-                    </div>
-                    <p className="mt-1 text-gray-700 line-clamp-2 text-left">
-                        {product.description}
-                    </p>
+                <div className="flex justify-between items-center">
+                    <p className="font-medium text-gray-900">{product.price} ₽</p>
+                    <button
+                        className="hover:cursor-pointer w-7 h-7 hover:scale-110 transition"
+                        onClick={(e) => handleLikeButtonClick(e)}
+                    >
+                        {product.isFavorite ? (
+                            <RedHeartIcon className="w-[90%] h-[90%]" />
+                        ) : (
+                            <EmptyHeartIcon className="w-[90%] h-[90%]" />
+                        )}
+                    </button>
                 </div>
+                <p className="mt-1 text-gray-700 line-clamp-2 text-left">{product.description}</p>
             </div>
         </Link>
+        // </Link>
     );
 }
+
+// <Link
+//     className="w-full max-w-[255px] sm:hover:bg-neutral-100 p-4 pb-0 rounded-xl group flex-shrink-0"
+//     to={`/products/${product.id}}`}
+//     draggable={false}
+// >
+//     <div
+//         className="flex flex-col bg-white rounded-lg sm:group-hover:bg-neutral-100"
+//         draggable={false}
+//     >
+//         <img
+//             className="xs:h-[790px] sm:h-[340px] w-full object-cover rounded-lg"
+//             src={product.imageSrc}
+//             alt={product.description}
+//             style={{ userSelect: "none" }}
+//             draggable={false}
+//         />
+//         <div
+//             className="p-3 px-0 flex flex-col justify-start h-[90px]"
+//             style={{ userSelect: "none" }}
+//         >
+//             <div className="flex justify-between items-center">
+//                 <p className="font-medium text-gray-900">{product.price} ₽</p>
+//                 <button
+//                     className="hover:cursor-pointer w-7 h-7 hover:scale-110 transition"
+//                     onClick={(e) => handleLikeButtonClick(e)}
+//                 >
+//                     {product.isFavorite ? (
+//                         <RedHeartIcon className="w-[90%] h-[90%]" />
+//                     ) : (
+//                         <EmptyHeartIcon className="w-[90%] h-[90%]" />
+//                     )}
+//                 </button>
+//             </div>
+//             <p className="mt-1 text-gray-700 line-clamp-2 text-left">
+//                 {product.description}
+//             </p>
+//         </div>
+//     </div>
+// </Link>

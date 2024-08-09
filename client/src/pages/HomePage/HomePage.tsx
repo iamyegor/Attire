@@ -22,11 +22,11 @@ export default function HomePage() {
         ref: lastRecommendedProductRef,
     } = useLoadRecommendedProducts();
 
-    const makeFeaturedProductFavorite = useMakeProductFavorite("featured-products");
-    const unmakeFeaturedProductFavorite = useUnmakeProductFavorite("featured-products");
+    const makeFeaturedProductFavorite = useMakeProductFavorite(["featured-products"]);
+    const unmakeFeaturedProductFavorite = useUnmakeProductFavorite(["featured-products"]);
 
-    const makeRecommendedProductFavorite = useMakeProductFavorite("recommended-products");
-    const unmakeRecommendedProductFavorite = useUnmakeProductFavorite("recommended-products");
+    const makeRecommendedProductFavorite = useMakeProductFavorite(["recommended-products"]);
+    const unmakeRecommendedProductFavorite = useUnmakeProductFavorite(["recommended-products"]);
 
     return (
         <div className="flex flex-col m-4">

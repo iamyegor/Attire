@@ -1,6 +1,6 @@
 import HomePage from "../pages/HomePage/HomePage.tsx";
 import RootLayout from "@/components/RootLayout/RootLayout.tsx";
-import CatalogPage from "@/pages/CatalogPag/CatalogPage.tsx";
+import CatalogPage from "@/pages/CatalogPage/CatalogPage.tsx";
 
 export const routes = [
     {

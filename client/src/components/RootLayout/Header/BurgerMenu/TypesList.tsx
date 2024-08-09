@@ -1,40 +1,38 @@
+import ArrowRightSvg from "@/assets/arrow-right.svg?react";
 import Category from "@/components/RootLayout/Header/BurgerMenu/types/Category.ts";
-import BackArrowSvg from "@/assets/back-arrow.svg?react";
-import { Link } from "react-router-dom";
 import Type from "@/components/RootLayout/Header/BurgerMenu/types/Type.ts";
 
-interface MenuCategoryProps {
-    selectedType: Type;
-    collections: Category[];
-    onBackButtonClick?: () => void;
+interface CategoryListProps {
+    categories: Category[];
+    onTypeSelect: (type: Type) => void;
 }
 
-export default function TypesList({
-    selectedType,
-    collections,
-    onBackButtonClick,
-}: MenuCategoryProps) {
+function TypesList({ onTypeSelect }: CategoryListProps) {
     return (
-        <div className="absolute top-4">
+        <div className="space-y-8 pt-32">
             <button
                 className="text-3xl font-medium flex items-center space-x-3"
-                onClick={onBackButtonClick}
+                onClick={() => onTypeSelect(Type.Men)}
             >
-                <BackArrowSvg className="w-6 h-6 mt-1 transform rotate-180" />
-                <span>Назад</span>
+                <span>Мужчинам</span>
+                <ArrowRightSvg className="w-6 h-6 mt-1" />
             </button>
-            <div className="mt-16">
-                <h2 className="text-3xl font-medium">
-                    <Link to={`/catalog/${selectedType.path}`}>{selectedType.name}</Link>
-                </h2>
-                <ul className="mt-8 space-y-4">
-                    {collections.map((collection, index) => (
-                        <li key={index} className="text-xl text-neutral-700">
-                            <Link to={`/catalog/${collection.path}`}>{collection.name}</Link>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+            <button
+                className="text-3xl font-medium flex items-center space-x-3"
+                onClick={() => onTypeSelect(Type.Women)}
+            >
+                <span>Женщинам</span>
+                <ArrowRightSvg className="w-6 h-6 mt-1" />
+            </button>
+            <button
+                className="text-3xl font-medium flex items-center space-x-3"
+                onClick={() => onTypeSelect(Type.New)}
+            >
+                <span>Новинки</span>
+                <ArrowRightSvg className="w-6 h-6 mt-1" />
+            </button>
         </div>
     );
 }
+
+export default TypesList;

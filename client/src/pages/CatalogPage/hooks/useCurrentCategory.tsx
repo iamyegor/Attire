@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Category from "@/components/RootLayout/Header/BurgerMenu/types/Category.ts";
 import useAttireContext from "@/context/useAttireContext.ts";
 
-export default function useCurrentCategory(path: string) {
+export default function useCurrentCategory(path: string | null) {
     const [category, setCategory] = useState<Category | null>(null);
     const { menCategories, womenCategories, newCategories } = useAttireContext();
 
@@ -32,7 +32,7 @@ export default function useCurrentCategory(path: string) {
         }
 
         setCategory(null);
-    }, [path]);
+    }, [path, womenCategories.length, menCategories.length, newCategories.length]);
 
     return category;
 }

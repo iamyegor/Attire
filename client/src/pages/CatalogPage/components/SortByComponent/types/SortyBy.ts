@@ -1,7 +1,7 @@
 export default class SortBy {
     private constructor(
         public readonly value: string,
-        public readonly searchParam: string,
+        public readonly searchParamValue: string,
     ) {}
 
     static readonly Popular = new SortBy("Популярные", "popular");
@@ -15,5 +15,9 @@ export default class SortBy {
 
     toString(): string {
         return this.value;
+    }
+
+    static createBasedOnSearchParamValue(searchParamValue: string | null) {
+        return SortBy.values().find((s) => s.searchParamValue === searchParamValue);
     }
 }

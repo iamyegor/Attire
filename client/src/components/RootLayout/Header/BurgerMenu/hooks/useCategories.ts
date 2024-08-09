@@ -25,8 +25,8 @@ export default function useCategories() {
     }
 
     const newCategories = useMemo(() => {
-        const newMaleCategory: Category = { name: "Мужчинам", path: "new/men" };
-        const newFemaleCategory: Category = { name: "Женщинам", path: "new/women" };
+        const newMaleCategory: Category = { id: "", name: "Мужчинам", path: "new/men" };
+        const newFemaleCategory: Category = { id: "", name: "Женщинам", path: "new/women" };
         return [newMaleCategory, newFemaleCategory];
     }, []);
 

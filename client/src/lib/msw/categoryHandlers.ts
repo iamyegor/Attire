@@ -2,17 +2,21 @@ import { http, HttpResponse } from "msw";
 import Category from "@/components/RootLayout/Header/BurgerMenu/types/Category.ts";
 
 const maleCategories: Category[] = [
-    { name: "Куртки и пальто", path: "men/jackets-coats" },
-    { name: "Рубашки", path: "men/shirts" },
-    { name: "Брюки", path: "men/pants" },
-    { name: "Обувь", path: "men/shoes" },
+    {
+        id: "b7f91c5a-11de-4f97-8743-60c08cbf5eae",
+        name: "Куртки и пальто",
+        path: "men/jackets-coats",
+    },
+    { id: "9e7cd42e-2f99-4d73-b85d-c89b89b8dc4f", name: "Рубашки", path: "men/shirts" },
+    { id: "23c93f0e-3692-4723-b3dc-f1a9f20c0a71", name: "Брюки", path: "men/pants" },
+    { id: "bbce5ad4-bf2b-4077-b31f-77f3c632b9a3", name: "Обувь", path: "men/shoes" },
 ];
 
 const femaleCategories: Category[] = [
-    { name: "Платья", path: "women/dresses" },
-    { name: "Юбки", path: "women/skirts" },
-    { name: "Сумки", path: "women/bags" },
-    { name: "Обувь", path: "women/shoes" },
+    { id: "64e2f84d-8335-4cfa-8726-7c1b048cfc39", name: "Платья", path: "women/dresses" },
+    { id: "3ec3779d-f51c-4b3e-a042-e88839f9ef0e", name: "Юбки", path: "women/skirts" },
+    { id: "98a8f9f2-9ff7-4a9a-bb14-ead5e9d6abef", name: "Сумки", path: "women/bags" },
+    { id: "4255ea6f-4620-4d28-957b-d1c4d6e2c685", name: "Обувь", path: "women/shoes" },
 ];
 
 export const categoryHandlers = [

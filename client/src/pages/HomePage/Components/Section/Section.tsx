@@ -21,12 +21,14 @@ const Section = React.forwardRef<HTMLDivElement, SectionProps>(
                 <div className="hidden sm:block">
                     <HorizontalScroll>
                         {products.map((product, index) => (
-                            <ProductCard
-                                key={index}
-                                product={product}
-                                makeProductFavorite={makeProductFavorite}
-                                unmakeProductFavorite={unmakeProductFavorite}
-                            />
+                            <div className="max-w-[280px] flex-shrink-0">
+                                <ProductCard
+                                    key={index}
+                                    product={product}
+                                    makeProductFavorite={makeProductFavorite}
+                                    unmakeProductFavorite={unmakeProductFavorite}
+                                />
+                            </div>
                         ))}
                         {areProductsLoading && <ProductListSkeleton />}
                         <div data-name="last-element" ref={ref}></div>

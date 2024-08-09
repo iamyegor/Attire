@@ -2,20 +2,20 @@ import { InfiniteData, useMutation, useQueryClient } from "@tanstack/react-query
 import { ProductsResponse } from "@/pages/HomePage/types/ProductsResponse.ts";
 import api from "@/lib/api.ts";
 
-export default function useMakeProductFavorite(queryKey: string) {
+export default function useMakeProductFavorite(queryKey: string[]) {
     const queryClient = useQueryClient();
 
     const makeProductFavoriteMutation = useMutation({
         mutationFn: makeProductFavorite,
         onMutate: async (productId: string) => {
-            await queryClient.cancelQueries({ queryKey: [queryKey] });
+            await queryClient.cancelQueries({ queryKey });
 
             const previousProducts = queryClient.getQueryData<
                 InfiniteData<ProductsResponse, unknown> | undefined
-            >([queryKey]);
+            >(queryKey);
 
             queryClient.setQueryData<InfiniteData<ProductsResponse, unknown> | undefined>(
-                [queryKey],
+                queryKey,
                 (data) => {
                     if (!data) return previousProducts;
 
@@ -30,11 +30,11 @@ export default function useMakeProductFavorite(queryKey: string) {
         },
         onError: (_, __, context) => {
             if (context?.previousProducts) {
-                queryClient.setQueryData([queryKey], context?.previousProducts);
+                queryClient.setQueryData(queryKey, context?.previousProducts);
             }
         },
         onSettled: () => {
-            queryClient.invalidateQueries({ queryKey: [queryKey] });
+            queryClient.invalidateQueries({ queryKey });
         },
     });
 
