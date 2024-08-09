@@ -1,0 +1,53 @@
+/* CSS for sliding in from the left with opacity */
+.slide-left-enter {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+.slide-left-enter-active {
+    transform: translateX(0);
+    opacity: 1;
+    transition:
+        transform 300ms ease-in-out,
+        opacity 300ms ease-in-out;
+}
+
+.slide-left-exit {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.slide-left-exit-active {
+    transform: translateX(-100%);
+    opacity: 0;
+    transition:
+        transform 300ms ease-in-out,
+        opacity 300ms ease-in-out;
+}
+
+/* CSS for sliding in from the right with opacity */
+.slide-right-enter {
+    transform: translateX(200%);
+    opacity: 0;
+}
+
+.slide-right-enter-active {
+    transform: translateX(0);
+    opacity: 1;
+    transition:
+        transform 300ms ease-in-out,
+        opacity 300ms ease-in-out;
+}
+
+.slide-right-exit {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.slide-right-exit-active {
+    transform: translateX(200%);
+    opacity: 0;
+    transition:
+        transform 300ms ease-in-out,
+        opacity 300ms ease-in-out;
+}
