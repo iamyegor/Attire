@@ -21,7 +21,7 @@ export default function FilterComponent({ category }: FilterComponentProps) {
         <div>
             <FilterButton isDrawerOpen={isDrawerOpen} openDrawer={() => setIsDrawerOpen(true)} />
             <Drawer open={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} anchor="right" PaperProps={{className: "w-full sm:w-min sm:min-w-[400px]"}}>
-                <div className="p-4 space-y-4">
+                <div className="p-4 space-y-4 h-full">
                     {filtersResponse ? (
                         <FilterDrawer filtersResponse={filtersResponse} closeDrawer={closeDrawer} />
                     ) : (

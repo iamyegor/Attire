@@ -41,59 +41,63 @@ export default function FilterDrawer({ filtersResponse, closeDrawer }: FilterDra
     }
 
     return (
-        <div className="space-y-6 p-4 bg-white rounded-xl">
+        <div className="space-y-6 p-4 bg-white rounded-xl h-full">
             <CloseButton onClose={closeDrawer} />
-            <div>
-                <h3 className="font-semibold mb-3 text-lg text-gray-800">Sizes</h3>
-                {filtersResponse.sizes.map((size) => (
-                    <SelectionButton
-                        key={size}
-                        label={size}
-                        isSelected={sizes.includes(size)}
-                        onClick={() => toggleSelection(setSizes, size)}
+            <div className="flex flex-col h-full justify-between sm:justify-start sm:space-y-3 pb-4">
+                <div className="flex flex-col space-y-4">
+                    <div>
+                        <h3 className="font-semibold mb-3 text-lg text-gray-800">Sizes</h3>
+                        {filtersResponse.sizes.map((size) => (
+                            <SelectionButton
+                                key={size}
+                                label={size}
+                                isSelected={sizes.includes(size)}
+                                onClick={() => toggleSelection(setSizes, size)}
+                            />
+                        ))}
+                    </div>
+                    <div>
+                        <h3 className="font-semibold mb-3 text-lg text-gray-800">Colors</h3>
+                        <div className="flex flex-wrap space-x-1">
+                            {filtersResponse.colors.map((color) => (
+                                <ColorButton
+                                    key={color.name}
+                                    colorName={color.name}
+                                    colorHex={color.hex}
+                                    isSelected={colors.includes(color.name)}
+                                    onClick={() => toggleSelection(setColors, color.name)}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                    <div>
+                        <h3 className="font-semibold mb-3 text-lg text-gray-800">Materials</h3>
+                        <div className="flex flex-wrap">
+                            {filtersResponse.compositions.map((material) => (
+                                <SelectionButton
+                                    key={material}
+                                    label={material}
+                                    isSelected={materials.includes(material)}
+                                    onClick={() => toggleSelection(setMaterials, material)}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                    <PriceRangeSlider
+                        minPrice={filtersResponse.minPrice}
+                        maxPrice={filtersResponse.maxPrice}
+                        priceRange={priceRange}
+                        onChange={(_, newValue) => setPriceRange(newValue as number[])}
                     />
-                ))}
-            </div>
-            <div>
-                <h3 className="font-semibold mb-3 text-lg text-gray-800">Colors</h3>
-                <div className="flex flex-wrap space-x-1">
-                    {filtersResponse.colors.map((color) => (
-                        <ColorButton
-                            key={color.name}
-                            colorName={color.name}
-                            colorHex={color.hex}
-                            isSelected={colors.includes(color.name)}
-                            onClick={() => toggleSelection(setColors, color.name)}
-                        />
-                    ))}
                 </div>
-            </div>
-            <div>
-                <h3 className="font-semibold mb-3 text-lg text-gray-800">Materials</h3>
-                <div className="flex flex-wrap">
-                    {filtersResponse.compositions.map((material) => (
-                        <SelectionButton
-                            key={material}
-                            label={material}
-                            isSelected={materials.includes(material)}
-                            onClick={() => toggleSelection(setMaterials, material)}
-                        />
-                    ))}
+                <div className="pt-4 ">
+                    <button
+                        onClick={handleApply}
+                        className="w-full py-2 rounded-lg bg-blue-500 text-white font-medium hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300 transition duration-150 ease-in-out"
+                    >
+                        Применить
+                    </button>
                 </div>
-            </div>
-            <PriceRangeSlider
-                minPrice={filtersResponse.minPrice}
-                maxPrice={filtersResponse.maxPrice}
-                priceRange={priceRange}
-                onChange={(_, newValue) => setPriceRange(newValue as number[])}
-            />
-            <div className="pt-4 absolute sm:static bottom-5 left-10 right-10">
-                <button
-                    onClick={handleApply}
-                    className="w-full py-2 rounded-lg bg-blue-500 text-white font-medium hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300 transition duration-150 ease-in-out"
-                >
-                    Применить
-                </button>
             </div>
         </div>
     );
