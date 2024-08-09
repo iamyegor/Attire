@@ -87,7 +87,7 @@ export default function FilterDrawer({ filtersResponse, closeDrawer }: FilterDra
                 priceRange={priceRange}
                 onChange={(_, newValue) => setPriceRange(newValue as number[])}
             />
-            <div className="pt-4">
+            <div className="pt-4 absolute sm:static bottom-5 left-10 right-10">
                 <button
                     onClick={handleApply}
                     className="w-full py-2 rounded-lg bg-blue-500 text-white font-medium hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300 transition duration-150 ease-in-out"
