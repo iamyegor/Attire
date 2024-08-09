@@ -3,7 +3,7 @@ import React from "react";
 import PriceRangeSlider from "@/pages/CatalogPage/components/FilterComponent/FilterDrawer/PriceRangeSlider.tsx";
 import SelectionButton from "@/pages/CatalogPage/components/FilterComponent/FilterDrawer/SelectionButton.tsx";
 import ColorButton from "@/pages/CatalogPage/components/FilterComponent/FilterDrawer/ColorButton.tsx";
-import useFilters from "@/pages/CatalogPage/components/FilterComponent/FilterDrawer/hooks/useApplyFilters.ts";
+import useFilters from "@/pages/CatalogPage/components/FilterComponent/FilterDrawer/hooks/useFilters.ts";
 import CloseButton from "@/components/ui/CloseButton.tsx";
 
 interface FilterDrawerProps {

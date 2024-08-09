@@ -1,7 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-export default function useApplyFilters(minPrice: number, maxPrice: number) {
+export default function useFilters(minPrice: number, maxPrice: number) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [searchParams, setSearchParams] = useSearchParams();
     const [priceRange, setPriceRange] = useState([minPrice, maxPrice]);

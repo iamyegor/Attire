@@ -3,7 +3,7 @@ import { Menu } from "@mui/material";
 import SortBy from "@/pages/CatalogPage/components/SortByComponent/types/SortyBy.ts";
 import SortDropdownButton from "@/pages/CatalogPage/components/SortByComponent/SortDropdownButton.tsx";
 import useDropdown from "./hooks/useDropdown";
-import useSorting from "@/pages/CatalogPage/components/SortByComponent/hooks/useChangeSorting.ts";
+import useSorting from "@/pages/CatalogPage/components/SortByComponent/hooks/useSorting.ts";
 
 export default function SortByComponent() {
     const { isDropdownOpen, anchorEl, showDropdown, hideDropdown } = useDropdown();
