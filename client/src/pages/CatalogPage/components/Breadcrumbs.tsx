@@ -4,22 +4,35 @@ import ArrowRight from "@/assets/arrow-right-2.svg?react";
 import Category from "@/components/RootLayout/Header/BurgerMenu/types/Category.ts";
 
 interface BreadcrumbsProps {
-    path: string;
-    category: Category | null;
+    type?: Type | null;
+    category?: Category | null;
+    productName?: string | null;
 }
 
-export default function Breadcrumbs({ path, category }: BreadcrumbsProps) {
-    const type = Type.createBasedOnPath(path);
-
+export default function Breadcrumbs({
+    type = null,
+    category = null,
+    productName = null,
+}: BreadcrumbsProps) {
     return (
         <div className="absolute flex items-center text-sm text-neutral-600 space-x-2 left-4">
             <Link to="/">Главная</Link>
-            <ArrowRight className="w-3 h-3" />
-            <Link to={type.path}>{type.name}</Link>
+            {type && (
+                <>
+                    <ArrowRight className="w-3 h-3" />{" "}
+                    <Link to={`/catalog/${type.path}`}>{type.name}</Link>
+                </>
+            )}
             {category && (
                 <>
                     <ArrowRight className="w-3 h-3" />
-                    <Link to={category.path}>{category.name}</Link>
+                    <Link to={`/catalog/${category.path}`}>{category.name}</Link>
+                </>
+            )}
+            {productName && (
+                <>
+                    <ArrowRight className="w-3 h-3" />
+                    <p>{productName}</p>
                 </>
             )}
         </div>

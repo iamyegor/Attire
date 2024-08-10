@@ -5,8 +5,9 @@ import FeaturedImage from "@/pages/HomePage/Components/FeaturedImage.tsx";
 import Section from "@/pages/HomePage/Components/Section/Section.tsx";
 import { useLoadFeaturedProducts } from "@/pages/HomePage/hooks/useLoadFeaturedProducts.ts";
 import useLoadRecommendedProducts from "@/pages/HomePage/hooks/useLoadRecommendedProducts.ts";
-import useMakeProductFavorite from "@/pages/HomePage/hooks/useMakeProductFavorite.ts";
-import useUnmakeProductFavorite from "@/pages/HomePage/hooks/useUnmakeProductFavorite.ts";
+import useLikeProduct from "@/pages/HomePage/hooks/useLikeProduct.ts";
+import useUnlikeProduct from "@/pages/HomePage/hooks/useUnlikeProduct.ts";
+import Type from "@/components/RootLayout/Header/BurgerMenu/types/Type.ts";
 
 export default function HomePage() {
     const featuredImageText = "Новая коллекция";
@@ -22,11 +23,11 @@ export default function HomePage() {
         ref: lastRecommendedProductRef,
     } = useLoadRecommendedProducts();
 
-    const makeFeaturedProductFavorite = useMakeProductFavorite(["featured-products"]);
-    const unmakeFeaturedProductFavorite = useUnmakeProductFavorite(["featured-products"]);
+    const makeFeaturedProductFavorite = useLikeProduct(["featured-products"]);
+    const unmakeFeaturedProductFavorite = useUnlikeProduct(["featured-products"]);
 
-    const makeRecommendedProductFavorite = useMakeProductFavorite(["recommended-products"]);
-    const unmakeRecommendedProductFavorite = useUnmakeProductFavorite(["recommended-products"]);
+    const makeRecommendedProductFavorite = useLikeProduct(["recommended-products"]);
+    const unmakeRecommendedProductFavorite = useUnlikeProduct(["recommended-products"]);
 
     return (
         <div className="flex flex-col m-4">
@@ -39,6 +40,7 @@ export default function HomePage() {
                 ref={lastFeaturedProductRef}
                 makeProductFavorite={makeFeaturedProductFavorite}
                 unmakeProductFavorite={unmakeFeaturedProductFavorite}
+                type={Type.New}
             />
             <FeaturedImage imageSrc={featuredImage} text={featuredImageText} />
             <Section
@@ -48,6 +50,7 @@ export default function HomePage() {
                 ref={lastRecommendedProductRef}
                 makeProductFavorite={makeRecommendedProductFavorite}
                 unmakeProductFavorite={unmakeRecommendedProductFavorite}
+                type={null}
             />
         </div>
     );

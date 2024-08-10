@@ -137,6 +137,7 @@ export const productHandlers = [
     }),
 
     http.post("*/products/make-favorite", async ({ request }) => {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         const { productId } = (await request.json()) as { productId: string };
         let isLiked = false;
 
@@ -180,7 +181,7 @@ export const productHandlers = [
         return HttpResponse.json({ success: true });
     }),
 
-    http.get("*/products*", async ({ request }) => {
+    http.get("*/products", async ({ request }) => {
         const url = new URL(request.url);
         const page: string | null = url.searchParams.get("page");
         if (page === null) {

@@ -1,11 +1,18 @@
-import useMakeProductFavorite from "@/pages/HomePage/hooks/useMakeProductFavorite.ts";
-import useUnmakeProductFavorite from "@/pages/HomePage/hooks/useUnmakeProductFavorite.ts";
+import useLikeProduct from "@/pages/HomePage/hooks/useLikeProduct.ts";
+import useUnlikeProduct from "@/pages/HomePage/hooks/useUnlikeProduct.ts";
 import { useLoadProducts } from "@/pages/HomePage/hooks/useLoadProducts.ts";
 import { useSearchParams } from "react-router-dom";
 import ProductCard from "@/pages/HomePage/Components/Section/ProductCard.tsx";
 import BaseSkeleton from "@/components/ui/BaseSkeleton.tsx";
+import Category from "@/components/RootLayout/Header/BurgerMenu/types/Category.ts";
+import Type from "@/components/RootLayout/Header/BurgerMenu/types/Type.ts";
 
-export default function Products() {
+interface ProductsProps {
+    type: Type;
+    category: Category | null;
+}
+
+export default function Products({ type, category }: ProductsProps) {
     const [searchParams] = useSearchParams();
     const queryKey = ["products", searchParams.toString()];
     const { products, isLoading, ref } = useLoadProducts(
@@ -13,8 +20,8 @@ export default function Products() {
         (page) => `products?page=${page}&${searchParams.toString()}`,
     );
 
-    const makeProductFavorite = useMakeProductFavorite(queryKey);
-    const unmakeProductFavorite = useUnmakeProductFavorite(queryKey);
+    const likeProduct = useLikeProduct(queryKey);
+    const unlikeProduct = useUnlikeProduct(queryKey);
 
     function skeleton() {
         return Array.from({ length: 8 }).map((_, index) => (
@@ -36,8 +43,10 @@ export default function Products() {
                 <ProductCard
                     key={product.id}
                     product={product}
-                    makeProductFavorite={makeProductFavorite}
-                    unmakeProductFavorite={unmakeProductFavorite}
+                    likeProduct={likeProduct}
+                    unlikeProduct={unlikeProduct}
+                    type={type}
+                    category={category}
                 />
             ))}
             <div ref={ref}></div>

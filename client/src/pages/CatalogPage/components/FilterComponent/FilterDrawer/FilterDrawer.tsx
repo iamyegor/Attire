@@ -2,9 +2,10 @@ import FiltersResponse from "@/pages/CatalogPage/components/FilterComponent/type
 import React from "react";
 import PriceRangeSlider from "@/pages/CatalogPage/components/FilterComponent/FilterDrawer/PriceRangeSlider.tsx";
 import SelectionButton from "@/pages/CatalogPage/components/FilterComponent/FilterDrawer/SelectionButton.tsx";
-import ColorButton from "@/pages/CatalogPage/components/FilterComponent/FilterDrawer/ColorButton.tsx";
+import ColorButton from "@/components/ui/ColorButton.tsx";
 import useFilters from "@/pages/CatalogPage/components/FilterComponent/FilterDrawer/hooks/useFilters.ts";
 import CloseButton from "@/components/ui/CloseButton.tsx";
+import toggleSelection from "@/utils/toggleSelection.ts";
 
 interface FilterDrawerProps {
     filtersResponse: FiltersResponse;
@@ -23,17 +24,6 @@ export default function FilterDrawer({ filtersResponse, closeDrawer }: FilterDra
         setMaterials,
         applyFilters,
     } = useFilters(filtersResponse.minPrice, filtersResponse.maxPrice);
-
-    function toggleSelection(
-        setSelected: React.Dispatch<React.SetStateAction<string[]>>,
-        value: string,
-    ) {
-        setSelected((prevSelected) =>
-            prevSelected.includes(value)
-                ? prevSelected.filter((item) => item !== value)
-                : [...prevSelected, value],
-        );
-    }
 
     function handleApply() {
         closeDrawer();
@@ -62,8 +52,7 @@ export default function FilterDrawer({ filtersResponse, closeDrawer }: FilterDra
                             {filtersResponse.colors.map((color) => (
                                 <ColorButton
                                     key={color.name}
-                                    colorName={color.name}
-                                    colorHex={color.hex}
+                                    color={color}
                                     isSelected={colors.includes(color.name)}
                                     onClick={() => toggleSelection(setColors, color.name)}
                                 />

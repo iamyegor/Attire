@@ -1,0 +1,16 @@
+---
+root: true
+env:
+  browser: true
+  es6: true
+  node: true
+extends:
+  - google
+parserOptions:
+  ecmaVersion: 2020
+  sourceType: module
+rules:
+# Customize or add additional rules here
+# Example:
+# indent: [error, 2]
+# quotes: [error, single]
