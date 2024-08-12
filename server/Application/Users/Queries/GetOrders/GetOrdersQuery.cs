@@ -6,24 +6,24 @@ using Npgsql;
 using XResults;
 using Errors = Domain.User.Errors.Errors;
 
-namespace Application.Users.Queries.GetCartItems;
+namespace Application.Users.Queries.GetOrders;
 
-public record GetCartItemsQuery(Guid UserId, int Page)
-    : IRequest<Result<GetCartItemsPaginationResult, Error>>;
+public record GetOrdersQuery(Guid UserId, int Page)
+    : IRequest<Result<GetOrdersPaginationResult, Error>>;
 
-public class GetCartItemsQueryHandler
-    : IRequestHandler<GetCartItemsQuery, Result<GetCartItemsPaginationResult, Error>>
+public class GetOrdersQueryHandler
+    : IRequestHandler<GetOrdersQuery, Result<GetOrdersPaginationResult, Error>>
 {
     private const int PageLimit = 10;
     private readonly DapperConnectionFactory _dapperConnectionFactory;
 
-    public GetCartItemsQueryHandler(DapperConnectionFactory dapperConnectionFactory)
+    public GetOrdersQueryHandler(DapperConnectionFactory dapperConnectionFactory)
     {
         _dapperConnectionFactory = dapperConnectionFactory;
     }
 
-    public async Task<Result<GetCartItemsPaginationResult, Error>> Handle(
-        GetCartItemsQuery request,
+    public async Task<Result<GetOrdersPaginationResult, Error>> Handle(
+        GetOrdersQuery request,
         CancellationToken cancellationToken
     )
     {
@@ -44,28 +44,16 @@ public class GetCartItemsQueryHandler
         string sqlQuery =
             @"
             SELECT 
-                uci.cart_item_id as id,
-                i.path as image_path,
-                p.product_id, 
-                p.title as product_title,
-                p.price as product_price,
-                p.sku as s_k_u,
-                uci.size,
-                uci.color_hex,
-                uci.color_name,
-                uci.quantity
-            FROM user_cart_items uci
-            LEFT JOIN products p
-                ON p.product_id = uci.product_id
-            LEFT JOIN product_images i  
-                ON p.product_id = i.product_id
-            WHERE 
-                i.order_index = 1 AND
-                uci.user_id = @UserId
+                order_id as id,
+                delivery_date as creation_date,
+                cost,
+                delivery_date
+            FROM user_orders
+            WHERE user_id = @UserId
             LIMIT @PageLimit
             OFFSET @Skip";
 
-        IEnumerable<CartItemDto> cartItems = await connection.QueryAsync<CartItemDto>(
+        IEnumerable<OrderDto> orders = await connection.QueryAsync<OrderDto>(
             sqlQuery,
             new
             {
@@ -81,7 +69,7 @@ public class GetCartItemsQueryHandler
             currentPage
         );
 
-        return new GetCartItemsPaginationResult(cartItems, nextPageNumber);
+        return new GetOrdersPaginationResult(orders, nextPageNumber);
     }
 
     private async Task<int?> GetNextPageNumberOrNull(
@@ -91,7 +79,7 @@ public class GetCartItemsQueryHandler
     )
     {
         int productTotalCount = await connection.QuerySingleAsync<int>(
-            "SELECT COUNT(1) FROM user_cart_items WHERE user_id = @UserId",
+            "SELECT COUNT(1) FROM user_orders WHERE user_id = @UserId",
             new { UserId = userId }
         );
 

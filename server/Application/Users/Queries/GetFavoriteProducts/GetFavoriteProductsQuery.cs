@@ -39,7 +39,7 @@ public class GetFavoriteProductsQueryHandler
             ) == null
         )
         {
-            return Errors.User.WithIdNofFound(request.UserId);
+            return Errors.User.WithIdNotFound(request.UserId);
         }
 
         string sqlQuery =

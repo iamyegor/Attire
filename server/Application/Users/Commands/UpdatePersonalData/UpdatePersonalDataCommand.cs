@@ -35,7 +35,7 @@ public class UpdatePersonalDataCommandHandler
 
         if (user == null)
         {
-            return Errors.User.WithIdNofFound(request.UserId);
+            return Errors.User.WithIdNotFound(request.UserId);
         }
 
         PhoneNumber phone = PhoneNumber.Create(request.Phone);

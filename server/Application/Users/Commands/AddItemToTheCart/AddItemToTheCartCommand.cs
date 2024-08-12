@@ -47,7 +47,7 @@ public class AddItemToTheCartCommandHandler
 
         if (user == null)
         {
-            return Domain.User.Errors.Errors.User.WithIdNofFound(request.UserId);
+            return Domain.User.Errors.Errors.User.WithIdNotFound(request.UserId);
         }
 
         Color? color = product.Colors.FirstOrDefault(x =>

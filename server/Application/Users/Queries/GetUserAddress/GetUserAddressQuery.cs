@@ -34,7 +34,7 @@ public class GetUserAddressQueryHandler
             ) == null
         )
         {
-            return Errors.User.WithIdNofFound(request.UserId);
+            return Errors.User.WithIdNotFound(request.UserId);
         }
 
         string sqlQuery =
@@ -55,7 +55,7 @@ public class GetUserAddressQueryHandler
 
         if (userAddress == null)
         {
-            return Errors.User.WithIdNofFound(request.UserId);
+            return Errors.User.WithIdNotFound(request.UserId);
         }
 
         return userAddress;

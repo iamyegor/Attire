@@ -36,7 +36,7 @@ public class UpdateUserAddressCommandHandler
 
         if (user == null)
         {
-            return Errors.User.WithIdNofFound(request.UserId);
+            return Errors.User.WithIdNotFound(request.UserId);
         }
 
         Address address = Address.Create(

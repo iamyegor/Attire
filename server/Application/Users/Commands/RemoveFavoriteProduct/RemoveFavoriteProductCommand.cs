@@ -30,7 +30,7 @@ public class RemoveFavoriteProductCommandHandler
 
         if (user == null)
         {
-            return Errors.User.WithIdNofFound(request.UserId);
+            return Errors.User.WithIdNotFound(request.UserId);
         }
 
         var removedFavoriteProductId = new FavoriteProductId(request.RemovedFavoriteProductId);

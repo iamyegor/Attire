@@ -30,7 +30,7 @@ public class AddFavoriteProductCommandHandler
 
         if (user == null)
         {
-            return Errors.User.WithIdNofFound(request.UserId);
+            return Errors.User.WithIdNotFound(request.UserId);
         }
 
         if (

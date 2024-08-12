@@ -46,7 +46,7 @@ public class GetPersonalDataQueryHandler
 
         if (userPersonalData == null)
         {
-            return Errors.User.WithIdNofFound(request.UserId);
+            return Errors.User.WithIdNotFound(request.UserId);
         }
 
         return userPersonalData;

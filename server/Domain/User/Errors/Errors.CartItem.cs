@@ -26,5 +26,10 @@ public static partial class Errors
                 details
             );
         }
+
+        public static Error NotFound()
+        {
+            return new Error("cart.item.not.found", "Cart item not found.");
+        }
     }
 }

@@ -32,7 +32,7 @@ public class ChangeQuantityOfProductsInCartItemCommandHandler
 
         if (user == null)
         {
-            return Errors.User.WithIdNofFound(request.UserId);
+            return Errors.User.WithIdNotFound(request.UserId);
         }
 
         SuccessOr<Error> result = user.ChangeQuantityOfProductsInCartItem(request.CartItemId, request.ChangedQuantity);

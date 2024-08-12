@@ -42,5 +42,10 @@ public static partial class Errors
                 details
             );
         }
+
+        public static Error NotFound()
+        {
+            return new Error("product.not.found", "Product not found.");
+        }
     }
 }

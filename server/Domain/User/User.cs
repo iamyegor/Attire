@@ -168,4 +168,11 @@ public class User : AggregateRoot<Guid>
         Phone = phone;
         Email = email;
     }
+
+    public void AddOrder(Order createdOrder, List<CartItem> createdOrderCartItems)
+    {
+        _orders.Add(createdOrder);
+
+        createdOrderCartItems.ForEach(cartItem => _cart.Remove(cartItem));
+    }
 }

@@ -17,7 +17,7 @@ public static partial class Errors
             return new Error("user.last.name.is.required", "User last name is required.");
         }
 
-        public static Error WithIdNofFound(Guid userId)
+        public static Error WithIdNotFound(Guid userId)
         {
             var details = new Dictionary<string, object?>() { ["userId"] = userId };
             return new Error("user.with.id.not.found", "User with id not found.", details);
