@@ -67,19 +67,22 @@ public class GetProductStatisticsQueryHandler
             return Errors.Product.WithIdNotFound(request.ProductId);
         }
 
-        int quantityOf5Stars = await reader.ReadSingleAsync<int>();
-        int quantityOf4Stars = await reader.ReadSingleAsync<int>();
-        int quantityOf3Stars = await reader.ReadSingleAsync<int>();
-        int quantityOf2Stars = await reader.ReadSingleAsync<int>();
-        int quantityOf1Stars = await reader.ReadSingleAsync<int>();
+        int numberOf5Stars = await reader.ReadSingleAsync<int>();
+        int numberOf4Stars = await reader.ReadSingleAsync<int>();
+        int numberOf3Stars = await reader.ReadSingleAsync<int>();
+        int numberOf2Stars = await reader.ReadSingleAsync<int>();
+        int numberOf1Stars = await reader.ReadSingleAsync<int>();
+        int allStarsNumber =
+            numberOf5Stars + numberOf4Stars + numberOf3Stars + numberOf2Stars + numberOf1Stars;
 
         return new ProductStatisticsDto(
             (double)productStars,
-            quantityOf5Stars,
-            quantityOf4Stars,
-            quantityOf3Stars,
-            quantityOf2Stars,
-            quantityOf1Stars
+            numberOf5Stars,
+            numberOf4Stars,
+            numberOf3Stars,
+            numberOf2Stars,
+            numberOf1Stars,
+            allStarsNumber
         );
     }
 }

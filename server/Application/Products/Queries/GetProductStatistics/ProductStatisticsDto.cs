@@ -2,9 +2,10 @@
 
 public record ProductStatisticsDto(
     double ProductStars,
-    int QuantityOf5Stars,
-    int QuantityOf4Stars,
-    int QuantityOf3Stars,
-    int QuantityOf2Stars,
-    int QuantityOf1Stars
+    int NumberOf5Stars,
+    int NumberOf4Stars,
+    int NumberOf3Stars,
+    int NumberOf2Stars,
+    int NumberOf1Stars,
+    int AllStarsNumber
 );
