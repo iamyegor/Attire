@@ -1,30 +1,27 @@
 import { InfiniteData, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ProductsResponse } from "@/pages/HomePage/types/ProductsResponse.ts";
 import api from "@/lib/api.ts";
+import sendLikeProductRequest from "@/utils/services/sendLikeProductRequest.ts";
 
-export default function useMakeProductFavorite(queryKey: string[]) {
+export default function useLikeProduct(queryKey: string[]) {
     const queryClient = useQueryClient();
 
-    const makeProductFavoriteMutation = useMutation({
-        mutationFn: makeProductFavorite,
+    const likeProductMutation = useMutation({
+        mutationFn: sendLikeProductRequest,
         onMutate: async (productId: string) => {
             await queryClient.cancelQueries({ queryKey });
 
-            const previousProducts = queryClient.getQueryData<
-                InfiniteData<ProductsResponse, unknown> | undefined
-            >(queryKey);
+            const previousProducts =
+                queryClient.getQueryData<InfiniteData<ProductsResponse, unknown>>(queryKey);
 
-            queryClient.setQueryData<InfiniteData<ProductsResponse, unknown> | undefined>(
-                queryKey,
-                (data) => {
-                    if (!data) return previousProducts;
+            queryClient.setQueryData<InfiniteData<ProductsResponse, unknown>>(queryKey, (data) => {
+                if (!data) return previousProducts;
 
-                    return {
-                        ...data,
-                        pages: markProductAsFavorite(productId, data.pages),
-                    };
-                },
-            );
+                return {
+                    ...data,
+                    pages: markProductAsFavorite(productId, data.pages),
+                };
+            });
 
             return { previousProducts };
         },
@@ -50,10 +47,5 @@ export default function useMakeProductFavorite(queryKey: string[]) {
         }));
     }
 
-    async function makeProductFavorite(productId: string) {
-        const { data } = await api.post(`products/make-favorite`, { productId });
-        return data;
-    }
-
-    return makeProductFavoriteMutation.mutate;
+    return likeProductMutation.mutate;
 }

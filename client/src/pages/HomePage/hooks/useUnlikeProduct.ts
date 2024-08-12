@@ -1,12 +1,12 @@
 import { InfiniteData, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ProductsResponse } from "@/pages/HomePage/types/ProductsResponse.ts";
-import api from "@/lib/api.ts";
+import sendUnlikeProductRequest from "@/utils/services/sendUnlikeProductRequest.tsx";
 
-export default function useUnmakeProductFavorite(queryKey: string[]) {
+export default function useUnlikeProduct(queryKey: string[]) {
     const queryClient = useQueryClient();
 
-    const unmakeProductFavoriteMutation = useMutation({
-        mutationFn: makeProductFavorite,
+    const unlikeProductMutation = useMutation({
+        mutationFn: sendUnlikeProductRequest,
         onMutate: async (productId: string) => {
             await queryClient.cancelQueries({ queryKey });
 
@@ -50,10 +50,5 @@ export default function useUnmakeProductFavorite(queryKey: string[]) {
         }));
     }
 
-    async function makeProductFavorite(productId: string) {
-        const { data } = await api.post(`products/unmake-favorite`, { productId });
-        return data;
-    }
-
-    return unmakeProductFavoriteMutation.mutate;
+    return unlikeProductMutation.mutate;
 }

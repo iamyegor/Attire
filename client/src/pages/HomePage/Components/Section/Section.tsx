@@ -4,6 +4,7 @@ import Product from "@/types/Product.ts";
 import ProductListSkeleton from "@/pages/HomePage/Components/Section/ProductListSkeleton.tsx";
 import React from "react";
 import ProductCarousel from "@/pages/HomePage/Components/Section/ProductCarousel.tsx";
+import Type from "@/components/RootLayout/Header/BurgerMenu/types/Type.ts";
 
 interface SectionProps {
     title: string;
@@ -11,10 +12,21 @@ interface SectionProps {
     areProductsLoading: boolean;
     makeProductFavorite: (productId: string) => void;
     unmakeProductFavorite: (productId: string) => void;
+    type: Type | null;
 }
 
 const Section = React.forwardRef<HTMLDivElement, SectionProps>(
-    ({ title, products, areProductsLoading, makeProductFavorite, unmakeProductFavorite }, ref) => {
+    (
+        {
+            title,
+            products,
+            areProductsLoading,
+            makeProductFavorite,
+            unmakeProductFavorite,
+            type = null,
+        },
+        ref,
+    ) => {
         return (
             <section className="my-8 md:ml-20">
                 <h2 className="text-3xl font-bold text-gray-600 mb-3 sm:ml-3">{title}</h2>
@@ -25,8 +37,9 @@ const Section = React.forwardRef<HTMLDivElement, SectionProps>(
                                 <ProductCard
                                     key={index}
                                     product={product}
-                                    makeProductFavorite={makeProductFavorite}
-                                    unmakeProductFavorite={unmakeProductFavorite}
+                                    likeProduct={makeProductFavorite}
+                                    unlikeProduct={unmakeProductFavorite}
+                                    type={type}
                                 />
                             </div>
                         ))}
@@ -39,6 +52,7 @@ const Section = React.forwardRef<HTMLDivElement, SectionProps>(
                         products={products}
                         makeProductFavorite={makeProductFavorite}
                         unmakeProductFavorite={unmakeProductFavorite}
+                        type={type}
                     />
                 </div>
             </section>
