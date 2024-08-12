@@ -8,7 +8,7 @@ interface ReviewSummaryProps {
 
 export default function ReviewSummary({ reviewsInfo }: ReviewSummaryProps) {
     return (
-        <div className="flex flex-col flex-1 max-w-[350px] space-y-5">
+        <div className="flex flex-col w-full lg:flex-1 max-w-full lg:max-w-[350px] space-y-5 order-1 lg:order-2 mb-5 lg:mb-0">
             <button className="bg-blue-500 text-white p-3 rounded-lg">Оставить отзыв</button>
             <div>
                 {reviewsInfo?.averageRating ? (
@@ -40,7 +40,7 @@ export default function ReviewSummary({ reviewsInfo }: ReviewSummaryProps) {
                             totalStars={reviewsInfo.allStarsNumber}
                         />
                         <StarRating
-                            label="1 звезды"
+                            label="1 звездa"
                             count={reviewsInfo.numberOf1Stars}
                             totalStars={reviewsInfo.allStarsNumber}
                         />

@@ -9,12 +9,12 @@ import { useIncreaseCartQuantity } from "@/pages/ProductDetailsPage/hooks/useInc
 import { useLikeProductDetails } from "@/pages/ProductDetailsPage/hooks/useLikeProductDetails.ts";
 import { useUnlikeProductDetails } from "@/pages/ProductDetailsPage/hooks/useUnlikeProductDetails.ts";
 import { useSelectedProductDetails } from "@/pages/ProductDetailsPage/hooks/useSelectedProductDetails.ts";
-import ImageGallery from "@/pages/ProductDetailsPage/components/ImageGallery.tsx";
 import Selectors from "@/pages/ProductDetailsPage/components/Selectors/Selectors.tsx";
 import ProductMainInfo from "@/pages/ProductDetailsPage/components/ProductMainInfo.tsx";
 import CartActions from "@/pages/ProductDetailsPage/components/CartActions.tsx";
 import ProductSecondaryInfo from "@/pages/ProductDetailsPage/components/ProductSecondaryInfo.tsx";
 import ProductDetailsFooter from "@/pages/ProductDetailsPage/components/ProductDetailsFooter/ProductDetailsFooter.tsx";
+import ImageGallery from "@/pages/ProductDetailsPage/components/ImageGallery/ImageGallery.tsx";
 
 export default function ProductDetailsPage() {
     const { productId } = useParams() as { productId: string };
@@ -25,18 +25,30 @@ export default function ProductDetailsPage() {
     const { selectedColor, selectedSize, setSelectedColor, setSelectedSize } =
         useSelectedProductDetails(productDetails);
 
-    const { decreaseCartQuantity } = useDecreaseCartQuantity(productId);
-    const { increaseCartQuantity } = useIncreaseCartQuantity(productId);
-    const { unlikeProductDetails } = useUnlikeProductDetails(productId);
-    const { likeProductDetails } = useLikeProductDetails(productId);
+    const { decreaseCartQuantityMutate } = useDecreaseCartQuantity(productId);
+    const { increaseCartQuantityMutate } = useIncreaseCartQuantity(productId);
+    const { unlikeProductDetailsMutate } = useUnlikeProductDetails(productId);
+    const { likeProductDetailsMutate } = useLikeProductDetails(productId);
+
+    function increaseCartQuantity() {
+        if (!selectedSize || !selectedColor) return;
+
+        increaseCartQuantityMutate({ size: selectedSize, color: selectedColor });
+    }
+
+    function decreaseCartQuantity() {
+        if (!selectedSize || !selectedColor) return;
+
+        decreaseCartQuantityMutate({ size: selectedSize, color: selectedColor });
+    }
 
     function toggleLike() {
         if (!productDetails) return;
 
         if (productDetails.isLiked) {
-            unlikeProductDetails();
+            unlikeProductDetailsMutate();
         } else {
-            likeProductDetails();
+            likeProductDetailsMutate();
         }
     }
 
@@ -45,12 +57,12 @@ export default function ProductDetailsPage() {
     }
 
     return (
-        <div className="bg-white text-gray-900 font-sans leading-relaxed">
+        <div className="bg-white text-gray-900 font-sans leading-relaxed pb-10">
             <Breadcrumbs type={type} category={category} productName={productDetails?.name} />
-            <div className="pt-8 p-4 flex flex-col md:flex-row items-start md:space-x-8 space-y-8 md:space-y-0">
+            <div className="pt-8 p-4 flex flex-col md:flex-row items-start md:space-x-8 space-y-6 md:space-y-0">
                 <ImageGallery images={productDetails.images} />
 
-                <div className="w-full md:w-[420px] space-y-5">
+                <div className="w-full md:flex-1 lg:flex-none lg:w-[350px] xl:w-[420px] space-y-5">
                     <ProductMainInfo name={productDetails.name} price={productDetails.price} />
                     <Selectors
                         colors={productDetails.colors}

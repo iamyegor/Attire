@@ -11,10 +11,10 @@ export default function ReviewItem({ review }: ReviewItemProps) {
             key={review.id}
             className="bg-white border border-neutral-200 p-6 rounded-3xl shadow-sm"
         >
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-start justify-between mb-4 space-x-3">
                 <h3 className="text-lg font-semibold text-gray-800">Review by {review.id}</h3>
                 <div className="flex items-center space-x-1">
-                    <Stars stars={review.rating} starClass="w-7 h-7" />
+                    <Stars stars={review.rating} starClass="w-6 h-6 md:w-7 md:h-7" />
                 </div>
             </div>
             <p className="text-gray-700 mb-4">{review.content}</p>

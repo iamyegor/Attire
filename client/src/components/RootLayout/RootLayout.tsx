@@ -6,8 +6,10 @@ export default function RootLayout() {
     return (
         <>
             <Header />
-            <div className="pt-[65px] md:pt-[75px] min-h-screen">
-                <Outlet />
+            <div className="flex justify-center">
+                <div className="pt-[65px] md:pt-[75px] min-h-screen max-w-screen-2xl">
+                    <Outlet />
+                </div>
             </div>
             <Footer />
         </>
