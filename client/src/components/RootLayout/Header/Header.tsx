@@ -41,70 +41,72 @@ function Header() {
     }
 
     return (
-        <header className="fixed top-0 left-0 right-0 bg-white py-3 px-4 md:px-8 flex justify-between items-center shadow-lg z-20">
-            <Drawer open={searchOpen} onClose={handleSearchClose} anchor="top">
-                <SearchComponent onClose={handleSearchClose} />
-            </Drawer>
-            <Drawer
-                open={burgerMenuOpen}
-                onClose={handleBurgerMenuClose}
-                anchor="right"
-                PaperProps={{
-                    className: "w-full sm:w-[450px]",
-                }}
-            >
-                <BurgerMenu onClose={handleBurgerMenuClose} />
-            </Drawer>
-            <h1 className="text-3xl font-medium italic">
-                <Link to="/">Attire</Link>
-            </h1>
-            <div className="text-lg font-semibold hidden lg:flex space-x-10">
-                <HeaderLink
-                    to={Type.New.path}
-                    onMouseEnter={() => showDropdown(newCategories)}
+        <header className="fixed top-0 left-0 right-0 bg-white py-3 px-4 md:px-8 shadow-lg z-20">
+            <div className="max-w-screen-2xl mx-auto flex justify-between items-center ">
+                <Drawer open={searchOpen} onClose={handleSearchClose} anchor="top">
+                    <SearchComponent onClose={handleSearchClose} />
+                </Drawer>
+                <Drawer
+                    open={burgerMenuOpen}
+                    onClose={handleBurgerMenuClose}
+                    anchor="right"
+                    PaperProps={{
+                        className: "w-full sm:w-[450px]",
+                    }}
+                >
+                    <BurgerMenu onClose={handleBurgerMenuClose} />
+                </Drawer>
+                <h1 className="text-3xl font-medium italic">
+                    <Link to="/">Attire</Link>
+                </h1>
+                <div className="text-lg font-semibold hidden lg:flex space-x-10">
+                    <HeaderLink
+                        to={Type.New.path}
+                        onMouseEnter={() => showDropdown(newCategories)}
+                        onMouseLeave={hideDropdown}
+                        onClick={hideDropdown}
+                    >
+                        {Type.New.name}
+                    </HeaderLink>
+                    <HeaderLink
+                        to={Type.Men.path}
+                        onMouseEnter={() => showDropdown(menCategories)}
+                        onMouseLeave={hideDropdown}
+                        onClick={hideDropdown}
+                    >
+                        {Type.Men.name}
+                    </HeaderLink>
+                    <HeaderLink
+                        to={Type.Women.path}
+                        onMouseEnter={() => showDropdown(womenCategories)}
+                        onMouseLeave={hideDropdown}
+                        onClick={hideDropdown}
+                    >
+                        {Type.Women.name}
+                    </HeaderLink>
+                </div>
+                <DropdownMenu
+                    categories={activeCategories}
+                    isVisible={dropdownVisible}
+                    onMouseEnter={() => setDropdownVisible(true)}
                     onMouseLeave={hideDropdown}
-                    onClick={hideDropdown}
-                >
-                    {Type.New.name}
-                </HeaderLink>
-                <HeaderLink
-                    to={Type.Men.path}
-                    onMouseEnter={() => showDropdown(menCategories)}
-                    onMouseLeave={hideDropdown}
-                    onClick={hideDropdown}
-                >
-                    {Type.Men.name}
-                </HeaderLink>
-                <HeaderLink
-                    to={Type.Women.path}
-                    onMouseEnter={() => showDropdown(womenCategories)}
-                    onMouseLeave={hideDropdown}
-                    onClick={hideDropdown}
-                >
-                    {Type.Women.name}
-                </HeaderLink>
-            </div>
-            <DropdownMenu
-                categories={activeCategories}
-                isVisible={dropdownVisible}
-                onMouseEnter={() => setDropdownVisible(true)}
-                onMouseLeave={hideDropdown}
-            />
-            <div className="flex items-center space-x-3 md:space-x-5">
-                <button
-                    className="text-lg font-semibold text-neutral-500 hover:text-neutral-600 md:bg-neutral-100 md:p-1 md:pr-20 rounded-full flex items-center md:space-x-3"
-                    onClick={() => setSearchOpen(true)}
-                >
-                    <SearchSvg className="w-5 h-5 ml-1" />
-                    <p className="hidden md:block">Искать</p>
-                </button>
-                <HeaderIconLink to="/profile" SvgIcon={PersonSvg} />
-                <HeaderIconLink to="/favorites" SvgIcon={HeartSvg} />
-                <HeaderIconLink to="/cart" SvgIcon={CartSvg} />
-                <BurgerMenuSvg
-                    className="block lg:hidden w-5 h-5 hover:cursor-pointer"
-                    onClick={() => setBurgerMenuOpen(true)}
                 />
+                <div className="flex items-center space-x-3 md:space-x-5">
+                    <button
+                        className="text-lg font-semibold text-neutral-500 hover:text-neutral-600 md:bg-neutral-100 md:p-1 md:pr-20 rounded-full flex items-center md:space-x-3"
+                        onClick={() => setSearchOpen(true)}
+                    >
+                        <SearchSvg className="w-5 h-5 ml-1" />
+                        <p className="hidden md:block">Искать</p>
+                    </button>
+                    <HeaderIconLink to="/profile" SvgIcon={PersonSvg} />
+                    <HeaderIconLink to="/favorites" SvgIcon={HeartSvg} />
+                    <HeaderIconLink to="/cart" SvgIcon={CartSvg} />
+                    <BurgerMenuSvg
+                        className="block lg:hidden w-5 h-5 hover:cursor-pointer"
+                        onClick={() => setBurgerMenuOpen(true)}
+                    />
+                </div>
             </div>
         </header>
     );
