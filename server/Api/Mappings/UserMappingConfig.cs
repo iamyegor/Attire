@@ -1,7 +1,9 @@
 ﻿using Application.Users.Commands.AddItemToTheCart;
+using Application.Users.Commands.UpdatePersonalData;
 using Application.Users.Commands.UpdateUserAddress;
 using Contracts.Users.Addresses;
 using Contracts.Users.Carts;
+using Contracts.Users.PersonalData;
 using Mapster;
 
 namespace Api.Mappings;
@@ -20,6 +22,14 @@ public class UserMappingConfig : IRegister
 
         config
             .NewConfig<(Guid UserId, AddressForUpdate AddressForUpdate), UpdateUserAddressCommand>()
+            .Map(d => d.UserId, s => s.UserId)
+            .Map(d => d, s => s.AddressForUpdate);
+
+        config
+            .NewConfig<
+                (Guid UserId, UserPersonalDataForUpdate AddressForUpdate),
+                UpdatePersonalDataCommand
+            >()
             .Map(d => d.UserId, s => s.UserId)
             .Map(d => d, s => s.AddressForUpdate);
     }

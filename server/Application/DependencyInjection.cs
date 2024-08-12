@@ -11,7 +11,8 @@ public static class DependencyInjection
     public static void AddApplicationValidation(this IServiceCollection services)
     {
         ValidatorOptions.Global.DefaultRuleLevelCascadeMode = CascadeMode.Stop;
-        
+        ValidatorOptions.Global.DefaultClassLevelCascadeMode = CascadeMode.Stop;
+
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services.AddMediatR(config =>
         {

@@ -12,10 +12,10 @@ public class User : AggregateRoot<Guid>
     private readonly List<CartItem> _cart = new();
     private readonly List<Order> _orders = new();
 
-    public string FirstName { get; }
-    public string LastName { get; }
-    public PhoneNumber Phone { get; }
-    public Email Email { get; }
+    public string FirstName { get; private set; }
+    public string LastName { get; private set; }
+    public PhoneNumber Phone { get; private set; }
+    public Email Email { get; private set; }
     public Address Address { get; private set; }
     public virtual IReadOnlyList<FavoriteProductId> FavoriteProductIds => _favoriteProductIds;
     public virtual IReadOnlyList<CartItem> Cart => _cart;
@@ -34,7 +34,7 @@ public class User : AggregateRoot<Guid>
     protected User()
         : base(Guid.NewGuid()) { }
 
-    public static Result<User, Error> Crete(
+    public static Result<User, Error> Create(
         string firstName,
         string lastName,
         PhoneNumber phone,
@@ -144,5 +144,28 @@ public class User : AggregateRoot<Guid>
     public void SetAddress(Address address)
     {
         Address = address;
+    }
+
+    public void UpdatePersonalData(
+        string firstName,
+        string lastName,
+        PhoneNumber phone,
+        Email email
+    )
+    {
+        if (string.IsNullOrWhiteSpace(firstName))
+        {
+            throw new InvalidOperationException("User first name is required.");
+        }
+
+        if (string.IsNullOrWhiteSpace(lastName))
+        {
+            throw new InvalidOperationException("User last name is required.");
+        }
+
+        FirstName = firstName.Trim();
+        LastName = lastName.Trim();
+        Phone = phone;
+        Email = email;
     }
 }
