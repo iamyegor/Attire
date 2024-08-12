@@ -12,15 +12,13 @@ export default function Reviews({ productId }: ReviewProps) {
     if (!reviews) return <p>Loading...</p>;
 
     return (
-        <div className="space-y-4">
-            <div className="flex items-start space-x-5">
-                <ReviewSummary reviewsInfo={reviewsInfo} />
-                <div className="flex flex-col max-w-[800px] space-y-6">
-                    {reviews.map((review) => (
-                        <ReviewItem key={review.id} review={review} /> // Use the new component
-                    ))}
-                </div>
+        <div className="flex flex-col lg:flex-row items-start justify-between lg:space-x-6 text-gray-600">
+            <div className="flex flex-col flex-1 max-w-full lg:max-w-[800px] space-y-6 order-2 lg:order-1">
+                {reviews.map((review) => (
+                    <ReviewItem key={review.id} review={review} /> // Use the new component
+                ))}
             </div>
+            <ReviewSummary reviewsInfo={reviewsInfo} />
         </div>
     );
 }

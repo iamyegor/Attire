@@ -1,11 +1,13 @@
+import ImageLightbox from "@/pages/ProductDetailsPage/components/ImageGallery/ImageLightbox/ImageLightbox.tsx";
+
 interface ImageGalleryProps {
     images: string[];
 }
 
 export default function ImageGallery({ images }: ImageGalleryProps) {
     return (
-        <div className="flex-1">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="w-full md:flex-1">
+            <div className="hidden md:grid md:grid-cols-1 lg:grid-cols-2 gap-6">
                 {images.map((image) => (
                     <div key={image} className="overflow-hidden rounded-xl">
                         <img
@@ -17,6 +19,7 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
                     </div>
                 ))}
             </div>
+            <ImageLightbox images={images} />
         </div>
     );
 }
