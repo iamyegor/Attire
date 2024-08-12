@@ -27,6 +27,16 @@ public class GetUserAddressQueryHandler
     {
         NpgsqlConnection connection = _dapperConnectionFactory.Create();
 
+        if (
+            await connection.QuerySingleOrDefaultAsync(
+                "SELECT 1 FROM users WHERE user_id = @UserId LIMIT 1",
+                new { request.UserId }
+            ) == null
+        )
+        {
+            return Errors.User.WithIdNofFound(request.UserId);
+        }
+
         string sqlQuery =
             @"
             SELECT

@@ -1,4 +1,6 @@
 ﻿using Application.Users.Commands.AddItemToTheCart;
+using Application.Users.Commands.UpdateUserAddress;
+using Contracts.Users.Addresses;
 using Contracts.Users.Carts;
 using Mapster;
 
@@ -15,5 +17,10 @@ public class UserMappingConfig : IRegister
             >()
             .Map(d => d.UserId, s => s.UserId)
             .Map(d => d, s => s.CartItemForCreate);
+
+        config
+            .NewConfig<(Guid UserId, AddressForUpdate AddressForUpdate), UpdateUserAddressCommand>()
+            .Map(d => d.UserId, s => s.UserId)
+            .Map(d => d, s => s.AddressForUpdate);
     }
 }

@@ -95,6 +95,6 @@ public class Product : AggregateRoot<Guid>
     {
         double stars = _reviews.Sum(x => x.Stars) / _reviews.Count;
 
-        Stars = Math.Round(stars, 2);
+        Stars = Math.Round(stars, 1);
     }
 }

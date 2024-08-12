@@ -23,6 +23,10 @@ public class UserFavoriteProductsController : ApplicationController
         _sender = sender;
     }
 
+    // statusCodes:
+    // user.with.id.not.found
+    // product.with.id.not.found
+    // user.favorite.product.id.with.value.already.exists
     [HttpPost]
     public async Task<IResult> AddFavoriteProduct(Guid favoriteProductId)
     {
@@ -35,6 +39,9 @@ public class UserFavoriteProductsController : ApplicationController
         return FromResult(result);
     }
 
+    // statusCodes:
+    // user.with.id.not.found
+    // user.favorite.product.id.with.value.not.found
     [HttpDelete]
     public async Task<IResult> RemoveFavoriteProduct(Guid removedFavoriteProductId)
     {
@@ -47,6 +54,8 @@ public class UserFavoriteProductsController : ApplicationController
         return FromResult(result);
     }
 
+    // statusCodes:
+    // user.with.id.not.found
     [HttpGet]
     public async Task<IResult> GetFavoriteProducts(int page = 1)
     {

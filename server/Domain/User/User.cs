@@ -16,7 +16,7 @@ public class User : AggregateRoot<Guid>
     public string LastName { get; }
     public PhoneNumber Phone { get; }
     public Email Email { get; }
-    public Address Address { get; }
+    public Address Address { get; private set; }
     public virtual IReadOnlyList<FavoriteProductId> FavoriteProductIds => _favoriteProductIds;
     public virtual IReadOnlyList<CartItem> Cart => _cart;
     public virtual IReadOnlyList<Order> Orders => _orders;
@@ -139,5 +139,10 @@ public class User : AggregateRoot<Guid>
         _favoriteProductIds.Remove(favoriteProductId);
 
         return Result.Ok();
+    }
+
+    public void SetAddress(Address address)
+    {
+        Address = address;
     }
 }
