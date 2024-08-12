@@ -18,7 +18,7 @@ export default function CatalogPage() {
     }
 
     return (
-        <div className="flex mt-4 lg:mt-0 mb-8">
+        <div className="flex mt-4 lg:mt-0 mb-8 w-full">
             <div className="lg:px-4">
                 {type && <Breadcrumbs type={type} category={category} />}
                 {path && <CategoriesDashboard path={path} />}
