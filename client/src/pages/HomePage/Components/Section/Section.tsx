@@ -10,23 +10,13 @@ interface SectionProps {
     title: string;
     products: Product[];
     areProductsLoading: boolean;
-    makeProductFavorite: (productId: string) => void;
-    unmakeProductFavorite: (productId: string) => void;
+    likeProduct: (productId: string) => void;
+    unlikeProduct: (productId: string) => void;
     type: Type | null;
 }
 
 const Section = React.forwardRef<HTMLDivElement, SectionProps>(
-    (
-        {
-            title,
-            products,
-            areProductsLoading,
-            makeProductFavorite,
-            unmakeProductFavorite,
-            type = null,
-        },
-        ref,
-    ) => {
+    ({ title, products, areProductsLoading, likeProduct, unlikeProduct, type = null }, ref) => {
         return (
             <section className="my-8 md:ml-20">
                 <h2 className="text-3xl font-bold text-gray-600 mb-3 sm:ml-3">{title}</h2>
@@ -37,8 +27,8 @@ const Section = React.forwardRef<HTMLDivElement, SectionProps>(
                                 <ProductCard
                                     key={index}
                                     product={product}
-                                    likeProduct={makeProductFavorite}
-                                    unlikeProduct={unmakeProductFavorite}
+                                    likeProduct={likeProduct}
+                                    unlikeProduct={unlikeProduct}
                                     type={type}
                                 />
                             </div>
@@ -50,8 +40,8 @@ const Section = React.forwardRef<HTMLDivElement, SectionProps>(
                 <div className="block sm:hidden">
                     <ProductCarousel
                         products={products}
-                        makeProductFavorite={makeProductFavorite}
-                        unmakeProductFavorite={unmakeProductFavorite}
+                        likeProduct={likeProduct}
+                        unlikeProduct={unlikeProduct}
                         type={type}
                     />
                 </div>

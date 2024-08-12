@@ -3,6 +3,7 @@ import RootLayout from "@/components/RootLayout/RootLayout.tsx";
 import CatalogPage from "@/pages/CatalogPage/CatalogPage.tsx";
 import React from "react";
 import ProductDetailsPage from "@/pages/ProductDetailsPage/ProductDetailsPage.tsx";
+import FavoritesPage from "@/pages/FavoritesPage/FavoritesPage.tsx";
 
 export const routes = [
     {
@@ -20,6 +21,10 @@ export const routes = [
             {
                 path: "products/:productId",
                 element: <ProductDetailsPage />,
+            },
+            {
+                path: "favorites",
+                element: <FavoritesPage />,
             },
         ],
     },

@@ -5,15 +5,15 @@ import Type from "@/components/RootLayout/Header/BurgerMenu/types/Type.ts";
 
 interface ProductCarouselProps {
     products: Product[];
-    makeProductFavorite: (productId: string) => void;
-    unmakeProductFavorite: (productId: string) => void;
+    likeProduct: (productId: string) => void;
+    unlikeProduct: (productId: string) => void;
     type: Type | null;
 }
 
 export default function ProductCarousel({
     products,
-    makeProductFavorite,
-    unmakeProductFavorite,
+    likeProduct,
+    unlikeProduct,
     type,
 }: ProductCarouselProps) {
     return (
@@ -22,8 +22,8 @@ export default function ProductCarousel({
                 <ProductCard
                     key={index}
                     product={product}
-                    likeProduct={makeProductFavorite}
-                    unlikeProduct={unmakeProductFavorite}
+                    likeProduct={likeProduct}
+                    unlikeProduct={unlikeProduct}
                     type={type}
                 />
             ))}

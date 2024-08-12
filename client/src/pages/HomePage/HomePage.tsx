@@ -23,11 +23,11 @@ export default function HomePage() {
         ref: lastRecommendedProductRef,
     } = useLoadRecommendedProducts();
 
-    const makeFeaturedProductFavorite = useLikeProduct(["featured-products"]);
-    const unmakeFeaturedProductFavorite = useUnlikeProduct(["featured-products"]);
+    const likeFeaturedProduct = useLikeProduct(["featured-products"]);
+    const unlikeFeaturedProduct = useUnlikeProduct(["featured-products"]);
 
-    const makeRecommendedProductFavorite = useLikeProduct(["recommended-products"]);
-    const unmakeRecommendedProductFavorite = useUnlikeProduct(["recommended-products"]);
+    const likeRecommendedProduct = useLikeProduct(["recommended-products"]);
+    const unlikeRecommendedProduct = useUnlikeProduct(["recommended-products"]);
 
     return (
         <div className="flex flex-col m-4">
@@ -38,8 +38,8 @@ export default function HomePage() {
                 products={featuredProducts}
                 areProductsLoading={areFeaturedProductsLoading}
                 ref={lastFeaturedProductRef}
-                makeProductFavorite={makeFeaturedProductFavorite}
-                unmakeProductFavorite={unmakeFeaturedProductFavorite}
+                likeProduct={likeFeaturedProduct}
+                unlikeProduct={unlikeFeaturedProduct}
                 type={Type.New}
             />
             <FeaturedImage imageSrc={featuredImage} text={featuredImageText} />
@@ -48,8 +48,8 @@ export default function HomePage() {
                 products={recommendedProducts}
                 areProductsLoading={areRecommendedProductsLoading}
                 ref={lastRecommendedProductRef}
-                makeProductFavorite={makeRecommendedProductFavorite}
-                unmakeProductFavorite={unmakeRecommendedProductFavorite}
+                likeProduct={likeRecommendedProduct}
+                unlikeProduct={unlikeRecommendedProduct}
                 type={null}
             />
         </div>

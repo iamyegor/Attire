@@ -37,18 +37,20 @@ export default function FilterDrawer({ filtersResponse, closeDrawer }: FilterDra
                 <div className="flex flex-col space-y-4">
                     <div>
                         <h3 className="font-semibold mb-3 text-lg text-gray-800">Sizes</h3>
-                        {filtersResponse.sizes.map((size) => (
-                            <SelectionButton
-                                key={size}
-                                label={size}
-                                isSelected={sizes.includes(size)}
-                                onClick={() => toggleSelection(setSizes, size)}
-                            />
-                        ))}
+                        <div className="space-x-2">
+                            {filtersResponse.sizes.map((size) => (
+                                <SelectionButton
+                                    key={size}
+                                    label={size}
+                                    isSelected={sizes.includes(size)}
+                                    onClick={() => toggleSelection(setSizes, size)}
+                                />
+                            ))}
+                        </div>
                     </div>
                     <div>
                         <h3 className="font-semibold mb-3 text-lg text-gray-800">Colors</h3>
-                        <div className="flex flex-wrap space-x-1">
+                        <div className="flex flex-wrap space-x-2">
                             {filtersResponse.colors.map((color) => (
                                 <ColorButton
                                     key={color.name}
@@ -61,7 +63,7 @@ export default function FilterDrawer({ filtersResponse, closeDrawer }: FilterDra
                     </div>
                     <div>
                         <h3 className="font-semibold mb-3 text-lg text-gray-800">Materials</h3>
-                        <div className="flex flex-wrap">
+                        <div className="flex flex-wrap space-x-2">
                             {filtersResponse.compositions.map((material) => (
                                 <SelectionButton
                                     key={material}

@@ -4,6 +4,7 @@ import { filterHandlers } from "@/lib/msw/handlers/filterHandlers.ts";
 import { productHandlers } from "@/lib/msw/handlers/productHandlers.ts";
 import { productDetailsHandlers } from "@/lib/msw/handlers/productDetailsHandlers.ts";
 import { reviewsHandlers } from "@/lib/msw/handlers/reviewsHandlers.ts";
+import { favoritesHandlers } from "@/lib/msw/handlers/favoritesHandlers.ts";
 
 export const handlers = [
     ...categoryHandlers,
@@ -11,4 +12,5 @@ export const handlers = [
     ...productHandlers,
     ...productDetailsHandlers,
     ...reviewsHandlers,
+    ...favoritesHandlers,
 ];

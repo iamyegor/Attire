@@ -42,16 +42,6 @@ export default function ProductDetailsPage() {
         decreaseCartQuantityMutate({ size: selectedSize, color: selectedColor });
     }
 
-    function toggleLike() {
-        if (!productDetails) return;
-
-        if (productDetails.isLiked) {
-            unlikeProductDetailsMutate();
-        } else {
-            likeProductDetailsMutate();
-        }
-    }
-
     if (!productDetails) {
         return <div>Загрузка...</div>;
     }
@@ -76,7 +66,8 @@ export default function ProductDetailsPage() {
                         quantityInCart={productDetails.quantityInCart}
                         decreaseCartQuantity={decreaseCartQuantity}
                         increaseCartQuantity={increaseCartQuantity}
-                        toggleLike={toggleLike}
+                        likeProduct={likeProductDetailsMutate}
+                        unlikeProduct={unlikeProductDetailsMutate}
                         isLiked={productDetails.isLiked}
                     />
                     <ProductSecondaryInfo

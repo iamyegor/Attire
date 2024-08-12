@@ -34,7 +34,7 @@ export default function ProductCard({
             state={{ type, category }}
             className="flex w-full flex-col bg-white rounded-xl hover:bg-neutral-100 p-4"
             to={`/products/${product.id}`}
-            style={{ aspectRatio: "9/16" }}
+            style={{ aspectRatio: "10/16" }}
             draggable={false}
         >
             <img
@@ -45,7 +45,7 @@ export default function ProductCard({
                 draggable={false}
             />
             <div
-                className="p-3 px-0 flex flex-col justify-start h-[90px]"
+                className="p-3 px-0 flex flex-col justify-start h-[105px]"
                 style={{ userSelect: "none" }}
             >
                 <div className="flex justify-between items-center">

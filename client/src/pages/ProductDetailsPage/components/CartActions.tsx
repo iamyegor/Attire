@@ -5,17 +5,27 @@ interface CartActionsProps {
     quantityInCart: number;
     decreaseCartQuantity: () => void;
     increaseCartQuantity: () => void;
-    toggleLike: () => void;
     isLiked: boolean;
+    likeProduct: () => void;
+    unlikeProduct: () => void;
 }
 
 export default function CartActions({
     quantityInCart,
     decreaseCartQuantity,
     increaseCartQuantity,
-    toggleLike,
     isLiked,
+    likeProduct,
+    unlikeProduct,
 }: CartActionsProps) {
+    function toggleLike() {
+        if (isLiked) {
+            likeProduct();
+        } else {
+            unlikeProduct();
+        }
+    }
+
     return (
         <div className="flex items-center space-x-4">
             {quantityInCart === 0 ? (

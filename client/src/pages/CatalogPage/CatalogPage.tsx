@@ -7,6 +7,7 @@ import useCurrentCategoryAndType from "@/pages/CatalogPage/hooks/useCurrentCateg
 import Category from "@/components/RootLayout/Header/BurgerMenu/types/Category.ts";
 import Type from "@/components/RootLayout/Header/BurgerMenu/types/Type.ts";
 import Products from "@/pages/CatalogPage/components/Products.tsx";
+import BaseSkeleton from "@/components/ui/BaseSkeleton.tsx";
 
 export default function CatalogPage() {
     const { "*": path } = useParams();
