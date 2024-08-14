@@ -14,7 +14,7 @@ function UserPersonalDataPage() {
                     <div className="pb-[16px]">{"Имя: " + personalData?.firstName}</div>
                     <div className="pb-[16px]">{"Фамилия: " + personalData?.lastName}</div>
                     <div className="pb-[16px]">{"Телефон: " + personalData?.phone}</div>
-                    <div className="pb-[32px]">{"Почта " + personalData?.email}</div>
+                    <div className="pb-[32px]">{"Почта: " + personalData?.email}</div>
 
                     <div className="mb-[16px]">
                         <Link className="text-[#1877F2]" to="changeForm">

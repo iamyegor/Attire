@@ -12,7 +12,7 @@ function UserListOrdersPage() {
             {orders.length == 0 ? (
                 <NoOrderPage />
             ) : (
-                orders.map((order) => <OrderCard order={order} />)
+                orders.map((order) => <OrderCard key={order.id} order={order} />)
             )}
             <div ref={ref}></div>
         </div>

@@ -10,10 +10,15 @@ const userAddress: Address = {
 };
 
 export const addressesHandlers = [
-    http.get("*/users/address", async ({ request }) => {
+    http.get("*/users/address", async () => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
-        const url = new URL(request.url);
 
         return HttpResponse.json(userAddress);
+    }),
+
+    http.put("*/users/address", async () => {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        return HttpResponse.json();
     }),
 ];

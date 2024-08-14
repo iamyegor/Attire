@@ -1,6 +1,7 @@
 import api from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
 import { Address } from "../types/Address";
+import { useEffect, useState } from "react";
 
 export function useLoadAddress() {
     const { data = null, isPending } = useQuery({
@@ -13,5 +14,13 @@ export function useLoadAddress() {
         return data;
     }
 
-    return { address: data, isPending };
+    const [address, setAddress] = useState<Address | null>(data);
+
+    useEffect(() => {
+        if (!isPending) {
+            setAddress(data);
+        }
+    }, [isPending]);
+
+    return { address, setAddress, isPending };
 }
