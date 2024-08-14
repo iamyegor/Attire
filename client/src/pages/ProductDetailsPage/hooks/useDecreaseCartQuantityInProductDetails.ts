@@ -1,17 +1,16 @@
 import { useOptimisticUpdateWithData } from "@/hooks/useOptimisticUpdateWithData.ts";
 import { ProductDetails } from "@/pages/ProductDetailsPage/types/ProductDetails.ts";
-import api from "@/lib/api.ts";
 import { useQueryClient } from "@tanstack/react-query";
+import { fetchDecreaseCartQuantity } from "@/utils/services/fetchDecreaseCartQuantity.ts";
 
-export function useDecreaseCartQuantity(productId: string) {
+export function useDecreaseCartQuantityInProductDetails(productId: string) {
     const queryClient = useQueryClient();
     const queryKey = ["product-details", productId];
 
-    const decreaseCartQuantityMutation = useOptimisticUpdateWithData(
-        queryKey,
-        sendDecreaseCartQuantityRequest,
-        onMutate,
-    );
+    const decreaseCartQuantityMutation = useOptimisticUpdateWithData<{
+        size: string;
+        color: string;
+    }>(queryKey, (data) => fetchDecreaseCartQuantity({ ...data, productId }), onMutate);
 
     async function onMutate() {
         await queryClient.cancelQueries({ queryKey });
@@ -27,16 +26,6 @@ export function useDecreaseCartQuantity(productId: string) {
         });
 
         return { previousData };
-    }
-
-    async function sendDecreaseCartQuantityRequest({
-        size,
-        color,
-    }: {
-        size: string;
-        color: string;
-    }) {
-        await api.post(`products/${productId}/decrease-cart-quantity`, { size, color });
     }
 
     return { decreaseCartQuantityMutate: decreaseCartQuantityMutation.mutate };

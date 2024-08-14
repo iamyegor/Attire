@@ -11,7 +11,7 @@ interface DropdownMenuProps {
 function DropdownMenu({ categories, isVisible, onMouseEnter, onMouseLeave }: DropdownMenuProps) {
     return (
         <div
-            className={`absolute left-0 top-10 shadow-lg w-full z-50 transition-opacity duration-300 bg-transparent pt-5
+            className={`absolute left-0 top-10 shadow-lg w-full z-30 transition-opacity duration-300 bg-transparent pt-5
                 ${isVisible ? "opacity-100" : "opacity-0 pointer-events-none"}
             `}
             onMouseEnter={onMouseEnter}
