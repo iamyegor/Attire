@@ -19,17 +19,19 @@ export default function CatalogPage() {
     }
 
     return (
-        <div className="flex mt-4 lg:mt-0 mb-8 w-full">
-            <div className="lg:px-4">
-                {type && <Breadcrumbs type={type} category={category} />}
-                {path && <CategoriesDashboard path={path} />}
-            </div>
-            <div className="flex flex-col space-y-3 w-full">
-                <div className="mt-[34px] ml-4 flex space-x-5 h-11">
-                    <SortByComponent />
-                    {category && !isNewCategory() && <FilterComponent category={category} />}
+        <div className="mt-4 lg:mt-0">
+            {type && <Breadcrumbs type={type} category={category} />}
+            <div className="flex mb-8 w-full">
+                <div className="lg:px-4 relative">
+                    {path && <CategoriesDashboard path={path} />}
                 </div>
-                {type && <Products type={type} category={category} />}
+                <div className="flex flex-col space-y-3 w-full">
+                    <div className="mt-[34px] ml-4 flex space-x-5 h-11">
+                        <SortByComponent />
+                        {category && !isNewCategory() && <FilterComponent category={category} />}
+                    </div>
+                    {type && <Products type={type} category={category} />}
+                </div>
             </div>
         </div>
     );

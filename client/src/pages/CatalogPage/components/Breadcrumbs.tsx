@@ -15,7 +15,7 @@ export default function Breadcrumbs({
     productName = null,
 }: BreadcrumbsProps) {
     return (
-        <div className="flex items-center text-sm text-neutral-600 space-x-2 left-4 px-4">
+        <div className="flex flex-wrap items-center text-sm text-neutral-600 space-x-2 left-4 px-4">
             <Link to="/">Главная</Link>
             {type && (
                 <>
@@ -26,7 +26,9 @@ export default function Breadcrumbs({
             {category && (
                 <>
                     <ArrowRight className="w-3 h-3" />
-                    <Link to={`/catalog/${category.path}`}>{category.name}</Link>
+                    <Link className="whitespace-nowrap" to={`/catalog/${category.path}`}>
+                        {category.name}
+                    </Link>
                 </>
             )}
             {productName && (
