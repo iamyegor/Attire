@@ -8,6 +8,7 @@ import { favoritesHandlers } from "@/lib/msw/handlers/favoritesHandlers.ts";
 import { ordersHandlers } from "./ordersHandlers";
 import { addressesHandlers } from "./addressesHandler";
 import { userPersonalDataHandlers } from "./userPersonalDataHandlers";
+import { usersHandlers } from "./usersHandlers";
 
 export const handlers = [
     ...categoryHandlers,
@@ -19,4 +20,5 @@ export const handlers = [
     ...ordersHandlers,
     ...addressesHandlers,
     ...userPersonalDataHandlers,
+    ...usersHandlers,
 ];

@@ -1,33 +1,57 @@
 import { Link } from "react-router-dom";
 import { useLoadUserPersonalData } from "./hooks/useLoadUserPersonalData";
+import { useState } from "react";
+import CurrentPersonalDataPage from "./types/CurrentPersonalDataPage";
+import ChangeUserPersonalDataFormPage from "./pages/ChangeUserPersonalDataFormPage";
+import ChangeUserPasswordFormPage from "./pages/ChangeUserPasswordFormPage/ChangeUserPasswordFormPage";
+import { toShowFormatPhoneNumber } from "@/utils/services/phoneNumberConverter";
 
 function UserPersonalDataPage() {
-    const { personalData, isPending } = useLoadUserPersonalData();
+    const { personalData, setPersonalData, isPending } = useLoadUserPersonalData();
+    const [currentPage, setCurrentPage] = useState<CurrentPersonalDataPage>("readPage");
 
     return (
-        <div className="pb-[30px] pt-[30px] lg:pt-0 lg:pl-[50px] w-full">
-            <h3 className="text-[24px] font-semibold mb-[30px]">Личные данные</h3>
+        <div className="pb-[30px] pt-[30px] lg:pt-0 lg:pl-[50px] w-full max-w-[560px]">
             {isPending ? (
                 <>Загрузка данных...</>
-            ) : (
-                <div className="text-[16px]">
-                    <div className="pb-[16px]">{"Имя: " + personalData?.firstName}</div>
-                    <div className="pb-[16px]">{"Фамилия: " + personalData?.lastName}</div>
-                    <div className="pb-[16px]">{"Телефон: " + personalData?.phone}</div>
-                    <div className="pb-[32px]">{"Почта: " + personalData?.email}</div>
+            ) : currentPage === "readPage" ? (
+                <div>
+                    <h3 className="text-[24px] font-semibold mb-[30px]">Личные данные</h3>
+                    <div className="text-[16px]">
+                        <div className="pb-[16px]">{"Имя: " + personalData?.firstName}</div>
+                        <div className="pb-[16px]">{"Фамилия: " + personalData?.lastName}</div>
+                        <div className="pb-[16px]">
+                            {"Телефон: " + toShowFormatPhoneNumber(personalData?.phone)}
+                        </div>
+                        <div className="pb-[32px]">{"Почта: " + personalData?.email}</div>
 
-                    <div className="mb-[16px]">
-                        <Link className="text-[#1877F2]" to="changeForm">
-                            Изменить личные данные
-                        </Link>
-                    </div>
+                        <div className="mb-[16px]">
+                            <button
+                                className="text-[#1877F2]"
+                                onClick={() => setCurrentPage("changePersonalDataPage")}
+                            >
+                                Изменить личные данные
+                            </button>
+                        </div>
 
-                    <div>
-                        <Link className="text-[#1877F2]" to="changeForm">
-                            Изменить пароль
-                        </Link>
+                        <div>
+                            <button
+                                className="text-[#1877F2]"
+                                onClick={() => setCurrentPage("changePasswordPage")}
+                            >
+                                Изменить пароль
+                            </button>
+                        </div>
                     </div>
                 </div>
+            ) : currentPage === "changePersonalDataPage" ? (
+                <ChangeUserPersonalDataFormPage
+                    initialPersonalData={personalData!}
+                    setInitialPersonalData={setPersonalData}
+                    setCurrentPage={setCurrentPage}
+                />
+            ) : (
+                <ChangeUserPasswordFormPage setCurrentPage={setCurrentPage} />
             )}
         </div>
     );

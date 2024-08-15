@@ -6,6 +6,7 @@ import Input from "@/components/ui/Input";
 import fetchChangeAddress from "@/utils/services/fetchChangeAddress";
 import { SuccessOr } from "@/types/results/SuccessOr";
 import ErrorMessage from "@/types/errors/ErrorMessage";
+import { EmptyResult } from "@/types/results/EmptyResult";
 
 function ChangeUserAddressForm({
     initialAddress,
@@ -43,6 +44,12 @@ function ChangeUserAddressForm({
                             }))
                         }
                         placeholder="Введите населенный пункт"
+                        validate={(e) => {
+                            if (e.target.value.trim() === "") {
+                                return EmptyResult.Fail("Вы не заполнили населенный пункт");
+                            }
+                            return EmptyResult.Ok();
+                        }}
                     />
                 </div>
 
@@ -57,6 +64,15 @@ function ChangeUserAddressForm({
                             }))
                         }
                         placeholder="Введите почтовый индекс"
+                        validate={(e) => {
+                            if (e.target.value.trim() === "") {
+                                return EmptyResult.Fail("Вы не заполнили почтовый индекс");
+                            }
+                            if (!/^\d{6}$/.test(e.target.value.trim())) {
+                                return EmptyResult.Fail("Вы некорректно заполнили почтовый индекс");
+                            }
+                            return EmptyResult.Ok();
+                        }}
                     />
                 </div>
 
@@ -71,6 +87,12 @@ function ChangeUserAddressForm({
                             }))
                         }
                         placeholder="Введите улицу"
+                        validate={(e) => {
+                            if (e.target.value.trim() === "") {
+                                return EmptyResult.Fail("Вы не заполнили улицу");
+                            }
+                            return EmptyResult.Ok();
+                        }}
                     />
                 </div>
 
@@ -85,6 +107,12 @@ function ChangeUserAddressForm({
                             }))
                         }
                         placeholder="Введите дом"
+                        validate={(e) => {
+                            if (e.target.value.trim() === "") {
+                                return EmptyResult.Fail("Вы не заполнили дом");
+                            }
+                            return EmptyResult.Ok();
+                        }}
                     />
                 </div>
 
@@ -99,6 +127,12 @@ function ChangeUserAddressForm({
                             }))
                         }
                         placeholder="Введите квартира"
+                        validate={(e) => {
+                            if (e.target.value.trim() === "") {
+                                return EmptyResult.Fail("Вы не заполнили квартиру");
+                            }
+                            return EmptyResult.Ok();
+                        }}
                     />
                 </div>
 

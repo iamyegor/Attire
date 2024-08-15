@@ -1,6 +1,7 @@
 import api from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
 import { PersonalData } from "../types/PersonalData";
+import { useEffect, useState } from "react";
 
 export function useLoadUserPersonalData() {
     const { data = null, isPending } = useQuery({
@@ -13,5 +14,13 @@ export function useLoadUserPersonalData() {
         return data;
     }
 
-    return { personalData: data, isPending };
+    const [personalData, setPersonalData] = useState<PersonalData | null>(data);
+
+    useEffect(() => {
+        if (!isPending) {
+            setPersonalData(data);
+        }
+    }, [isPending]);
+
+    return { personalData, setPersonalData, isPending };
 }

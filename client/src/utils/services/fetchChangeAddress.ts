@@ -6,23 +6,15 @@ import { SuccessOr } from "@/types/results/SuccessOr";
 export default async function fetchChangeAddress(
     changedAddress: Address,
 ): Promise<SuccessOr<ErrorMessage>> {
-    if (changedAddress.city.trim() === "") {
-        return SuccessOr.Fail(new ErrorMessage("Вы не заполнили населенный пункт"));
-    }
-    if (changedAddress.postIndex.trim() === "") {
-        return SuccessOr.Fail(new ErrorMessage("Вы не заполнили почтовый индекс"));
-    }
-    if (!/^\d{6}$/.test(changedAddress.postIndex.trim())) {
-        return SuccessOr.Fail(new ErrorMessage("Вы некорректно заполнили почтовый индекс"));
-    }
-    if (changedAddress.street.trim() === "") {
-        return SuccessOr.Fail(new ErrorMessage("Вы не заполнили улицу"));
-    }
-    if (changedAddress.house.trim() === "") {
-        return SuccessOr.Fail(new ErrorMessage("Вы не заполнили дом"));
-    }
-    if (changedAddress.flat.trim() === "") {
-        return SuccessOr.Fail(new ErrorMessage("Вы не заполнили квартиру"));
+    if (
+        changedAddress.city.trim() === "" ||
+        changedAddress.postIndex.trim() === "" ||
+        !/^\d{6}$/.test(changedAddress.postIndex.trim()) ||
+        changedAddress.street.trim() === "" ||
+        changedAddress.house.trim() === "" ||
+        changedAddress.flat.trim() === ""
+    ) {
+        return SuccessOr.Fail(new ErrorMessage("Не все поля были заполнены корректно."));
     }
 
     await api.put("users/address", changedAddress);

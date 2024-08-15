@@ -9,10 +9,15 @@ const userPersonalData: PersonalData = {
 };
 
 export const userPersonalDataHandlers = [
-    http.get("*/users/personalData", async ({ request }) => {
+    http.get("*/users/personalData", async () => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
-        const url = new URL(request.url);
 
         return HttpResponse.json(userPersonalData);
+    }),
+
+    http.put("*/users/personalData", async () => {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        return HttpResponse.json();
     }),
 ];
