@@ -1,7 +1,5 @@
 ﻿namespace Application.Users.Queries.GetCartItems;
 
-public record GetCartItemsPaginationResult(IEnumerable<CartItemDto> CartItems, int? NextPageNumber);
-
 public class CartItemDto
 {
     public Guid Id { get; set; }

@@ -8,13 +8,11 @@ using Errors = Domain.User.Errors.Errors;
 
 namespace Application.Users.Queries.GetCartItems;
 
-public record GetCartItemsQuery(Guid UserId, int Page)
-    : IRequest<Result<GetCartItemsPaginationResult, Error>>;
+public record GetCartItemsQuery(Guid UserId) : IRequest<Result<IEnumerable<CartItemDto>, Error>>;
 
 public class GetCartItemsQueryHandler
-    : IRequestHandler<GetCartItemsQuery, Result<GetCartItemsPaginationResult, Error>>
+    : IRequestHandler<GetCartItemsQuery, Result<IEnumerable<CartItemDto>, Error>>
 {
-    private const int PageLimit = 10;
     private readonly DapperConnectionFactory _dapperConnectionFactory;
 
     public GetCartItemsQueryHandler(DapperConnectionFactory dapperConnectionFactory)
@@ -22,13 +20,11 @@ public class GetCartItemsQueryHandler
         _dapperConnectionFactory = dapperConnectionFactory;
     }
 
-    public async Task<Result<GetCartItemsPaginationResult, Error>> Handle(
+    public async Task<Result<IEnumerable<CartItemDto>, Error>> Handle(
         GetCartItemsQuery request,
         CancellationToken cancellationToken
     )
     {
-        int currentPage = request.Page <= 0 ? 1 : request.Page;
-
         NpgsqlConnection connection = _dapperConnectionFactory.Create();
 
         if (
@@ -61,42 +57,13 @@ public class GetCartItemsQueryHandler
                 ON p.product_id = i.product_id
             WHERE 
                 i.order_index = 1 AND
-                uci.user_id = @UserId
-            LIMIT @PageLimit
-            OFFSET @Skip";
+                uci.user_id = @UserId";
 
         IEnumerable<CartItemDto> cartItems = await connection.QueryAsync<CartItemDto>(
             sqlQuery,
-            new
-            {
-                request.UserId,
-                PageLimit,
-                Skip = (currentPage - 1) * PageLimit
-            }
+            new { request.UserId }
         );
 
-        int? nextPageNumber = await GetNextPageNumberOrNull(
-            connection,
-            request.UserId,
-            currentPage
-        );
-
-        return new GetCartItemsPaginationResult(cartItems, nextPageNumber);
-    }
-
-    private async Task<int?> GetNextPageNumberOrNull(
-        NpgsqlConnection connection,
-        Guid userId,
-        int page
-    )
-    {
-        int productTotalCount = await connection.QuerySingleAsync<int>(
-            "SELECT COUNT(1) FROM user_cart_items WHERE user_id = @UserId",
-            new { UserId = userId }
-        );
-
-        int? nextPage = PageLimit * page >= productTotalCount ? null : page + 1;
-
-        return nextPage;
+        return Result.Ok(cartItems);
     }
 }

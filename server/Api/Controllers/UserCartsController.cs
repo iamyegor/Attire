@@ -15,7 +15,7 @@ using XResults;
 
 namespace Api.Controllers;
 
-[Authorize]
+// [Authorize]
 [Route("api/users/carts")]
 public class UserCartsController : ApplicationController
 {
@@ -35,8 +35,8 @@ public class UserCartsController : ApplicationController
     [HttpPost]
     public async Task<IResult> AddCartItem(CartItemForCreate cartItemForCreate)
     {
-        // Guid userId = Guid.Parse("b0b95618-3427-4183-8f2f-3eb7ecd8fda2");
-        Guid userId = Guid.Parse(User.FindFirstValue(JwtClaims.UserId)!);
+        Guid userId = Guid.Parse("b0b95618-3427-4183-8f2f-3eb7ecd8fda2");
+        // Guid userId = Guid.Parse(User.FindFirstValue(JwtClaims.UserId)!);
         AddItemToTheCartCommand command = (
             userId,
             cartItemForCreate
@@ -50,13 +50,13 @@ public class UserCartsController : ApplicationController
     // errorCodes:
     // user.with.id.not.found
     [HttpGet]
-    public async Task<IResult> GetCartItems(int page = 1)
+    public async Task<IResult> GetCartItems()
     {
-        // Guid userId = Guid.Parse("b0b95618-3427-4183-8f2f-3eb7ecd8fda2");
-        Guid userId = Guid.Parse(User.FindFirstValue(JwtClaims.UserId)!);
-        var query = new GetCartItemsQuery(userId, page);
+        Guid userId = Guid.Parse("b0b95618-3427-4183-8f2f-3eb7ecd8fda2");
+        // Guid userId = Guid.Parse(User.FindFirstValue(JwtClaims.UserId)!);
+        var query = new GetCartItemsQuery(userId);
 
-        Result<GetCartItemsPaginationResult, Error> result = await _sender.Send(query);
+        Result<IEnumerable<CartItemDto>, Error> result = await _sender.Send(query);
 
         return FromResult(result);
     }
