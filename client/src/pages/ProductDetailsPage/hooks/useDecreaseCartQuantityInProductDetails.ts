@@ -1,32 +1,38 @@
-import { useOptimisticUpdateWithData } from "@/hooks/useOptimisticUpdateWithData.ts";
 import { ProductDetails } from "@/pages/ProductDetailsPage/types/ProductDetails.ts";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchDecreaseCartQuantity } from "@/utils/services/fetchDecreaseCartQuantity.ts";
 
-export function useDecreaseCartQuantityInProductDetails(productId: string) {
+export function useDecreaseCartQuantityInProductDetails(queryKey: string[]) {
     const queryClient = useQueryClient();
-    const queryKey = ["product-details", productId];
 
-    const decreaseCartQuantityMutation = useOptimisticUpdateWithData<{
-        size: string;
-        color: string;
-    }>(queryKey, (data) => fetchDecreaseCartQuantity({ ...data, productId }), onMutate);
+    const decreaseCartQuantityMutation = useMutation({
+        mutationFn: fetchDecreaseCartQuantity,
+        onMutate: async (cartItemId: string) => {
+            await queryClient.cancelQueries({ queryKey });
 
-    async function onMutate() {
-        await queryClient.cancelQueries({ queryKey });
+            const previousData = queryClient.getQueryData<ProductDetails>(queryKey);
 
-        const previousData = queryClient.getQueryData<ProductDetails>(queryKey);
+            queryClient.setQueryData<ProductDetails>(queryKey, (data) => {
+                if (!data) return previousData;
 
-        queryClient.setQueryData<ProductDetails>(queryKey, (data) => {
-            if (!data) return previousData;
+                return {
+                    ...data,
+                    cartItemsInfo: data.cartItemsInfo.map((x) => {
+                        if (x.cartItemId == cartItemId) {
+                            return { ...x, quantityInCart: Math.max(x.quantityInCart - 1, 0) };
+                        }
+                        return x;
+                    }),
+                };
+            });
 
-            const newQuantity = Math.max(data.quantityInCart - 1, 0);
-
-            return { ...data, quantityInCart: newQuantity };
-        });
-
-        return { previousData };
-    }
+            return { previousData };
+        },
+        onError: (_, __, context) => {
+            if (context?.previousData) queryClient.setQueryData(queryKey, context.previousData);
+        },
+        onSettled: () => queryClient.invalidateQueries({ queryKey }),
+    });
 
     return { decreaseCartQuantityMutate: decreaseCartQuantityMutation.mutate };
 }

@@ -1,4 +1,6 @@
 import Color from "@/types/Color.ts";
+import ProductDetailsCartInfo from "@/pages/ProductDetailsPage/types/ProductDetailsCartInfo.ts";
+
 
 export interface ProductDetails {
     id: string;
@@ -8,7 +10,7 @@ export interface ProductDetails {
     images: string[];
     colors: Color[];
     sizes: string[];
-    quantityInCart: number;
+    cartItemsInfo: ProductDetailsCartInfo[];
     isLiked: boolean;
     composition: string;
     category: string;

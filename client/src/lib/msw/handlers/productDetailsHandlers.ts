@@ -19,7 +19,7 @@ export const productDetails: ProductDetails = {
         },
     ],
     sizes: ["S", "M", "L"],
-    quantityInCart: 0,
+    cartItemsInfo: [{ cartItemId: "1", size: "S", color: "Red", quantityInCart: 1 }],
     isLiked: false,
     composition: "Cotton 100%",
     category: "Pants",
@@ -31,12 +31,28 @@ export const productDetailsHandlers = [
     http.get("*/product-details/*", () => {
         return HttpResponse.json(productDetails);
     }),
-    http.post("*/products/*/decrease-cart-quantity", () => {
-        productDetails.quantityInCart -= 1;
-        return HttpResponse.json(productDetails);
+    http.post("*/products/:cartItemId/decrease-cart-quantity", ({ params }) => {
+        const { cartItemId } = params;
+
+        const cartItem = productDetails.cartItemsInfo.find((x) => x.cartItemId === cartItemId);
+        if (!cartItem) {
+            return HttpResponse.error();
+        }
+
+        cartItem.quantityInCart = Math.max(cartItem.quantityInCart - 1, 0);
+
+        return HttpResponse.json();
     }),
-    http.post("*/products/*/increase-cart-quantity", async () => {
-        productDetails.quantityInCart += 1;
-        return HttpResponse.json(productDetails);
+    http.post("*/products/:cartItemId/increase-cart-quantity", async ({ params }) => {
+        const { cartItemId } = params;
+
+        const cartItem = productDetails.cartItemsInfo.find((x) => x.cartItemId === cartItemId);
+        if (!cartItem) {
+            return HttpResponse.error();
+        }
+
+        cartItem.quantityInCart = Math.max(cartItem.quantityInCart + 1, 0);
+
+        return HttpResponse.json();
     }),
 ];
