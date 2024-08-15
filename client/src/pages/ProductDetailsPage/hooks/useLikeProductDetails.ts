@@ -1,5 +1,5 @@
 import { ProductDetails } from "@/pages/ProductDetailsPage/types/ProductDetails.ts";
-import sendLikeProductRequest from "@/utils/services/sendLikeProductRequest.ts";
+import fetchLikeProduct from "@/utils/services/fetchLikeProduct.ts";
 import { useQueryClient } from "@tanstack/react-query";
 import { useOptimisticUpdateWithoutData } from "@/hooks/useOptimisticUpdateWithoutData.tsx";
 
@@ -9,7 +9,7 @@ export function useLikeProductDetails(productId: string) {
 
     const likeProductDetailsMutation = useOptimisticUpdateWithoutData<ProductDetails>(
         queryKey,
-        () => sendLikeProductRequest(productId),
+        () => fetchLikeProduct(productId),
         onMutate,
     );
 

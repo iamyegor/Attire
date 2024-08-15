@@ -7,6 +7,7 @@ import ProfilePage from "@/pages/ProfilePage/ProfilePage.tsx";
 import UserAddressPage from "@/pages/ProfilePage/pages/UserAddressPage/UserAddressPage.tsx";
 import UserListOrdersPage from "@/pages/ProfilePage/pages/UserListOrdersPage/UserListOrdersPage.tsx";
 import UserPersonalDataPage from "@/pages/ProfilePage/pages/UserPersonalDataPage/UserPersonalDataPage.tsx";
+import CartPage from "@/pages/CartPage/CartPage.tsx";
 
 export const routes = [
     {
@@ -46,6 +47,10 @@ export const routes = [
                         element: <UserPersonalDataPage />,
                     },
                 ],
+            },
+            {
+                path: "cart",
+                element: <CartPage />,
             },
         ],
     },

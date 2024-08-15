@@ -4,8 +4,8 @@ import Type from "@/components/RootLayout/Header/BurgerMenu/types/Type.ts";
 import Breadcrumbs from "@/pages/CatalogPage/components/Breadcrumbs.tsx";
 import React from "react";
 import { useLoadProductDetails } from "@/pages/ProductDetailsPage/hooks/useLoadProductDetails.ts";
-import { useDecreaseCartQuantity } from "@/pages/ProductDetailsPage/hooks/useDecreaseCartQuantity.ts";
-import { useIncreaseCartQuantity } from "@/pages/ProductDetailsPage/hooks/useIncreaseCartQuantity.ts";
+import { useDecreaseCartQuantityInProductDetails } from "@/pages/ProductDetailsPage/hooks/useDecreaseCartQuantityInProductDetails.ts";
+import { useIncreaseCartQuantityInProductDetails } from "@/pages/ProductDetailsPage/hooks/useIncreaseCartQuantityInProductDetails.ts";
 import { useLikeProductDetails } from "@/pages/ProductDetailsPage/hooks/useLikeProductDetails.ts";
 import { useUnlikeProductDetails } from "@/pages/ProductDetailsPage/hooks/useUnlikeProductDetails.ts";
 import { useSelectedProductDetails } from "@/pages/ProductDetailsPage/hooks/useSelectedProductDetails.ts";
@@ -25,8 +25,8 @@ export default function ProductDetailsPage() {
     const { selectedColor, selectedSize, setSelectedColor, setSelectedSize } =
         useSelectedProductDetails(productDetails);
 
-    const { decreaseCartQuantityMutate } = useDecreaseCartQuantity(productId);
-    const { increaseCartQuantityMutate } = useIncreaseCartQuantity(productId);
+    const { decreaseCartQuantityMutate } = useDecreaseCartQuantityInProductDetails(productId);
+    const { increaseCartQuantityMutate } = useIncreaseCartQuantityInProductDetails(productId);
     const { unlikeProductDetailsMutate } = useUnlikeProductDetails(productId);
     const { likeProductDetailsMutate } = useLikeProductDetails(productId);
 
