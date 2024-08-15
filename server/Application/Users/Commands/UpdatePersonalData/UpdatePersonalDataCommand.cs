@@ -3,6 +3,7 @@ using Domain.User;
 using Domain.User.ValueObject;
 using Infrastructure.Data;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using XResults;
 using Errors = Domain.User.Errors.Errors;
 
@@ -40,6 +41,26 @@ public class UpdatePersonalDataCommandHandler
 
         PhoneNumber phone = PhoneNumber.Create(request.Phone);
         Email email = Email.Create(request.Email);
+
+        if (
+            await _context.Users.FirstOrDefaultAsync(
+                u => u.Phone == phone && u.Id != user.Id,
+                cancellationToken
+            ) != null
+        )
+        {
+            return Errors.PhoneNumber.IsTaken(phone.Value);
+        }
+
+        if (
+            await _context.Users.FirstOrDefaultAsync(
+                u => u.Email == email && u.Id != user.Id,
+                cancellationToken
+            ) != null
+        )
+        {
+            return Errors.Email.IsTaken(email.Value);
+        }
 
         user.UpdatePersonalData(request.FirstName, request.LastName, phone, email);
 
