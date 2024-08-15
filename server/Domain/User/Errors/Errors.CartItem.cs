@@ -31,5 +31,13 @@ public static partial class Errors
         {
             return new Error("cart.item.not.found", "Cart item not found.");
         }
+
+        public static Error CountMustBeLessThan100()
+        {
+            return new Error(
+                "cart.items.count.must.be.less.than.100",
+                "Cart items count must be less than 100."
+            );
+        }
     }
 }

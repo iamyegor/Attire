@@ -60,6 +60,11 @@ public class User : AggregateRoot<Guid>
 
     public SuccessOr<Error> AddCartItem(Product.Product product, CartItem newCartItem)
     {
+        if (_cart.Count >= 100)
+        {
+            return Errors.Errors.CartItem.CountMustBeLessThan100();
+        }
+
         if (product.Sizes.FirstOrDefault(x => x.Value == newCartItem.Size.Value) == null)
         {
             return Product.Errors.Errors.Product.SizeWithValueNotFound(newCartItem.Size.Value);
