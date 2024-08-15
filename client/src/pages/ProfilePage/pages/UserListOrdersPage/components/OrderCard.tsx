@@ -3,7 +3,7 @@ import { Order } from "../types/Order";
 
 function OrderCard({ order }: { order: Order }) {
     return (
-        <div className="max-w-[875px] rounded-md bg-white overflow-hidden shadow-md mb-[20px]">
+        <div className="max-w-[875px] rounded-md bg-white overflow-hidden border mb-[20px]">
             <div className="p-[27px] bg-[#EEEEEE]">
                 <div className="md:flex justify-between items-center">
                     <div className="text-[18px] md:text-[20px] font-medium">
@@ -20,7 +20,7 @@ function OrderCard({ order }: { order: Order }) {
                     </div>
                 </div>
                 <div className="pt-[20px]">
-                    <Link to="." className="text-[#1100FF]">
+                    <Link to="." className="text-blue-500">
                         {order.id}
                     </Link>
                 </div>

@@ -1,12 +1,9 @@
 import React, { useState } from "react";
-import TrashSvg from "@/assets/trash.svg?react";
-import ShareSvg from "@/assets/share.svg?react";
 import CartItem from "@/pages/CartPage/types/CartItem.ts";
 import { Link } from "react-router-dom";
-import LinkCopiedNotification from "@/pages/CartPage/components/LinkCopiedNotification.tsx";
-import QuantityButton from "@/pages/CartPage/components/CartItemCard/QuantityButton.tsx";
-import IconButton from "@/pages/CartPage/components/CartItemCard/IconButton.tsx";
 import Checkbox from "@/pages/CartPage/components/Checkbox.tsx";
+import CartItemQuantityControl from "@/pages/CartPage/components/CartItemCard/CartItemQuantityControl.tsx";
+import CartItemActions from "@/pages/CartPage/components/CartItemCard/CartItemActionButtons.tsx";
 
 interface CartItemProps {
     item: CartItem;
@@ -48,7 +45,7 @@ export default function CartItemCard({
                 </div>
                 <div className="flex flex-col justify-between h-full w-full">
                     <div className="space-y-1">
-                        <p className="block sm:hidden font-medium text-medium">
+                        <p className="block md:hidden font-medium text-medium">
                             {item.productPrice * item.quantity} ₽
                         </p>
                         <Link
@@ -71,34 +68,20 @@ export default function CartItemCard({
                         </p>
                     </div>
                     <div className="hidden md:flex space-x-1 justify-between pt-2">
-                        <div className="flex space-x-1">
-                            <IconButton onClick={() => setLinkCopied(true)}>
-                                <ShareSvg className="w-4 h-4" />
-                            </IconButton>
-                            <LinkCopiedNotification
-                                isOpen={linkCopied}
-                                onClose={() => setLinkCopied(false)}
-                            />
-                            <IconButton onClick={() => deleteCartItem(item.id)}>
-                                <TrashSvg className="w-4 h-4" />
-                            </IconButton>
-                        </div>
+                        <CartItemActions
+                            itemId={item.id}
+                            linkCopied={linkCopied}
+                            deleteCartItem={deleteCartItem}
+                            setLinkCopied={setLinkCopied}
+                        />
                     </div>
                 </div>
                 <div className="hidden md:flex flex-col items-end space-y-2 h-full">
-                    <div className="flex items-center space-x-3">
-                        <QuantityButton
-                            label="-"
-                            isDisabled={item.quantity === 1}
-                            onClick={() => decreaseCartQuantity(item.id)}
-                        />
-                        <span className="w-10 text-center">{item.quantity}</span>
-                        <QuantityButton
-                            label="+"
-                            isDisabled={item.quantity === 99}
-                            onClick={() => increaseCartQuantity(item.id)}
-                        />
-                    </div>
+                    <CartItemQuantityControl
+                        item={item}
+                        decreaseCartQuantity={decreaseCartQuantity}
+                        increaseCartQuantity={increaseCartQuantity}
+                    />
                     <span className="font-medium text-black">
                         {item.productPrice * item.quantity} ₽
                     </span>
@@ -106,33 +89,18 @@ export default function CartItemCard({
             </div>
 
             <div className="flex md:hidden justify-between">
-                <div className="flex space-x-1">
-                    <IconButton onClick={() => setLinkCopied(true)}>
-                        <ShareSvg className="w-4 h-4" />
-                    </IconButton>
-                    <LinkCopiedNotification
-                        isOpen={linkCopied}
-                        onClose={() => setLinkCopied(false)}
-                    />
-                    <IconButton onClick={() => deleteCartItem(item.id)}>
-                        <TrashSvg className="w-4 h-4" />
-                    </IconButton>
-                </div>
-                <div className="flex items-center space-x-3">
-                    <QuantityButton
-                        className="!p-0 !px-0.5"
-                        label="-"
-                        isDisabled={item.quantity === 1}
-                        onClick={() => decreaseCartQuantity(item.id)}
-                    />
-                    <span className="w-10 text-center">{item.quantity}</span>
-                    <QuantityButton
-                        className="!p-0 !px-0.5"
-                        label="+"
-                        isDisabled={item.quantity === 99}
-                        onClick={() => increaseCartQuantity(item.id)}
-                    />
-                </div>
+                <CartItemActions
+                    itemId={item.id}
+                    linkCopied={linkCopied}
+                    deleteCartItem={deleteCartItem}
+                    setLinkCopied={setLinkCopied}
+                />
+                <CartItemQuantityControl
+                    item={item}
+                    decreaseCartQuantity={decreaseCartQuantity}
+                    increaseCartQuantity={increaseCartQuantity}
+                    className="!p-0 !px-0.5"
+                />
             </div>
         </div>
     );
