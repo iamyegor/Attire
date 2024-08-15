@@ -1,6 +1,6 @@
 import { ProductDetails } from "@/pages/ProductDetailsPage/types/ProductDetails.ts";
-import fetchLikeProduct from "@/utils/services/fetchLikeProduct.ts";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import fetchLikeProduct from "@/utils/services/product/fetchLikeProduct.ts";
 
 export function useLikeProductDetails(queryKey: string[]) {
     const queryClient = useQueryClient();

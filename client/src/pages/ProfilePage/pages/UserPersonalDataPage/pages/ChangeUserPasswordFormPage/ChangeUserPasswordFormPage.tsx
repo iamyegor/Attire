@@ -6,7 +6,7 @@ import ChangedPasswordForm from "./types/ChangedPasswordForm";
 import { EmptyResult } from "@/types/results/EmptyResult";
 import { SuccessOr } from "@/types/results/SuccessOr";
 import ErrorMessage from "@/types/errors/ErrorMessage";
-import fetchChangePassword from "@/utils/services/fetchChangePassword";
+import fetchChangePassword from "@/utils/services/profile/fetchChangePassword.ts";
 
 const cleanChangedPasswordForm: ChangedPasswordForm = {
     oldPassword: "",

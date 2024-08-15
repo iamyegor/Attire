@@ -1,5 +1,5 @@
-import fetchLogout from "@/utils/services/fetchLogout";
 import { NavLink, useNavigate } from "react-router-dom";
+import fetchLogout from "@/utils/services/auth/fetchLogout.ts";
 
 function ProfilePageSideBar() {
     const nav = useNavigate();

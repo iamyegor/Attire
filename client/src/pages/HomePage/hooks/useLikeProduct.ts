@@ -1,6 +1,6 @@
 import { InfiniteData, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ProductsResponse } from "@/pages/HomePage/types/ProductsResponse.ts";
-import fetchLikeProduct from "@/utils/services/fetchLikeProduct.ts";
+import fetchLikeProduct from "@/utils/services/product/fetchLikeProduct.ts";
 
 export default function useLikeProduct(queryKey: string[]) {
     const queryClient = useQueryClient();

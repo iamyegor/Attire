@@ -1,10 +1,9 @@
-import { Link } from "react-router-dom";
 import { useLoadUserPersonalData } from "./hooks/useLoadUserPersonalData";
 import { useState } from "react";
 import CurrentPersonalDataPage from "./types/CurrentPersonalDataPage";
 import ChangeUserPersonalDataFormPage from "./pages/ChangeUserPersonalDataFormPage";
 import ChangeUserPasswordFormPage from "./pages/ChangeUserPasswordFormPage/ChangeUserPasswordFormPage";
-import { toShowFormatPhoneNumber } from "@/utils/services/phoneNumberConverter";
+import { toShowFormatPhoneNumber } from "@/utils/phoneNumberConverter.ts";
 
 function UserPersonalDataPage() {
     const { personalData, setPersonalData, isPending } = useLoadUserPersonalData();

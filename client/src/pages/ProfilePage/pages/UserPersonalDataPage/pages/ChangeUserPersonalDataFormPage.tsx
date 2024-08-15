@@ -6,9 +6,9 @@ import Input from "@/components/ui/Input";
 import { SuccessOr } from "@/types/results/SuccessOr";
 import ErrorMessage from "@/types/errors/ErrorMessage";
 import { EmptyResult } from "@/types/results/EmptyResult";
-import fetchChangePersonalData from "@/utils/services/fetchChangePersonalData";
 import PhoneInput from "@/components/ui/PhoneInput/components/PhoneInput";
-import { toServerPhoneNumberDto } from "@/utils/services/phoneNumberConverter";
+import fetchChangePersonalData from "@/utils/services/profile/fetchChangePersonalData.ts";
+import { toServerPhoneNumberDto } from "@/utils/phoneNumberConverter.ts";
 // import fetchChangePersonalData from "@/utils/services/fetchChangePersonalData";
 
 function ChangeUserPersonalDataFormPage({

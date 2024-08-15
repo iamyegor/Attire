@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { fetchDecreaseCartQuantity } from "@/utils/services/fetchDecreaseCartQuantity.ts";
 import CartItem from "@/pages/CartPage/types/CartItem.ts";
+import { fetchDecreaseCartQuantity } from "@/utils/services/cart/fetchDecreaseCartQuantity.ts";
 
 export function useDecreaseCartQuantityInCart(queryKey: string[]) {
     const queryClient = useQueryClient();

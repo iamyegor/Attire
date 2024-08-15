@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { fetchAddToCart } from "@/utils/services/fetchAddToCart.ts";
+import { fetchAddToCart } from "@/utils/services/cart/fetchAddToCart.ts";
 
 export function useAddToCart(queryKey: string[]) {
     const queryClient = useQueryClient();
