@@ -57,7 +57,7 @@ public class ProductsController : ApplicationController
         return result;
     }
 
-    [HttpGet("new")]
+    [HttpGet("genders/{gender}/new")]
     public async Task<IResult> GetNewProductsWithGender(
         string gender,
         [AsParameters] SortParameters sortParameters,

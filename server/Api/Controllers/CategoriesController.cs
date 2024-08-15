@@ -1,8 +1,6 @@
 ﻿using System.Security.Claims;
 using Api.Controllers.Common;
-using Application.Categories.Queries.Common;
-using Application.Categories.Queries.GetFemaleCategories;
-using Application.Categories.Queries.GetMaleCategories;
+using Application.Categories.Queries.GetCategoryByGender;
 using Application.Categories.Queries.GetProductFilterFromCategory;
 using Application.Categories.Queries.GetProductsFromCategory;
 using Application.Common.Models;
@@ -27,24 +25,14 @@ public class CategoriesController : ApplicationController
         _sender = sender;
     }
 
-    [HttpGet("female")]
-    public async Task<IEnumerable<CategoryShortDto>> GetFemaleCategories()
+    [HttpGet("{gender}")]
+    public async Task<IResult> GetCategoriesByGender(string gender)
     {
-        var query = new GetFemaleCategoriesQuery();
+        var query = new GetCategoriesByGenderQuery(gender);
 
-        IEnumerable<CategoryShortDto> result = await _sender.Send(query);
+        Result<IEnumerable<CategoryShortDto>, Error> result = await _sender.Send(query);
 
-        return result;
-    }
-
-    [HttpGet("male")]
-    public async Task<IEnumerable<CategoryShortDto>> GetMaleCategories()
-    {
-        var query = new GetMaleCategoriesQuery();
-
-        IEnumerable<CategoryShortDto> result = await _sender.Send(query);
-
-        return result;
+        return FromResult(result);
     }
 
     // errorCodes: category.with.id.not.found

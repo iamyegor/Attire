@@ -1,4 +1,4 @@
-﻿namespace Application.Categories.Queries.Common;
+﻿namespace Application.Categories.Queries.GetCategoryByGender;
 
 public class CategoryShortDto
 {
