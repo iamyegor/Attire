@@ -15,7 +15,7 @@ export default function Breadcrumbs({
     productName = null,
 }: BreadcrumbsProps) {
     return (
-        <div className="absolute flex items-center text-sm text-neutral-600 space-x-2 left-4">
+        <div className="flex items-center text-sm text-neutral-600 space-x-2 left-4 px-4">
             <Link to="/">Главная</Link>
             {type && (
                 <>
