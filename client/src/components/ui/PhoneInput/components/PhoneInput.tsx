@@ -20,9 +20,9 @@ export default function PhoneInput({ country, phoneNumber, setPhoneNumber }: Pho
 
     const [errorMessage, setErrorMessage] = useState<string>("");
 
-    // useEffect(() => {
-    //     setPhoneNumber(formatPhoneNumber(country, phoneNumber));
-    // }, [phoneNumber, country]);
+    useEffect(() => {
+        setPhoneNumber(formatPhoneNumber(country, phoneNumber));
+    }, [phoneNumber]);
 
     useCloseOnOutsideClick(countriesDropdownRef.current, setIsDropdownOpen);
 
