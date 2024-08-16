@@ -18,15 +18,9 @@ public class ProductDetailsDto
     public int CountOfReviews { get; set; }
     public Guid CategoryId { get; set; }
     public string CategoryName { get; set; }
-    public GenderDto Gender { get; set; }
+    public string Gender { get; set; }
 
     public List<string> ImagePaths { get; set; }
     public List<ColorDto> Colors { get; set; }
     public List<string> Sizes { get; set; }
-}
-
-public enum GenderDto
-{
-    Male = 1,
-    Female = 2
 }

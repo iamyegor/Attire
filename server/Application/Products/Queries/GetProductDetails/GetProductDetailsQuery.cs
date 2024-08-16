@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Domain.Category.ValueObject;
 using Domain.DomainErrors;
 using Infrastructure.Data;
 using MediatR;
@@ -31,7 +32,7 @@ public class GetProductDetailsQueryHandler
         string sqlQuery =
             @"
             SELECT 
-                p.title, 
+                p.title,
                 p.price,
                 p.description,
                 p.brand,
@@ -39,7 +40,10 @@ public class GetProductDetailsQueryHandler
                 p.composition,
                 c.category_id,
                 c.name as category_name,
-                c.gender
+                CASE 
+                    WHEN c.gender = @MaleGender THEN 'male'
+                    ELSE 'female'
+                END as gender
             FROM products p
             LEFT JOIN categories c
                 ON p.category_id = c.category_id
@@ -71,7 +75,12 @@ public class GetProductDetailsQueryHandler
 
         SqlMapper.GridReader reader = await connection.QueryMultipleAsync(
             sqlQuery,
-            new { request.ProductId, UserId = userId }
+            new
+            {
+                request.ProductId,
+                UserId = userId,
+                MaleGender = Gender.Male
+            }
         );
 
         ProductDetailsDto? productDetails =
