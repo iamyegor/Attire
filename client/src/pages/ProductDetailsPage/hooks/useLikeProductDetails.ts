@@ -1,31 +1,30 @@
 import { ProductDetails } from "@/pages/ProductDetailsPage/types/ProductDetails.ts";
-import fetchLikeProduct from "@/utils/services/fetchLikeProduct.ts";
-import { useQueryClient } from "@tanstack/react-query";
-import { useOptimisticUpdateWithoutData } from "@/hooks/useOptimisticUpdateWithoutData.tsx";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import fetchLikeProduct from "@/utils/services/product/fetchLikeProduct.ts";
 
-export function useLikeProductDetails(productId: string) {
+export function useLikeProductDetails(queryKey: string[]) {
     const queryClient = useQueryClient();
-    const queryKey = ["product-details", productId];
 
-    const likeProductDetailsMutation = useOptimisticUpdateWithoutData<ProductDetails>(
-        queryKey,
-        () => fetchLikeProduct(productId),
-        onMutate,
-    );
+    const likeProductDetailsMutation = useMutation({
+        mutationFn: fetchLikeProduct,
+        onMutate: async () => {
+            await queryClient.cancelQueries({ queryKey });
 
-    async function onMutate() {
-        await queryClient.cancelQueries({ queryKey });
+            const previousData = queryClient.getQueryData<ProductDetails>(queryKey);
 
-        const previousData = queryClient.getQueryData<ProductDetails>(queryKey);
+            queryClient.setQueryData<ProductDetails>(queryKey, (data) => {
+                if (!data) return previousData;
 
-        queryClient.setQueryData<ProductDetails>(queryKey, (data) => {
-            if (!data) return previousData;
+                return { ...data, isLiked: true };
+            });
 
-            return { ...data, isLiked: true };
-        });
-
-        return { previousData };
-    }
+            return { previousData };
+        },
+        onError: (_, __, context) => {
+            if (context?.previousData) queryClient.setQueryData(queryKey, context.previousData);
+        },
+        onSettled: () => queryClient.invalidateQueries({ queryKey }),
+    });
 
     return { likeProductDetailsMutate: likeProductDetailsMutation.mutate };
 }

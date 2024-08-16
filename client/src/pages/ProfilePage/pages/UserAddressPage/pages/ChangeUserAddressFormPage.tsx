@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import { CurrentAddressPage } from "../types/CurrentAddressPage";
 import { Address } from "../types/Address";
 import Input from "@/components/ui/Input";
-import fetchChangeAddress from "@/utils/services/fetchChangeAddress";
 import { SuccessOr } from "@/types/results/SuccessOr";
 import ErrorMessage from "@/types/errors/ErrorMessage";
 import { EmptyResult } from "@/types/results/EmptyResult";
+import fetchChangeAddress from "@/utils/services/profile/fetchChangeAddress.ts";
 
 function ChangeUserAddressForm({
     initialAddress,

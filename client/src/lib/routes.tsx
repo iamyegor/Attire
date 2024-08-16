@@ -8,11 +8,15 @@ import UserAddressPage from "@/pages/ProfilePage/pages/UserAddressPage/UserAddre
 import UserListOrdersPage from "@/pages/ProfilePage/pages/UserListOrdersPage/UserListOrdersPage.tsx";
 import UserPersonalDataPage from "@/pages/ProfilePage/pages/UserPersonalDataPage/UserPersonalDataPage.tsx";
 import CartPage from "@/pages/CartPage/CartPage.tsx";
+import profilePageLoader from "@/pages/ProfilePage/loaders/profilePageLoader.ts";
+import ErrorPage from "@/pages/ErrorPage/ErrorPage.tsx";
+import SignInPage from "@/pages/SigninPage/SignInPage.tsx";
 
 export const routes = [
     {
         path: "/",
         element: <RootLayout />,
+        errorElement: <ErrorPage />,
         children: [
             {
                 index: true,
@@ -33,6 +37,7 @@ export const routes = [
             {
                 path: "profile",
                 element: <ProfilePage />,
+                loader: profilePageLoader,
                 children: [
                     {
                         index: true,
@@ -51,6 +56,10 @@ export const routes = [
             {
                 path: "cart",
                 element: <CartPage />,
+            },
+            {
+                path: "sign-in",
+                element: <SignInPage />,
             },
         ],
     },

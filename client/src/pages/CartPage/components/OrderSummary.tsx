@@ -38,8 +38,9 @@ export default function OrderSummary({ selectedItems, totalPrice }: OrderSummary
             <CustomDialog
                 isOpen={deliveryDetailsOpen}
                 onClose={() => setDeliveryDetailsOpen(false)}
-                text="При заказе от 0₽ доставка осуществляется бесплатно"
-            />
+            >
+                <p>При заказе от 0₽ доставка осуществляется бесплатно</p>
+            </CustomDialog>
 
             <div className="w-full h-[1px] bg-neutral-400" />
 

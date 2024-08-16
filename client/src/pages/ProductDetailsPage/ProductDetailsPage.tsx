@@ -15,31 +15,46 @@ import CartActions from "@/pages/ProductDetailsPage/components/CartActions.tsx";
 import ProductSecondaryInfo from "@/pages/ProductDetailsPage/components/ProductSecondaryInfo.tsx";
 import ProductDetailsFooter from "@/pages/ProductDetailsPage/components/ProductDetailsFooter/ProductDetailsFooter.tsx";
 import ImageGallery from "@/pages/ProductDetailsPage/components/ImageGallery/ImageGallery.tsx";
+import { useCurrentCartItemInfo } from "@/pages/ProductDetailsPage/hooks/useCurrentCartItemInfo.ts";
+import { useAddToCart } from "@/pages/ProductDetailsPage/hooks/useAddToCart.ts";
 
 export default function ProductDetailsPage() {
     const { productId } = useParams() as { productId: string };
+    const queryKey = ["product-details", productId];
     const { state } = useLocation();
     const category: Category | null = state?.category;
     const type: Type | null = state?.type;
     const { productDetails } = useLoadProductDetails(productId);
     const { selectedColor, selectedSize, setSelectedColor, setSelectedSize } =
         useSelectedProductDetails(productDetails);
+    const { currentCartItemInfo } = useCurrentCartItemInfo(
+        productDetails,
+        selectedSize,
+        selectedColor,
+    );
 
-    const { decreaseCartQuantityMutate } = useDecreaseCartQuantityInProductDetails(productId);
-    const { increaseCartQuantityMutate } = useIncreaseCartQuantityInProductDetails(productId);
-    const { unlikeProductDetailsMutate } = useUnlikeProductDetails(productId);
-    const { likeProductDetailsMutate } = useLikeProductDetails(productId);
+    const { addToCartMutation } = useAddToCart(queryKey);
+    const { decreaseCartQuantityMutate } = useDecreaseCartQuantityInProductDetails(queryKey);
+    const { increaseCartQuantityMutate } = useIncreaseCartQuantityInProductDetails(queryKey);
+    const { unlikeProductDetailsMutate } = useUnlikeProductDetails(queryKey);
+    const { likeProductDetailsMutate } = useLikeProductDetails(queryKey);
 
     function increaseCartQuantity() {
-        if (!selectedSize || !selectedColor) return;
+        if (!currentCartItemInfo) return;
 
-        increaseCartQuantityMutate({ size: selectedSize, color: selectedColor });
+        increaseCartQuantityMutate(currentCartItemInfo.cartItemId);
+    }
+
+    function addToCart() {
+        if (!selectedColor || !selectedSize) return;
+
+        addToCartMutation.mutate({ size: selectedSize, color: selectedColor, productId });
     }
 
     function decreaseCartQuantity() {
-        if (!selectedSize || !selectedColor) return;
+        if (!currentCartItemInfo) return;
 
-        decreaseCartQuantityMutate({ size: selectedSize, color: selectedColor });
+        decreaseCartQuantityMutate(currentCartItemInfo.cartItemId);
     }
 
     if (!productDetails) {
@@ -63,11 +78,13 @@ export default function ProductDetailsPage() {
                         setSelectedSize={setSelectedSize}
                     />
                     <CartActions
-                        quantityInCart={productDetails.quantityInCart}
+                        addingToCartPending={addToCartMutation.isPending}
+                        quantityInCart={currentCartItemInfo?.quantityInCart ?? 0}
+                        addToCart={addToCart}
                         decreaseCartQuantity={decreaseCartQuantity}
                         increaseCartQuantity={increaseCartQuantity}
-                        likeProduct={likeProductDetailsMutate}
-                        unlikeProduct={unlikeProductDetailsMutate}
+                        likeProduct={() => likeProductDetailsMutate(productId)}
+                        unlikeProduct={() => unlikeProductDetailsMutate(productId)}
                         isLiked={productDetails.isLiked}
                     />
                     <ProductSecondaryInfo
