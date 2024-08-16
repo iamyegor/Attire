@@ -27,7 +27,7 @@ public class UserFavoriteProductsController : ApplicationController
     // user.with.id.not.found
     // product.with.id.not.found
     // user.favorite.product.id.with.value.already.exists
-    [HttpPost]
+    [HttpPost("{favoriteProductId:guid}")]
     public async Task<IResult> AddFavoriteProduct(Guid favoriteProductId)
     {
         // Guid userId = Guid.Parse("b0b95618-3427-4183-8f2f-3eb7ecd8fda2");
@@ -42,7 +42,7 @@ public class UserFavoriteProductsController : ApplicationController
     // statusCodes:
     // user.with.id.not.found
     // user.favorite.product.id.with.value.not.found
-    [HttpDelete]
+    [HttpDelete("{removedFavoriteProductId:guid}")]
     public async Task<IResult> RemoveFavoriteProduct(Guid removedFavoriteProductId)
     {
         // Guid userId = Guid.Parse("b0b95618-3427-4183-8f2f-3eb7ecd8fda2");
