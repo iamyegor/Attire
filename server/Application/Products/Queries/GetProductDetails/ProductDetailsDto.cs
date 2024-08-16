@@ -23,4 +23,13 @@ public class ProductDetailsDto
     public List<string> ImagePaths { get; set; }
     public List<ColorDto> Colors { get; set; }
     public List<string> Sizes { get; set; }
+    public List<ProductDetailsCartInfo> CartItemsInfo { get; set; }
+}
+
+public class ProductDetailsCartInfo
+{
+    public string Size { get; set; }
+    public string Color { get; set; }
+    public Guid CartItemId { get; set; }
+    public int QuantityInCart { get; set; }
 }

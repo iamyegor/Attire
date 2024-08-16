@@ -69,7 +69,15 @@ public class GetProductDetailsQueryHandler
         
             SELECT COUNT(1)
             FROM product_reviews
-            WHERE product_id = @ProductId;";
+            WHERE product_id = @ProductId;
+
+            SELECT 
+                cart_item_id,
+                size,
+                color_name as color,
+                quantity as quantity_in_cart
+            FROM user_cart_items
+            WHERE product_id = @ProductId AND user_id = @UserId;";
 
         Guid? userId = request.UserId == null ? null : Guid.Parse(request.UserId);
 
@@ -99,11 +107,18 @@ public class GetProductDetailsQueryHandler
 
         List<string> productSizes = (await reader.ReadAsync<string>()).ToList();
 
-        productDetails.CountOfReviews = await reader.ReadSingleAsync<int>();
+        int countOfProductReviews = await reader.ReadSingleAsync<int>();
+
+        List<ProductDetailsCartInfo> productCartItemsInfo = (
+            await reader.ReadAsync<ProductDetailsCartInfo>()
+        ).ToList();
+
+        productDetails.CountOfReviews = countOfProductReviews;
 
         productDetails.ImagePaths = productImagePaths;
         productDetails.Colors = productColors;
         productDetails.Sizes = productSizes;
+        productDetails.CartItemsInfo = productCartItemsInfo;
 
         return productDetails;
     }

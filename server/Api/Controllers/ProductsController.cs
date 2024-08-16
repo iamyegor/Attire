@@ -29,7 +29,9 @@ public class ProductsController : ApplicationController
     [HttpGet("{productId:guid}")]
     public async Task<IResult> GetProductDetails(Guid productId)
     {
-        var query = new GetProductDetailsQuery(productId, User.FindFirstValue(JwtClaims.UserId));
+        // string userId = "b0b95618-3427-4183-8f2f-3eb7ecd8fda2";
+        string? userId = User.FindFirstValue(JwtClaims.UserId);
+        var query = new GetProductDetailsQuery(productId, userId);
 
         Result<ProductDetailsDto, Error> result = await _sender.Send(query);
 
