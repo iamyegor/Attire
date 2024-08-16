@@ -33,7 +33,7 @@ public class UserCartsController : ApplicationController
     // product.size.with.value.not.found
     // cart.item.with.parameters.already.exists
     [HttpPost]
-    public async Task<IResult> AddCartItem(CartItemForCreate cartItemForCreate)
+    public async Task<IResult> AddCartItem([FromBody] CartItemForCreate cartItemForCreate)
     {
         // Guid userId = Guid.Parse("b0b95618-3427-4183-8f2f-3eb7ecd8fda2");
         Guid userId = Guid.Parse(User.FindFirstValue(JwtClaims.UserId)!);
@@ -71,6 +71,7 @@ public class UserCartsController : ApplicationController
         [FromBody] ChangeQuantityOfProductInCartItemDto changeQuantityOfProductInCartItemDto
     )
     {
+        // Guid userId = Guid.Parse("b0b95618-3427-4183-8f2f-3eb7ecd8fda2");
         Guid userId = Guid.Parse(User.FindFirstValue(JwtClaims.UserId)!);
         var command = new ChangeQuantityOfProductsInCartItemCommand(
             userId,
@@ -89,6 +90,7 @@ public class UserCartsController : ApplicationController
     [HttpDelete("{cartItemId:guid}")]
     public async Task<IResult> RemoveCartItem(Guid cartItemId)
     {
+        // Guid userId = Guid.Parse("b0b95618-3427-4183-8f2f-3eb7ecd8fda2");
         Guid userId = Guid.Parse(User.FindFirstValue(JwtClaims.UserId)!);
         var command = new RemoveCartItemCommand(userId, cartItemId);
 
