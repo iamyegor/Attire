@@ -7,7 +7,7 @@ export default class AppError extends Error {
     }
 
     static unexpected(): AppError {
-        return new AppError("Неожиданная ошибка", "Что-то пошло не так. Пожалуйста, попробуйте еще раз.");
+        return new AppError("Какая-то Ошибка", "Что-то пошло не так. Пожалуйста, попробуйте еще раз.");
     }
 
     static serverError(): AppError {

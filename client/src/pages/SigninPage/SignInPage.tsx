@@ -1,23 +1,27 @@
-import VkSvg from "@/assets/vk.svg?react";
 import { useState } from "react";
-import SignInPasswordInput from "@/pages/SigninPage/components/SignInPasswordInput.tsx";
-import { Link } from "react-router-dom";
+import AuthPasswordInput from "@/pages/SigninPage/components/AuthPasswordInput.tsx";
+import { Form, Link, useActionData } from "react-router-dom";
 import Checkbox from "@/pages/CartPage/components/Checkbox.tsx";
+import ErrorMessage from "@/types/errors/ErrorMessage.ts";
+import ErrorMessageComponent from "@/components/ui/ErrorMessageComponent.tsx";
+import VkLoginButton from "@/pages/SigninPage/components/VkSignInButton.tsx";
+import SubmittingButton from "@/components/ui/SubmittingButton.tsx";
 
 export default function SignInPage() {
     const [rememberMe, setRememberMe] = useState(false);
-    
+    const errorMessage = useActionData() as ErrorMessage | null;
+
     return (
-        <div className="relative mx-auto p-6 max-w-md bg-white rounded-2xl space-y-8">
+        <Form
+            method="post"
+            className="relative mx-auto p-6 max-w-md bg-white rounded-2xl space-y-8"
+        >
             <div className="text-center">
                 <h1 className="text-3xl font-semibold text-gray-900">Войти</h1>
                 <p className="text-base text-gray-500 mt-1">Добро пожаловать обратно! 👋</p>
             </div>
 
-            <button className="flex w-full items-center justify-center space-x-2 border border-gray-200 rounded-lg p-3 hover:bg-gray-100 transition">
-                <VkSvg className="w-6 h-6" />
-                <span className="font-medium text-gray-900">Войти с помощью VK</span>
-            </button>
+            <VkLoginButton />
 
             <div className="relative flex items-center justify-center">
                 <div className="flex-1 h-px bg-gray-300" />
@@ -28,11 +32,12 @@ export default function SignInPage() {
             <div className="space-y-6">
                 <div className="space-y-4">
                     <label htmlFor="email" className="block font-medium text-gray-700">
-                        Почта или логин
+                        Почта
                     </label>
                     <input
                         id="email"
-                        type="email"
+                        name="email"
+                        type="text"
                         placeholder="Например: myemail@example.com"
                         className="w-full mt-1 p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
                     />
@@ -42,8 +47,10 @@ export default function SignInPage() {
                     <label htmlFor="password" className="block font-medium text-gray-700">
                         Пароль
                     </label>
-                    <SignInPasswordInput id="password" />
+                    <AuthPasswordInput id="password" />
                 </div>
+
+                <ErrorMessageComponent errorMessage={errorMessage?.value} />
 
                 <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
@@ -55,24 +62,22 @@ export default function SignInPage() {
                             Запомнить меня
                         </label>
                     </div>
-                    <Link to="/forgot-password" className="text-blue-500 hover:underline">
+                    <Link to="/request-password-reset" className="text-blue-500 hover:underline">
                         Не помню пароль
                     </Link>
                 </div>
 
-                <button className="w-full py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
-                    Войти
-                </button>
+                <SubmittingButton text="Войти" />
             </div>
 
             <div className="text-center space-y-2">
                 <p className="text-sm text-gray-700">
                     Еще не зарегистрированы?{" "}
-                    <Link to="/register" className="text-blue-500 hover:underline">
+                    <Link to="/sign-up" className="text-blue-500 hover:underline">
                         Создайте аккаунт
                     </Link>
                 </p>
             </div>
-        </div>
+        </Form>
     );
 }

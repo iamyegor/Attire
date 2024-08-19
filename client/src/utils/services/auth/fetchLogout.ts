@@ -1,5 +1,5 @@
-import api from "@/lib/api";
+import authApi from "@/lib/authApi.ts";
 
 export default async function fetchLogout() {
-    await api.post("users/logout");
+    await authApi.post("auth/log-out");
 }

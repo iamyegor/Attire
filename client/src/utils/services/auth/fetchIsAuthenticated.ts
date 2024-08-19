@@ -1,5 +1,5 @@
-import api from "@/lib/api.ts";
+import authApi from "@/lib/authApi.ts";
 
 export default async function fetchIsAuthenticated() {
-    await api.get("auth/is-authenticated");
+    await authApi.get("user/is-authenticated");
 }
