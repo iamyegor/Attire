@@ -9,6 +9,6 @@ public class GetNewProductsWithGenderQueryValidator
 {
     public GetNewProductsWithGenderQueryValidator()
     {
-        RuleFor(x => x.Gender).MustBeOk(GenderConverter.Convert);
+        RuleFor(x => x.Gender).MustBeOk(x => GenderConverter.Convert(x!)).When(x => x != null);
     }
 }
