@@ -30,13 +30,13 @@ export default function CategoriesList({
                     <Link to={`/catalog/${selectedType.path}`}>{selectedType.name}</Link>
                 </h2>
                 <div className="mt-8 space-y-4 flex flex-col ">
-                    {collections.map((collection, index) => (
+                    {collections.map((category, index) => (
                         <button
                             key={index}
                             className="text-xl text-neutral-700 text-left"
                             onClick={closeMenu}
                         >
-                            <Link to={`/catalog/${collection.path}`}>{collection.name}</Link>
+                            <Link to={`/catalog/${category.id}`}>{category.name}</Link>
                         </button>
                     ))}
                 </div>

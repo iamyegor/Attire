@@ -6,8 +6,8 @@ const cartItems: CartItem[] = [
     {
         id: "item1",
         productId: "item1",
-        name: "T-Shirt",
-        image: ProductImage,
+        productTitle: "T-Shirt",
+        imagePath: ProductImage,
         productPrice: 1999, // was 19.99
         size: "M",
         color: {
@@ -20,8 +20,8 @@ const cartItems: CartItem[] = [
     {
         id: "item2",
         productId: "item2",
-        name: "Jeans",
-        image: ProductImage,
+        productTitle: "Jeans",
+        imagePath: ProductImage,
         productPrice: 4999, // was 49.99
         size: "32",
         color: {
@@ -34,8 +34,8 @@ const cartItems: CartItem[] = [
     {
         id: "item3",
         productId: "item3",
-        name: "Sneakers",
-        image: ProductImage,
+        productTitle: "Sneakers",
+        imagePath: ProductImage,
         productPrice: 7999, // was 79.99
         size: "9",
         color: {
@@ -48,8 +48,8 @@ const cartItems: CartItem[] = [
     {
         id: "item4",
         productId: "item4",
-        name: "Hat",
-        image: ProductImage,
+        productTitle: "Hat",
+        imagePath: ProductImage,
         productPrice: 1499, // was 14.99
         size: "One Size",
         color: {
@@ -62,8 +62,8 @@ const cartItems: CartItem[] = [
     {
         id: "item5",
         productId: "item5",
-        name: "Jacket",
-        image: ProductImage,
+        productTitle: "Jacket",
+        imagePath: ProductImage,
         productPrice: 9999, // was 99.99
         size: "L",
         color: {
@@ -76,8 +76,8 @@ const cartItems: CartItem[] = [
     {
         id: "item6",
         productId: "item6",
-        name: "Socks",
-        image: ProductImage,
+        productTitle: "Socks",
+        imagePath: ProductImage,
         productPrice: 599, // was 5.99
         size: "M",
         color: {
@@ -90,8 +90,8 @@ const cartItems: CartItem[] = [
     {
         id: "item7",
         productId: "item7",
-        name: "Backpack",
-        image: ProductImage,
+        productTitle: "Backpack",
+        imagePath: ProductImage,
         productPrice: 5999, // was 59.99
         size: "One Size",
         color: {
@@ -104,8 +104,8 @@ const cartItems: CartItem[] = [
     {
         id: "item8",
         productId: "item8",
-        name: "Watch",
-        image: ProductImage,
+        productTitle: "Watch",
+        imagePath: ProductImage,
         productPrice: 19999, // was 199.99
         size: "Standard",
         color: {
@@ -118,8 +118,8 @@ const cartItems: CartItem[] = [
     {
         id: "item9",
         productId: "item9",
-        name: "Belt",
-        image: ProductImage,
+        productTitle: "Belt",
+        imagePath: ProductImage,
         productPrice: 2999, // was 29.99
         size: "M",
         color: {
@@ -132,8 +132,8 @@ const cartItems: CartItem[] = [
     {
         id: "item10",
         productId: "item10",
-        name: "Scarf",
-        image: ProductImage,
+        productTitle: "Scarf",
+        imagePath: ProductImage,
         productPrice: 2499, // was 24.99
         size: "One Size",
         color: {

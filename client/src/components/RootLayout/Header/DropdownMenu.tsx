@@ -22,7 +22,7 @@ function DropdownMenu({ categories, isVisible, onMouseEnter, onMouseLeave }: Dro
                     {categories.map((category, index) => (
                         <Link
                             key={index}
-                            to={`catalog/${category.path}`}
+                            to={`catalog/${category.id}`}
                             className="hover:bg-neutral-100 font-medium text-base px-4 py-2 rounded-lg text-center"
                             onClick={onMouseLeave}
                         >

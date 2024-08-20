@@ -24,6 +24,7 @@ import RequestPasswordResetPage from "@/pages/RequestPasswordReset/RequestPasswo
 import requestPasswordResetAction from "@/pages/RequestPasswordReset/actions/requestPasswordResetAction.ts";
 import ResetPasswordPage from "@/pages/ResetPassword/ResetPasswordPage.tsx";
 import resetPasswordPageAction from "@/pages/ResetPassword/actions/resetPasswordPageAction.ts";
+import SearchPage from "@/pages/SearchPage/SearchPage.tsx";
 
 export const routes = [
     {
@@ -108,6 +109,10 @@ export const routes = [
                 element: <ResetPasswordPage />,
                 action: resetPasswordPageAction,
             },
+            {
+                path: "search",
+                element: <SearchPage />,
+            }
         ],
     },
 ];

@@ -1,15 +1,15 @@
-import axios from "axios";
 import CartItem from "@/pages/CartPage/types/CartItem.ts";
 import { useQuery } from "@tanstack/react-query";
+import api from "@/lib/api.ts";
 
-export function useCart(queryKey: string[]) {
+export function useLoadCart(queryKey: string[]) {
     const { data } = useQuery({
         queryKey,
         queryFn: fetchCart,
     });
 
     async function fetchCart() {
-        const { data } = await axios.get<CartItem[]>(`cart`);
+        const { data } = await api.get<CartItem[]>(`users/carts`);
         return data;
     }
 

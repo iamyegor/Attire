@@ -5,7 +5,7 @@ import PersonSvg from "@/assets/person.svg?react";
 import HeartSvg from "@/assets/heart.svg?react";
 import CartSvg from "@/assets/cart.svg?react";
 import BurgerMenuSvg from "@/assets/burger-menu.svg?react";
-import SearchComponent from "@/components/RootLayout/SearchComponent.tsx";
+import SearchComponent from "@/components/RootLayout/Header/SearchComponent.tsx";
 import BurgerMenu from "@/components/RootLayout/Header/BurgerMenu/BurgerMenu.tsx";
 import HeaderIconLink from "@/components/RootLayout/Header/HeaderIconLink.tsx";
 import HeaderLink from "@/components/RootLayout/Header/HeaderLink.tsx";
@@ -14,8 +14,10 @@ import { Link } from "react-router-dom";
 import Category from "@/components/RootLayout/Header/BurgerMenu/types/Category.ts";
 import useAttireContext from "@/context/useAttireContext.ts";
 import Type from "@/components/RootLayout/Header/BurgerMenu/types/Type.ts";
+import useSearchTerm from "@/components/RootLayout/Header/hooks/useSearchTerm.ts";
 
 function Header() {
+    const { searchTerm } = useSearchTerm();
     const [searchOpen, setSearchOpen] = useState<boolean>(false);
     const [burgerMenuOpen, setBurgerMenuOpen] = useState<boolean>(false);
     const [activeCategories, setActiveCategories] = useState<Category[]>([]);
@@ -93,11 +95,13 @@ function Header() {
                 />
                 <div className="flex items-center space-x-3 md:space-x-5">
                     <button
-                        className="text-lg font-semibold text-neutral-500 hover:text-neutral-600 md:bg-neutral-100 md:p-1 md:pr-20 rounded-full flex items-center md:space-x-3"
+                        className="text-lg font-semibold text-neutral-500 hover:text-neutral-600 md:bg-neutral-100 md:p-1 md:pr-4 rounded-full flex items-center md:space-x-3"
                         onClick={() => setSearchOpen(true)}
                     >
                         <SearchSvg className="w-5 h-5 ml-1" />
-                        <p className="hidden md:block">Искать</p>
+                        <p className="hidden md:block max-w-[14ch] truncate overflow-hidden whitespace-nowrap">
+                            {searchTerm ? searchTerm : <span className="mr-16">Искать</span>}
+                        </p>
                     </button>
                     <HeaderIconLink to="/profile" SvgIcon={PersonSvg} />
                     <HeaderIconLink to="/favorites" SvgIcon={HeartSvg} />

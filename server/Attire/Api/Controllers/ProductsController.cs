@@ -50,9 +50,9 @@ public class ProductsController : ApplicationController
     }
 
     [HttpGet]
-    public async Task<FindProductsPaginationResult> FindProducts(string searchText, int page = 1)
+    public async Task<FindProductsPaginationResult> FindProducts(string searchTerm, int page = 1)
     {
-        var query = new FindProductsQuery(searchText, page, User.FindFirstValue(JwtClaims.UserId));
+        var query = new FindProductsQuery(searchTerm, page, User.FindFirstValue(JwtClaims.UserId));
 
         FindProductsPaginationResult result = await _sender.Send(query);
 

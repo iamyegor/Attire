@@ -9,32 +9,22 @@ export default function useCurrentCategory(path: string | null) {
     const { menCategories, womenCategories, newCategories } = useAttireContext();
 
     useEffect(() => {
-        if (path == null) {
+        const categoryId: string | null = path?.split("/")[1] ?? null;
+        if (path === null || categoryId == null) {
+            setType(null);
             setCategory(null);
             return;
         }
 
+        const allCategories = menCategories.concat(newCategories).concat(womenCategories);
         let category: Category | null =
-            menCategories.find((category) => category.path === path) ?? null;
+            allCategories.find((category) => category.id === categoryId) ?? null;
         if (category) {
             setCategory(category);
-            return;
+        } else {
+            throw new Error(`Category with id ${categoryId} not found`);
         }
-
-        category = womenCategories.find((category) => category.path === path) ?? null;
-        if (category) {
-            setCategory(category);
-            return;
-        }
-
-        category = newCategories.find((category) => category.path === path) ?? null;
-        if (category) {
-            setCategory(category);
-            return;
-        }
-
-        setCategory(null);
-    }, [path, womenCategories.length, menCategories.length, newCategories.length]);
+    }, [path]);
 
     useEffect(() => {
         if (path) {
@@ -42,5 +32,5 @@ export default function useCurrentCategory(path: string | null) {
         }
     }, [path]);
 
-    return {category, type};
+    return { category, type };
 }

@@ -37,8 +37,8 @@ export default function CartItemCard({
                         className={`absolute top-2 left-2 ${isSelected ? "opacity-100" : "lg:opacity-0"} group-hover:opacity-100 transition-opacity`}
                     />
                     <img
-                        src={item.image}
-                        alt={item.name}
+                        src={item.imagePath}
+                        alt={item.productTitle}
                         className="h-full rounded-lg select-none"
                         draggable={false}
                     />
@@ -52,7 +52,7 @@ export default function CartItemCard({
                             to={`/products/${item.productId}`}
                             className="line-clamp-2 font-medium"
                         >
-                            {item.name}
+                            {item.productTitle}
                         </Link>
                         <p className="text-[#5b5b5b] line-clamp-2 text-xs xs:text-base">
                             артикул <span className="font-medium">{item.sku}</span>

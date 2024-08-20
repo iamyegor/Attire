@@ -3,7 +3,7 @@ import api from "@/lib/api.ts";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 
-export default function useCategories() {
+export default function useLoadCategories() {
     const { data: menCategories = [] } = useQuery<Category[]>({
         queryKey: ["men-categories"],
         queryFn: fetchMenCategories,
@@ -25,8 +25,14 @@ export default function useCategories() {
     }
 
     const newCategories = useMemo(() => {
-        const newMaleCategory: Category = { id: "", name: "Мужчинам", path: "new/men" };
-        const newFemaleCategory: Category = { id: "", name: "Женщинам", path: "new/women" };
+        const newMaleCategory: Category = {
+            id: "25a5e11f-ca7a-43f4-94be-e9fb3a6c25f5",
+            name: "Мужчинам",
+        };
+        const newFemaleCategory: Category = {
+            id: "bdbb429c-a070-409d-974b-03c45a22f686",
+            name: "Женщинам",
+        };
         return [newMaleCategory, newFemaleCategory];
     }, []);
 

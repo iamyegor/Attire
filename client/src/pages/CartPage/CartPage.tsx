@@ -1,4 +1,4 @@
-import { useCart } from "@/pages/CartPage/hooks/useCart.ts";
+import { useLoadCart } from "@/pages/CartPage/hooks/useLoadCart.ts";
 import OrderSummary from "@/pages/CartPage/components/OrderSummary.tsx";
 import Checkbox from "@/pages/CartPage/components/Checkbox.tsx";
 import useItemSelection from "@/pages/CartPage/hooks/useItemSelection.ts";
@@ -9,7 +9,7 @@ import CartItemCard from "@/pages/CartPage/components/CartItemCard.tsx";
 
 export default function CartPage() {
     const queryKey = ["cart"];
-    const { cartItems } = useCart(queryKey);
+    const { cartItems } = useLoadCart(queryKey);
     const { selectedItems, toggleSelect, toggleSelectAll } = useItemSelection(cartItems);
 
     const { decreaseCartQuantityMutate } = useDecreaseCartQuantityInCart(queryKey);

@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import Breadcrumbs from "@/pages/CatalogPage/components/Breadcrumbs.tsx";
 import CategoriesDashboard from "@/pages/CatalogPage/components/CategoryDashboard/CategoriesDashboard.tsx";
 import SortByComponent from "@/pages/CatalogPage/components/SortByComponent/SortByComponent.tsx";
@@ -14,22 +14,25 @@ export default function CatalogPage() {
         useCurrentCategoryAndType(path ?? null);
 
     function isNewCategory() {
-        return category?.path.startsWith(Type.New.path);
+        return type && type === Type.New;
     }
 
     return (
-        <div className="mt-4 lg:mt-0">
-            {type && <Breadcrumbs type={type} category={category} />}
+        <div className="mt-4 space-y-2 lg:mt-0">
+            <Breadcrumbs type={type} category={category} />
             <div className="flex mb-8 w-full">
                 <div className="lg:px-4 relative">
-                    {path && <CategoriesDashboard path={path} />}
+                    <CategoriesDashboard
+                        currentType={type}
+                        currentCategoryId={category?.id ?? null}
+                    />
                 </div>
                 <div className="flex flex-col space-y-3 w-full">
-                    <div className="mt-[34px] ml-4 flex space-x-5 h-11">
+                    <div className="ml-4 flex space-x-5 h-11">
                         <SortByComponent />
                         {category && !isNewCategory() && <FilterComponent category={category} />}
                     </div>
-                    {type && <Products type={type} category={category} />}
+                    <Products type={type} category={category} />
                 </div>
             </div>
         </div>

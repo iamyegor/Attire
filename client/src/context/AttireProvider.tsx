@@ -1,6 +1,6 @@
 import React, { createContext } from "react";
 import Category from "@/components/RootLayout/Header/BurgerMenu/types/Category.ts";
-import useCategories from "@/components/RootLayout/Header/BurgerMenu/hooks/useCategories.ts";
+import useLoadCategories from "@/components/RootLayout/Header/BurgerMenu/hooks/useLoadCategories.ts";
 
 export interface AttireContextProps {
     menCategories: Category[];
@@ -11,7 +11,7 @@ export interface AttireContextProps {
 export const AttireContext = createContext<AttireContextProps | null>(null);
 
 export default function AttireProvider({ children }: { children: React.ReactNode }) {
-    const { menCategories, womenCategories, newCategories } = useCategories();
+    const { menCategories, womenCategories, newCategories } = useLoadCategories();
 
     return (
         <AttireContext.Provider value={{ menCategories, womenCategories, newCategories }}>

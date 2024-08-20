@@ -4,7 +4,10 @@ import { useInView } from "react-intersection-observer";
 import { ProductsResponse } from "@/pages/HomePage/types/ProductsResponse.ts";
 import api from "@/lib/api.ts";
 
-export function useLoadProducts(queryKey: string[], getEndpoint: (page: number) => string) {
+export function useLoadProducts(
+    queryKey: (string | null)[],
+    getEndpoint: (page: number) => string,
+) {
     const { data, isLoading, fetchNextPage } = useInfiniteQuery({
         queryKey: queryKey,
         queryFn: fetchProducts,
