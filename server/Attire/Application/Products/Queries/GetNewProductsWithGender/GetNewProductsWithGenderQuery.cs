@@ -13,7 +13,7 @@ namespace Application.Products.Queries.GetNewProductsWithGender;
 public record SortParameters(string? SortBy, string? SortByDescending);
 
 public record GetNewProductsWithGenderQuery(
-    string Gender,
+    string? Gender,
     SortParameters SortParameters,
     int Page,
     string? UserId
@@ -64,7 +64,7 @@ public class GetNewProductsWithGenderQueryHandler
         }
 
         Guid? userId = request.UserId == null ? null : Guid.Parse(request.UserId);
-        Gender gender = GenderConverter.Convert(request.Gender);
+        Gender? gender = request.Gender == null ? null : GenderConverter.Convert(request.Gender).Value;
 
         IEnumerable<ProductShortDto> newProducts = await connection.QueryAsync<ProductShortDto>(
             sqlQuery,
@@ -103,7 +103,7 @@ public class GetNewProductsWithGenderQueryHandler
 
     private async Task<int?> GetNextPageNumberOrNull(
         NpgsqlConnection connection,
-        Gender gender,
+        Gender? gender,
         int page
     )
     {
@@ -115,7 +115,7 @@ public class GetNewProductsWithGenderQueryHandler
                 ON p.category_id = c.category_id
             WHERE 
                 is_new = true AND
-                gender = @Gender",
+                (gender = @Gender OR @Gender IS NULL)",
             new { Gender = gender }
         );
 
@@ -145,7 +145,7 @@ public class GetNewProductsWithGenderQueryHandler
             WHERE 
                 pi.order_index = 1 AND
                 p.is_new = true AND
-                c.gender = @Gender
+                (gender = @Gender OR @Gender IS NULL)
             LIMIT @PageLimit
             OFFSET @Skip";
 
@@ -194,7 +194,7 @@ public class GetNewProductsWithGenderQueryHandler
             WHERE 
                 pi.order_index = 1 AND
                 p.is_new = true AND
-                c.gender = @Gender
+                (gender = @Gender OR @Gender IS NULL)
             LIMIT @PageLimit
             OFFSET @Skip";
 
