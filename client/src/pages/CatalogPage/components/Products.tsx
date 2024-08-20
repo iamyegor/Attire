@@ -14,7 +14,7 @@ interface ProductsProps {
 
 export default function Products({ type, category }: ProductsProps) {
     const [searchParams] = useSearchParams();
-    const queryKey = ["products", searchParams.toString()];
+    const queryKey = ["catalog", type.toString(), category?.name ?? "", searchParams.toString()];
     const { products, ref } = useLoadProducts(
         queryKey,
         (page) => `products?page=${page}&${searchParams.toString()}`,

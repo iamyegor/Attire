@@ -1,8 +1,7 @@
 export default interface Product {
     id: string;
-    name: string;
-    imageSrc: string;
-    description: string;
+    imagePath: string;
     price: number;
-    isFavorite: boolean;
+    title: string;
+    liked: boolean;
 }

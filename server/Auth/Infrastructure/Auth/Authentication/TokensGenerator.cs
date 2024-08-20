@@ -44,6 +44,7 @@ public class TokensGenerator
             _jwtSettings.Issuer,
             _jwtSettings.Audience,
             expires: DateTime.UtcNow.AddMinutes(2),
+
             claims: claims,
             signingCredentials: signingCredentials
         );

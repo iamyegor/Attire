@@ -10,41 +10,30 @@ export default function useLikeProduct(queryKey: string[]) {
         onMutate: async (productId: string) => {
             await queryClient.cancelQueries({ queryKey });
 
-            const previousProducts =
+            const previousData =
                 queryClient.getQueryData<InfiniteData<ProductsResponse, unknown>>(queryKey);
 
             queryClient.setQueryData<InfiniteData<ProductsResponse, unknown>>(queryKey, (data) => {
-                if (!data) return previousProducts;
+                if (!data) return previousData;
 
                 return {
                     ...data,
-                    pages: markProductAsFavorite(productId, data.pages),
+                    pages: data.pages.map((page) => ({
+                        ...page,
+                        products: page.products.map((product) =>
+                            product.id === productId ? { ...product, liked: true } : product,
+                        ),
+                    })),
                 };
             });
 
-            return { previousProducts };
+            return { previousData };
         },
         onError: (_, __, context) => {
-            if (context?.previousProducts) {
-                queryClient.setQueryData(queryKey, context?.previousProducts);
-            }
+            if (context?.previousData) queryClient.setQueryData(queryKey, context?.previousData);
         },
-        onSettled: () => {
-            queryClient.invalidateQueries({ queryKey });
-        },
+        onSettled: () => queryClient.invalidateQueries({ queryKey }),
     });
-
-    function markProductAsFavorite(
-        productId: string,
-        pages: ProductsResponse[],
-    ): ProductsResponse[] {
-        return pages.map((page) => ({
-            ...page,
-            products: page.products.map((product) =>
-                product.id === productId ? { ...product, isFavorite: true } : product,
-            ),
-        }));
-    }
 
     return likeProductMutation.mutate;
 }

@@ -22,7 +22,7 @@ export default function ProductCard({
 }: ProductCardProps) {
     function handleLikeButtonClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         e.preventDefault();
-        if (product.isFavorite) {
+        if (product.liked) {
             unlikeProduct(product.id);
         } else {
             likeProduct(product.id);
@@ -39,8 +39,8 @@ export default function ProductCard({
         >
             <img
                 className="w-full object-cover rounded-lg"
-                src={product.imageSrc}
-                alt={product.description}
+                src={product.imagePath}
+                alt={product.title}
                 style={{ userSelect: "none" }}
                 draggable={false}
             />
@@ -51,12 +51,12 @@ export default function ProductCard({
                 <div className="flex justify-between items-center">
                     <p className="font-medium text-gray-900">{product.price} ₽</p>
                     <LikeButton
-                        isLiked={product.isFavorite}
+                        isLiked={product.liked}
                         className="w-7 h-7"
                         onClick={handleLikeButtonClick}
                     />
                 </div>
-                <p className="mt-1 text-gray-700 line-clamp-2 text-left">{product.description}</p>
+                <p className="mt-1 text-gray-700 line-clamp-2 text-left">{product.title}</p>
             </div>
         </Link>
     );

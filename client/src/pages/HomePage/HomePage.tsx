@@ -3,31 +3,31 @@ import featuredImage from "@/assets/going_out_outfits.webp";
 import GenderSelection from "@/pages/HomePage/Components/GenderSelection/GenderSelection.tsx";
 import FeaturedImage from "@/pages/HomePage/Components/FeaturedImage.tsx";
 import Section from "@/pages/HomePage/Components/Section/Section.tsx";
-import { useLoadFeaturedProducts } from "@/pages/HomePage/hooks/useLoadFeaturedProducts.ts";
-import useLoadRecommendedProducts from "@/pages/HomePage/hooks/useLoadRecommendedProducts.ts";
 import useLikeProduct from "@/pages/HomePage/hooks/useLikeProduct.ts";
 import useUnlikeProduct from "@/pages/HomePage/hooks/useUnlikeProduct.ts";
 import Type from "@/components/RootLayout/Header/BurgerMenu/types/Type.ts";
+import { useLoadProducts } from "@/pages/HomePage/hooks/useLoadProducts.ts";
 
 export default function HomePage() {
-    const featuredImageText = "Новая коллекция";
+    const newProductsQueryKey = ["new-products"];
+    const recommendedProductsQueryKey = ["recommended-products"];
     const {
-        products: featuredProducts,
-        isLoading: areFeaturedProductsLoading,
-        ref: lastFeaturedProductRef,
-    } = useLoadFeaturedProducts();
+        products: newProducts,
+        isLoading: areNewProductsLoading,
+        ref: lastNewProductRef,
+    } = useLoadProducts(newProductsQueryKey, (page) => `products/new?page=${page}`);
 
     const {
         products: recommendedProducts,
         isLoading: areRecommendedProductsLoading,
         ref: lastRecommendedProductRef,
-    } = useLoadRecommendedProducts();
+    } = useLoadProducts(recommendedProductsQueryKey, (page) => `products?page=${page}`);
 
-    const likeFeaturedProduct = useLikeProduct(["featured-products"]);
-    const unlikeFeaturedProduct = useUnlikeProduct(["featured-products"]);
+    const likeNewProduct = useLikeProduct(newProductsQueryKey);
+    const unlikeNewProduct = useUnlikeProduct(newProductsQueryKey);
 
-    const likeRecommendedProduct = useLikeProduct(["recommended-products"]);
-    const unlikeRecommendedProduct = useUnlikeProduct(["recommended-products"]);
+    const likeRecommendedProduct = useLikeProduct(recommendedProductsQueryKey);
+    const unlikeRecommendedProduct = useUnlikeProduct(recommendedProductsQueryKey);
 
     return (
         <div className="flex flex-col m-4">
@@ -35,14 +35,14 @@ export default function HomePage() {
             <GenderSelection />
             <Section
                 title="Новинки"
-                products={featuredProducts}
-                areProductsLoading={areFeaturedProductsLoading}
-                ref={lastFeaturedProductRef}
-                likeProduct={likeFeaturedProduct}
-                unlikeProduct={unlikeFeaturedProduct}
+                products={newProducts}
+                areProductsLoading={areNewProductsLoading}
+                ref={lastNewProductRef}
+                likeProduct={likeNewProduct}
+                unlikeProduct={unlikeNewProduct}
                 type={Type.New}
             />
-            <FeaturedImage imageSrc={featuredImage} text={featuredImageText} />
+            <FeaturedImage imageSrc={featuredImage} text="Новая коллекция" />
             <Section
                 title="Вам может понравиться"
                 products={recommendedProducts}

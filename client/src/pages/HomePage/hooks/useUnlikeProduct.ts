@@ -45,7 +45,7 @@ export default function useUnlikeProduct(queryKey: string[]) {
         return pages.map((page) => ({
             ...page,
             products: page.products.map((product) =>
-                product.id === productId ? { ...product, isFavorite: false } : product,
+                product.id === productId ? { ...product, liked: false } : product,
             ),
         }));
     }

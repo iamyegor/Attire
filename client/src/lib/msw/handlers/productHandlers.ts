@@ -35,7 +35,7 @@ export const productHandlers = [
 
             if (productIndex !== -1) {
                 isLiked = true;
-                products[productIndex].isFavorite = true;
+                products[productIndex].liked = true;
                 break;
             }
         }
@@ -57,7 +57,7 @@ export const productHandlers = [
 
             if (productIndex !== -1) {
                 isUnliked = true;
-                products[productIndex].isFavorite = false;
+                products[productIndex].liked = false;
                 break;
             }
         }
