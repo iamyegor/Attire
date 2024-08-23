@@ -1,15 +1,28 @@
 import Stars from "@/pages/ProductDetailsPage/components/ProductDetailsFooter/Reviews/Stars.tsx";
 import StarRating from "@/pages/ProductDetailsPage/components/ProductDetailsFooter/Reviews/StarRating.tsx";
 import ReviewsInfo from "@/pages/ProductDetailsPage/components/ProductDetailsFooter/Reviews/types/ReviewsInfo.ts";
+import { useState } from "react";
+import ReviewErrorDialog from "@/pages/ProductDetailsPage/components/ProductDetailsFooter/Reviews/ReviewErrorDialog.tsx";
 
 interface ReviewSummaryProps {
     reviewsInfo: ReviewsInfo | null;
 }
 
 export default function ReviewSummary({ reviewsInfo }: ReviewSummaryProps) {
+    const [reviewErrorDialogOpen, setReviewErrorDialogOpen] = useState(false);
+
     return (
         <div className="flex flex-col w-full lg:flex-1 max-w-full lg:max-w-[350px] space-y-5 order-1 lg:order-2 mb-5 lg:mb-0">
-            <button className="bg-blue-500 text-white p-3 rounded-lg">Оставить отзыв</button>
+            <ReviewErrorDialog
+                reviewErrorDialogOpen={reviewErrorDialogOpen}
+                setReviewErrorDialogOpen={setReviewErrorDialogOpen}
+            />
+            <button
+                className="bg-blue-500 text-white p-3 rounded-lg"
+                onClick={() => setReviewErrorDialogOpen(true)}
+            >
+                Оставить отзыв
+            </button>
             <div>
                 {reviewsInfo?.averageRating && (
                     <div className="space-y-4">

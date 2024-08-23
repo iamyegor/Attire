@@ -7,6 +7,7 @@ export function useLoadCart(queryKey: string[]) {
         queryKey,
         queryFn: fetchCart,
         gcTime: 0,
+        retry: 1,
     });
 
     async function fetchCart() {

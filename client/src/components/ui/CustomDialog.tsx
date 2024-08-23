@@ -1,7 +1,6 @@
-import { Dialog } from "@mui/material";
-import { styled } from "@mui/material/styles";
 import MuiDialog from "@/components/ui/MuiDialog.tsx";
 import React from "react";
+import classNames from "classnames";
 
 interface DialogProps {
     isOpen: boolean;
@@ -16,7 +15,11 @@ export default function CustomDialog({ isOpen, children, onClose, auxiliaryButto
             <div className="space-y-5">
                 {children}
                 <hr />
-                <div className="w-full flex justify-between">
+                <div
+                    className={classNames("w-full flex justify-end", {
+                        "!justify-between": auxiliaryButton,
+                    })}
+                >
                     {auxiliaryButton}
                     <button
                         onClick={onClose}

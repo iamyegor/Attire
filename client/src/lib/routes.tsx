@@ -71,6 +71,7 @@ export const routes = [
             {
                 path: "cart",
                 element: <CartPage />,
+                loader: redirectToSignInOnUnauthenticated,
             },
             {
                 path: "sign-in",

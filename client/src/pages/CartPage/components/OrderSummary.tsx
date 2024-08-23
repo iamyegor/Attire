@@ -2,6 +2,7 @@ import TruckSvg from "@/assets/truck.svg?react";
 import { useState } from "react";
 import CustomDialog from "@/components/ui/CustomDialog.tsx";
 import classNames from "classnames";
+import RedFaceSvg from "@/assets/red-face.svg?react";
 
 interface OrderSummaryProps {
     selectedItems: number;
@@ -9,6 +10,7 @@ interface OrderSummaryProps {
 }
 
 export default function OrderSummary({ selectedItems, totalPrice }: OrderSummaryProps) {
+    const [purchaseFailedDialogOpen, setPurchaseFailedDialogOpen] = useState(false);
     const [deliveryDetailsOpen, setDeliveryDetailsOpen] = useState(false);
 
     return (
@@ -56,9 +58,22 @@ export default function OrderSummary({ selectedItems, totalPrice }: OrderSummary
                     "bg-blue-500": selectedItems > 0,
                 })}
                 disabled={selectedItems == 0}
+                onClick={() => setPurchaseFailedDialogOpen(true)}
             >
                 <span className="font-normal text-white text-base">Перейти к оформлению</span>
             </button>
+            <CustomDialog
+                isOpen={purchaseFailedDialogOpen}
+                onClose={() => setPurchaseFailedDialogOpen(false)}
+            >
+                <div className="px-6 flex flex-col items-center space-y-4">
+                    <RedFaceSvg className="w-20 h-20" />
+                    <p className="text-xl font-medium text-center">
+                        Что-то пошло не так при попытке совершить покупку, пожалуйста попробуйте
+                        позже.
+                    </p>
+                </div>
+            </CustomDialog>
         </div>
     );
 }
