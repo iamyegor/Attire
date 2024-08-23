@@ -22,6 +22,7 @@ function Header() {
     const [burgerMenuOpen, setBurgerMenuOpen] = useState<boolean>(false);
     const [activeCategories, setActiveCategories] = useState<Category[]>([]);
     const [dropdownVisible, setDropdownVisible] = useState<boolean>(false);
+    const [hoveredType, setHoveredType] = useState<Type | null>(null);
 
     const { menCategories, womenCategories, newCategories } = useAttireContext();
 
@@ -33,7 +34,8 @@ function Header() {
         setBurgerMenuOpen(false);
     }
 
-    function showDropdown(categories: Category[]) {
+    function showDropdown(type: Type, categories: Category[]) {
+        setHoveredType(type);
         setActiveCategories(categories);
         setDropdownVisible(true);
     }
@@ -64,7 +66,7 @@ function Header() {
                 <div className="text-lg font-semibold hidden lg:flex space-x-10">
                     <HeaderLink
                         to={Type.New.path}
-                        onMouseEnter={() => showDropdown(newCategories)}
+                        onMouseEnter={() => showDropdown(Type.New, newCategories)}
                         onMouseLeave={hideDropdown}
                         onClick={hideDropdown}
                     >
@@ -72,7 +74,7 @@ function Header() {
                     </HeaderLink>
                     <HeaderLink
                         to={Type.Men.path}
-                        onMouseEnter={() => showDropdown(menCategories)}
+                        onMouseEnter={() => showDropdown(Type.Men, menCategories)}
                         onMouseLeave={hideDropdown}
                         onClick={hideDropdown}
                     >
@@ -80,7 +82,7 @@ function Header() {
                     </HeaderLink>
                     <HeaderLink
                         to={Type.Women.path}
-                        onMouseEnter={() => showDropdown(womenCategories)}
+                        onMouseEnter={() => showDropdown(Type.Women, womenCategories)}
                         onMouseLeave={hideDropdown}
                         onClick={hideDropdown}
                     >
@@ -92,6 +94,7 @@ function Header() {
                     isVisible={dropdownVisible}
                     onMouseEnter={() => setDropdownVisible(true)}
                     onMouseLeave={hideDropdown}
+                    currentType={hoveredType}
                 />
                 <div className="flex items-center space-x-3 md:space-x-5">
                     <button

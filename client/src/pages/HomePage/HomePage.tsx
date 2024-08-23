@@ -7,6 +7,8 @@ import useLikeProduct from "@/pages/HomePage/hooks/useLikeProduct.ts";
 import useUnlikeProduct from "@/pages/HomePage/hooks/useUnlikeProduct.ts";
 import Type from "@/components/RootLayout/Header/BurgerMenu/types/Type.ts";
 import { useLoadProducts } from "@/pages/HomePage/hooks/useLoadProducts.ts";
+import { useState } from "react";
+import LoginModal from "@/components/ui/LoginModal.tsx";
 
 export default function HomePage() {
     const newProductsQueryKey = ["new-products"];
@@ -16,6 +18,7 @@ export default function HomePage() {
         isLoading: areNewProductsLoading,
         ref: lastNewProductRef,
     } = useLoadProducts(newProductsQueryKey, (page) => `products/new?page=${page}`);
+    const [isLoginModalShown, setIsLoginModalShown] = useState(false);
 
     const {
         products: recommendedProducts,
@@ -23,14 +26,25 @@ export default function HomePage() {
         ref: lastRecommendedProductRef,
     } = useLoadProducts(recommendedProductsQueryKey, (page) => `products?page=${page}`);
 
-    const likeNewProduct = useLikeProduct(newProductsQueryKey);
-    const unlikeNewProduct = useUnlikeProduct(newProductsQueryKey);
+    const likeNewProduct = useLikeProduct(newProductsQueryKey, () => setIsLoginModalShown(true));
+    const unlikeNewProduct = useUnlikeProduct(newProductsQueryKey, () =>
+        setIsLoginModalShown(true),
+    );
 
-    const likeRecommendedProduct = useLikeProduct(recommendedProductsQueryKey);
-    const unlikeRecommendedProduct = useUnlikeProduct(recommendedProductsQueryKey);
+    const likeRecommendedProduct = useLikeProduct(recommendedProductsQueryKey, () =>
+        setIsLoginModalShown(true),
+    );
+    const unlikeRecommendedProduct = useUnlikeProduct(recommendedProductsQueryKey, () =>
+        setIsLoginModalShown(true),
+    );
 
     return (
-        <div className="flex flex-col m-4">
+        <div className="flex flex-col mt-0 m-4">
+            <LoginModal
+                isLoginModalShown={isLoginModalShown}
+                hideLoginModal={() => setIsLoginModalShown(false)}
+                type="like"
+            />
             <MainCarousel />
             <GenderSelection />
             <Section

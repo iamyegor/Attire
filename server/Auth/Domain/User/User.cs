@@ -26,7 +26,7 @@ public class User : AggregateRoot<UserId>
         IsEmailVerified = false;
     }
 
-    public Name? Name { get; }
+    public Name? Name { get; private set; }
     public Email? Email { get; private set; }
     public Password? Password { get; private set; }
 
@@ -73,7 +73,9 @@ public class User : AggregateRoot<UserId>
 
     public void AddNameAndEmail(Name name, Email email)
     {
+        Precondition.Requires(Name == null);
         Precondition.Requires(Email == null);
+        Name = name;
         Email = email;
     }
 }

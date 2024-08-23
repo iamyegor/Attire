@@ -1,4 +1,5 @@
 using Infrastructure.Data;
+using Infrastructure.Data.Dapper;
 using Infrastructure.Utils;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

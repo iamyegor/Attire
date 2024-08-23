@@ -22,7 +22,10 @@ export default function Breadcrumbs({ type, category, productName = null }: Brea
             {category && (
                 <>
                     <ArrowRight className="w-3 h-3" />
-                    <Link className="whitespace-nowrap" to={`/catalog/${category.name}`}>
+                    <Link
+                        className="whitespace-nowrap"
+                        to={`/catalog/${type!.path}/${category.id}`}
+                    >
                         {category.name}
                     </Link>
                 </>

@@ -4,16 +4,19 @@ import FavoritesResponse from "@/pages/FavoritesPage/types/FavoritesResponse.ts"
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 
-export function useFavorites(queryKey: string[]) {
-    const { data, fetchNextPage } = useInfiniteQuery({
+export function useLoadFavorites(queryKey: string[]) {
+    const { data, isLoading, isSuccess, fetchNextPage } = useInfiniteQuery({
         queryKey,
         queryFn: fetchFavorites,
         initialPageParam: 0,
-        getNextPageParam: (lastPage) => lastPage.nextPage,
+        getNextPageParam: (lastPage) => lastPage.nextPageNumber,
+        retry: false,
     });
 
     async function fetchFavorites({ pageParam }: { pageParam: number }) {
-        const { data } = await api.get<FavoritesResponse>(`favorites?page=${pageParam}`);
+        const { data } = await api.get<FavoritesResponse>(
+            `users/favoriteProducts?page=${pageParam}`,
+        );
         return data;
     }
 
@@ -25,7 +28,7 @@ export function useFavorites(queryKey: string[]) {
         }
     }, [JSON.stringify(data), inView]);
 
-    const products = data?.pages.flatMap((page) => page.products) || [];
+    const products = data?.pages.flatMap((page) => page.favoriteProducts) || [];
 
-    return { products, ref };
+    return { products, isLoading, isSuccess, ref };
 }

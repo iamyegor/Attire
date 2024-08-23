@@ -1,4 +1,4 @@
-﻿namespace Application.Users.Queries.GetCartItems;
+﻿namespace Contracts.Users.Carts;
 
 public class CartItemDto
 {
@@ -9,7 +9,6 @@ public class CartItemDto
     public int ProductPrice { get; set; }
     public string SKU { get; set; }
     public string Size { get; set; }
-    public string ColorName { get; set; }
-    public string ColorHex { get; set; }
+    public ColorDto Color { get; set; }
     public int Quantity { get; set; }
 }

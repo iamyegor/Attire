@@ -1,9 +1,9 @@
 import getCodeFromForm from "@/pages/ConfirmEmailPage/utils/getCodeFromForm.ts";
 import FeedbackMessage from "@/utils/FeedbackMessage.ts";
 import extractVerifyEmailError from "@/pages/ConfirmEmailPage/utils/extractVerifyEmailError.ts";
-import api from "@/lib/api.ts";
 import { redirect } from "react-router-dom";
 import throwOnIncorrectError from "@/utils/throwOnIncorrectError.ts";
+import authApi from "@/lib/authApi.ts";
 
 export default async function confirmEmailPageAction({ request }: any) {
     const code: string = await getCodeFromForm(request, 5);
@@ -13,7 +13,7 @@ export default async function confirmEmailPageAction({ request }: any) {
     }
 
     try {
-        await api.post("confirm-email", { code });
+        await authApi.post("confirm-email", { code });
         return redirect("/");
     } catch (err) {
         const error = throwOnIncorrectError(err);

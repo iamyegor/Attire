@@ -5,15 +5,15 @@ import { AxiosResponse } from "axios";
 import VkSignInResponse from "@/pages/VkAuthRedirectPage/types/VkSignInResponse.ts";
 import throwOnIncorrectError from "@/utils/throwOnIncorrectError.ts";
 import AppError from "@/types/errors/AppError.ts";
+import authApi from "@/lib/authApi.ts";
 
 export default async function signInWithVk(
     code: string,
     vkDeviceId: string,
     navigate: NavigateFunction,
-    
 ): Promise<ErrorMessage | undefined> {
     try {
-        const response = (await api.post("vk/sign-in", {
+        const response = (await authApi.post("vk/sign-in", {
             code,
             vkDeviceId,
         })) as AxiosResponse<VkSignInResponse>;

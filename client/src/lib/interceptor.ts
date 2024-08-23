@@ -2,9 +2,11 @@ import { AxiosError, AxiosRequestConfig } from "axios";
 import ServerErrorResponse from "@/types/networking/ServerErrorResponse.ts";
 import api from "@/lib/api.ts";
 import authApi from "@/lib/authApi.ts";
+import { EmptyResult } from "@/types/results/EmptyResult.ts";
 
 interface CustomAxiosRequestConfig extends AxiosRequestConfig {
     _retry?: boolean;
+    _refreshToken?: boolean;
 }
 
 export default async function interceptor(error: AxiosError<ServerErrorResponse>): Promise<any> {
@@ -19,7 +21,10 @@ export default async function interceptor(error: AxiosError<ServerErrorResponse>
         if (error.response?.data?.errorCode === "device.id.is.invalid") {
             await issueNewDeviceId();
         } else if (error.response?.status === 401) {
-            await refreshToken();
+            const refreshResult = await refreshToken();
+            if (refreshResult.isFailure) {
+                return api(originalRequest);
+            }
         } else {
             return Promise.reject(error);
         }
@@ -30,8 +35,13 @@ export default async function interceptor(error: AxiosError<ServerErrorResponse>
     }
 }
 
-async function refreshToken(): Promise<any> {
-    await authApi.post("refresh-access-token");
+async function refreshToken(): Promise<EmptyResult> {
+    try {
+        await authApi.post("refresh-access-token");
+        return EmptyResult.Ok();
+    } catch (refreshError) {
+        return EmptyResult.Fail("Token refresh failed");
+    }
 }
 
 async function issueNewDeviceId(): Promise<any> {

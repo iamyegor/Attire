@@ -1,13 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import requestCartQuantityChange from "@/utils/services/cart/requestCartQuantityChange.ts";
 import CartItem from "@/pages/CartPage/types/CartItem.ts";
-import { fetchIncreaseCartQuantity } from "@/utils/services/cart/fetchIncreaseCartQuantity.ts";
 
-export function useIncreaseCartQuantityInCart(queryKey: string[]) {
+export default function useChangeCartQuantityInCart(queryKey: string[]) {
     const queryClient = useQueryClient();
 
-    const increaseCartQuantityMutation = useMutation({
-        mutationFn: fetchIncreaseCartQuantity,
-        onMutate: async (cartItemId) => {
+    const changeCartQuantity = useMutation({
+        mutationFn: requestCartQuantityChange,
+        onMutate: async ({ cartItemId, newQuantity }) => {
             await queryClient.cancelQueries({ queryKey });
 
             const previousData = queryClient.getQueryData<CartItem[]>(queryKey);
@@ -17,7 +17,7 @@ export function useIncreaseCartQuantityInCart(queryKey: string[]) {
 
                 return data.map((item) => {
                     if (item.id === cartItemId) {
-                        return { ...item, quantity: item.quantity + 1 };
+                        return { ...item, quantity: newQuantity };
                     }
                     return item;
                 });
@@ -25,13 +25,11 @@ export function useIncreaseCartQuantityInCart(queryKey: string[]) {
 
             return { previousData };
         },
-        onError(_, __, context) {
-            context?.previousData && queryClient.setQueryData(queryKey, context.previousData);
+        onError: (_, __, context) => {
+            if (context?.previousData) queryClient.setQueryData(queryKey, context.previousData);
         },
-        onSettled() {
-            queryClient.invalidateQueries({ queryKey });
-        },
+        onSettled: () => queryClient.invalidateQueries({ queryKey }),
     });
 
-    return { increaseCartQuantityMutate: increaseCartQuantityMutation.mutate };
+    return { changeCartQuantityMutate: changeCartQuantity.mutate };
 }

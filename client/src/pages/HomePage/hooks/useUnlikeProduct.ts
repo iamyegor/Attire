@@ -2,7 +2,10 @@ import { InfiniteData, useMutation, useQueryClient } from "@tanstack/react-query
 import { ProductsResponse } from "@/pages/HomePage/types/ProductsResponse.ts";
 import fetchUnlikeProduct from "@/utils/services/product/fetchUnlikeProduct.ts";
 
-export default function useUnlikeProduct(queryKey: (string | null)[]) {
+export default function useUnlikeProduct(
+    queryKey: (string | null)[],
+    setShowLoginModal: () => void,
+) {
     const queryClient = useQueryClient();
 
     const unlikeProductMutation = useMutation({
@@ -10,14 +13,14 @@ export default function useUnlikeProduct(queryKey: (string | null)[]) {
         onMutate: async (productId: string) => {
             await queryClient.cancelQueries({ queryKey });
 
-            const previousProducts = queryClient.getQueryData<
+            const previousData = queryClient.getQueryData<
                 InfiniteData<ProductsResponse, unknown> | undefined
             >(queryKey);
 
             queryClient.setQueryData<InfiniteData<ProductsResponse, unknown> | undefined>(
                 queryKey,
                 (data) => {
-                    if (!data) return previousProducts;
+                    if (!data) return previousData;
 
                     return {
                         ...data,
@@ -26,12 +29,12 @@ export default function useUnlikeProduct(queryKey: (string | null)[]) {
                 },
             );
 
-            return { previousProducts };
+            return { previousData };
         },
         onError: (_, __, context) => {
-            if (context?.previousProducts) {
-                queryClient.setQueryData(queryKey, context?.previousProducts);
-            }
+            if (context?.previousData) queryClient.setQueryData(queryKey, context?.previousData);
+
+            setShowLoginModal();
         },
         onSettled: () => {
             queryClient.invalidateQueries({ queryKey });

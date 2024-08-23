@@ -2,6 +2,7 @@
 using Domain.Category.ValueObject;
 using Domain.DomainErrors;
 using Infrastructure.Data;
+using Infrastructure.Data.Dapper;
 using MediatR;
 using Npgsql;
 using XResults;

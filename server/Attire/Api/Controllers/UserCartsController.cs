@@ -56,9 +56,14 @@ public class UserCartsController : ApplicationController
         Guid userId = Guid.Parse(User.FindFirstValue(JwtClaims.UserId)!);
         var query = new GetCartItemsQuery(userId);
 
-        Result<IEnumerable<CartItemDto>, Error> result = await _sender.Send(query);
+        Result<IEnumerable<CartItemModel>, Error> result = await _sender.Send(query);
+        if (result.IsFailure)
+        {
+            return FromResult(result.Error);
+        }
 
-        return FromResult(result);
+        List<CartItemDto> cartItems = result.Value.Adapt<List<CartItemDto>>();
+        return Results.Ok(cartItems);
     }
 
     // errorCodes

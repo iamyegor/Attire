@@ -3,6 +3,7 @@ import ImageLightBoxNextArrow from "@/pages/ProductDetailsPage/components/ImageG
 import ImageLightBoxPrevArrow from "@/pages/ProductDetailsPage/components/ImageGallery/ImageLightbox/ImageLightBoxPrevArrow.tsx";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import Lightbox from "yet-another-react-lightbox";
+import productImageFullPath from "@/utils/productImageFullPath.ts";
 
 interface ImagesLightboxProps {
     images: string[];
@@ -15,7 +16,7 @@ export default function ImageLightbox({ images }: ImagesLightboxProps) {
         <div className="visible md:hidden">
             <button onClick={() => setIsOpen(true)} className="w-full">
                 <img
-                    src={images[0]}
+                    src={productImageFullPath(images[0])}
                     alt="Product image"
                     className="w-full object-cover"
                     style={{ aspectRatio: "10/16" }}
@@ -24,7 +25,7 @@ export default function ImageLightbox({ images }: ImagesLightboxProps) {
             <Lightbox
                 open={isOpen}
                 close={() => setIsOpen(false)}
-                slides={images.map((image) => ({ src: image }))}
+                slides={images.map((image) => ({ src: productImageFullPath(image) }))}
                 styles={{ container: { backgroundColor: "rgba(0, 0, 0, .8)" } }}
                 render={{
                     iconPrev: () => <ImageLightBoxPrevArrow />,

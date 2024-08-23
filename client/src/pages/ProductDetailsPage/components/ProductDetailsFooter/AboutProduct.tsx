@@ -13,7 +13,7 @@ export default function AboutProduct({ productDetails }: AboutProductProps) {
                 value={productDetails.composition}
                 className="bg-neutral-200"
             />
-            <DetailRow label="Категория" value={productDetails.category} />
+            <DetailRow label="Категория" value={productDetails.categoryName} />
             <DetailRow label="Бренд" value={productDetails.brand} className="bg-neutral-200" />
             <DetailRow label="Артикул" value={productDetails.sku} />
         </div>

@@ -4,6 +4,7 @@ import React from "react";
 import Category from "@/components/RootLayout/Header/BurgerMenu/types/Category.ts";
 import Type from "@/components/RootLayout/Header/BurgerMenu/types/Type.ts";
 import LikeButton from "@/components/ui/LikeButton.tsx";
+import productImageFullPath from "@/utils/productImageFullPath.ts";
 
 interface ProductCardProps {
     product: Product;
@@ -39,7 +40,7 @@ export default function ProductCard({
         >
             <img
                 className="w-full object-cover rounded-lg"
-                src={product.imagePath}
+                src={productImageFullPath(product.imagePath)}
                 alt={product.title}
                 style={{ userSelect: "none" }}
                 draggable={false}

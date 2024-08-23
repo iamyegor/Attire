@@ -1,12 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import CartItem from "@/pages/CartPage/types/CartItem.ts";
-import api from "@/lib/api.ts";
+import requestCartItemDelete from "@/utils/services/cart/requestCartItemDelete.ts";
 
 export function useDeleteCartItem(queryKey: string[]) {
     const queryClient = useQueryClient();
 
     const deleteCartItemMutation = useMutation({
-        mutationFn: fetchDeleteCartItem,
+        mutationFn: requestCartItemDelete,
         onMutate: async (cartItemId) => {
             await queryClient.cancelQueries({ queryKey });
 
@@ -27,10 +27,6 @@ export function useDeleteCartItem(queryKey: string[]) {
             queryClient.invalidateQueries({ queryKey });
         },
     });
-
-    async function fetchDeleteCartItem(cartItemId: string) {
-        await api.delete(`cart/${cartItemId}`);
-    }
 
     return { deleteCartItemMutate: deleteCartItemMutation.mutate };
 }

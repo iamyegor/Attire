@@ -1,8 +1,9 @@
 import { InfiniteData, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ProductsResponse } from "@/pages/HomePage/types/ProductsResponse.ts";
 import fetchLikeProduct from "@/utils/services/product/fetchLikeProduct.ts";
+import throwOnIncorrectError from "@/utils/throwOnIncorrectError.ts";
 
-export default function useLikeProduct(queryKey: (string | null)[]) {
+export default function useLikeProduct(queryKey: (string | null)[], setShowLoginModal: () => void) {
     const queryClient = useQueryClient();
 
     const likeProductMutation = useMutation({
@@ -29,8 +30,13 @@ export default function useLikeProduct(queryKey: (string | null)[]) {
 
             return { previousData };
         },
-        onError: (_, __, context) => {
+        onError: (err, __, context) => {
             if (context?.previousData) queryClient.setQueryData(queryKey, context?.previousData);
+
+            const error = throwOnIncorrectError(err);
+            if (error.response!.status === 401) {
+                setShowLoginModal();
+            }
         },
         onSettled: () => queryClient.invalidateQueries({ queryKey }),
     });

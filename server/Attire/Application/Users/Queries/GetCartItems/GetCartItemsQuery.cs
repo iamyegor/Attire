@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Domain.DomainErrors;
 using Infrastructure.Data;
+using Infrastructure.Data.Dapper;
 using MediatR;
 using Npgsql;
 using XResults;
@@ -8,10 +9,10 @@ using Errors = Domain.User.Errors.Errors;
 
 namespace Application.Users.Queries.GetCartItems;
 
-public record GetCartItemsQuery(Guid UserId) : IRequest<Result<IEnumerable<CartItemDto>, Error>>;
+public record GetCartItemsQuery(Guid UserId) : IRequest<Result<IEnumerable<CartItemModel>, Error>>;
 
 public class GetCartItemsQueryHandler
-    : IRequestHandler<GetCartItemsQuery, Result<IEnumerable<CartItemDto>, Error>>
+    : IRequestHandler<GetCartItemsQuery, Result<IEnumerable<CartItemModel>, Error>>
 {
     private readonly DapperConnectionFactory _dapperConnectionFactory;
 
@@ -20,7 +21,7 @@ public class GetCartItemsQueryHandler
         _dapperConnectionFactory = dapperConnectionFactory;
     }
 
-    public async Task<Result<IEnumerable<CartItemDto>, Error>> Handle(
+    public async Task<Result<IEnumerable<CartItemModel>, Error>> Handle(
         GetCartItemsQuery request,
         CancellationToken cancellationToken
     )
@@ -59,7 +60,7 @@ public class GetCartItemsQueryHandler
                 i.order_index = 1 AND
                 uci.user_id = @UserId";
 
-        IEnumerable<CartItemDto> cartItems = await connection.QueryAsync<CartItemDto>(
+        IEnumerable<CartItemModel> cartItems = await connection.QueryAsync<CartItemModel>(
             sqlQuery,
             new { request.UserId }
         );

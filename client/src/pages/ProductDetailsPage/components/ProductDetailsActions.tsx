@@ -6,20 +6,22 @@ import LoadingSpinner from "@/components/ui/LoadingSpinner.tsx";
 interface CartActionsProps {
     quantityInCart: number;
     addToCart: () => void;
-    decreaseCartQuantity: () => void;
-    increaseCartQuantity: () => void;
+    changeCartQuantity: (newQuantity: number) => void;
     isLiked: boolean;
     likeProduct: () => void;
     unlikeProduct: () => void;
     addingToCartPending: boolean;
+    cartItemId: string | null;
+    deleteCartItem: (id: string) => void;
 }
 
-export default function CartActions({
+export default function ProductDetailsActions({
+    cartItemId,
+    deleteCartItem,
     addingToCartPending,
     quantityInCart,
     addToCart,
-    decreaseCartQuantity,
-    increaseCartQuantity,
+    changeCartQuantity,
     isLiked,
     likeProduct,
     unlikeProduct,
@@ -29,6 +31,14 @@ export default function CartActions({
             likeProduct();
         } else {
             unlikeProduct();
+        }
+    }
+
+    function handleMinusClick() {
+        if (quantityInCart > 1) {
+            changeCartQuantity(quantityInCart - 1);
+        } else {
+            deleteCartItem(cartItemId!);
         }
     }
 
@@ -61,15 +71,15 @@ export default function CartActions({
                         В корзину
                     </Link>
                     <button
-                        onClick={decreaseCartQuantity}
-                        className="px-4 py-2 bg-gray-200 rounded-full hover:bg-gray-300 transition-all"
+                        onClick={handleMinusClick}
+                        className="w-11 h-11 bg-gray-200 rounded-full hover:bg-gray-300 transition-colors"
                     >
                         -
                     </button>
                     <p className="font-medium">{quantityInCart}</p>
                     <button
-                        onClick={increaseCartQuantity}
-                        className="px-4 py-2 bg-gray-200 rounded-full hover:bg-gray-300 transition-all"
+                        onClick={() => changeCartQuantity(quantityInCart + 1)}
+                        className="w-11 h-11 bg-gray-200 rounded-full hover:bg-gray-300 transition-all"
                     >
                         +
                     </button>

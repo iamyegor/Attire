@@ -1,8 +1,9 @@
 import { ProductDetails } from "@/pages/ProductDetailsPage/types/ProductDetails.ts";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import fetchLikeProduct from "@/utils/services/product/fetchLikeProduct.ts";
+import throwOnIncorrectError from "@/utils/throwOnIncorrectError.ts";
 
-export function useLikeProductDetails(queryKey: string[]) {
+export function useLikeProductDetails(queryKey: string[], showLoginModal: () => void) {
     const queryClient = useQueryClient();
 
     const likeProductDetailsMutation = useMutation({
@@ -15,13 +16,18 @@ export function useLikeProductDetails(queryKey: string[]) {
             queryClient.setQueryData<ProductDetails>(queryKey, (data) => {
                 if (!data) return previousData;
 
-                return { ...data, isLiked: true };
+                return { ...data, liked: true };
             });
 
             return { previousData };
         },
-        onError: (_, __, context) => {
+        onError: (err, __, context) => {
             if (context?.previousData) queryClient.setQueryData(queryKey, context.previousData);
+
+            const error = throwOnIncorrectError(err);
+            if (error.response!.status === 401) {
+                showLoginModal();
+            }
         },
         onSettled: () => queryClient.invalidateQueries({ queryKey }),
     });

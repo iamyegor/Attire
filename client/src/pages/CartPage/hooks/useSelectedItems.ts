@@ -1,7 +1,7 @@
 import CartItem from "@/pages/CartPage/types/CartItem.ts";
 import { useState } from "react";
 
-export default function useItemSelection(cartItems: CartItem[]) {
+export default function useSelectedItems(cartItems: CartItem[]) {
     const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
     function toggleSelect(id: string) {

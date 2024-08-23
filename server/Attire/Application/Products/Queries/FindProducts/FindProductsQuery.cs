@@ -1,6 +1,7 @@
 ﻿using Application.Common.Models;
 using Dapper;
 using Infrastructure.Data;
+using Infrastructure.Data.Dapper;
 using MediatR;
 using Npgsql;
 

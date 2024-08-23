@@ -3,6 +3,7 @@ using Dapper;
 using Domain.Category.ValueObject;
 using Domain.DomainErrors;
 using Infrastructure.Data;
+using Infrastructure.Data.Dapper;
 using Infrastructure.Services;
 using MediatR;
 using Npgsql;

@@ -9,6 +9,5 @@ export async function fetchAddToCart({
     size: string;
     color: string;
 }) {
-    const { data } = await api.post<string>("/cart/add", { productId, size, color });
-    return data;
+    await api.post<string>("users/carts", { productId, quantity: 1, size, color });
 }

@@ -4,10 +4,10 @@ import ProductImage from "@/assets/product.webp";
 
 export const productDetails: ProductDetails = {
     id: "1",
-    name: "Pants",
+    title: "Pants",
     price: 100,
     description: "Beautiful pants",
-    images: [ProductImage, ProductImage, ProductImage],
+    imagePaths: [ProductImage, ProductImage, ProductImage],
     colors: [
         {
             name: "Red",
@@ -20,9 +20,9 @@ export const productDetails: ProductDetails = {
     ],
     sizes: ["S", "M", "L"],
     cartItemsInfo: [{ cartItemId: "1", size: "S", color: "Red", quantityInCart: 1 }],
-    isLiked: false,
+    liked: false,
     composition: "Cotton 100%",
-    category: "Pants",
+    categoryName: "Pants",
     brand: "Gucci",
     sku: "HUY-12345",
 };

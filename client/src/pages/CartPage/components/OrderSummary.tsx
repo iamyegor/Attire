@@ -1,6 +1,7 @@
 import TruckSvg from "@/assets/truck.svg?react";
 import { useState } from "react";
 import CustomDialog from "@/components/ui/CustomDialog.tsx";
+import classNames from "classnames";
 
 interface OrderSummaryProps {
     selectedItems: number;
@@ -11,7 +12,7 @@ export default function OrderSummary({ selectedItems, totalPrice }: OrderSummary
     const [deliveryDetailsOpen, setDeliveryDetailsOpen] = useState(false);
 
     return (
-        <div className="w-full lg:max-w-[420px] h-full mx-auto bg-neutral-200 rounded-xl overflow-hidden p-4 md:p-6 space-y-4">
+        <div className="w-full lg:max-w-[420px] h-min mx-auto bg-neutral-200 rounded-xl overflow-hidden p-4 md:p-6 space-y-4">
             <h2 className="font-semibold text-black text-xl tracking-normal">Сумма заказа</h2>
 
             <div className="grid grid-cols-2 gap-2 text-base text-black">
@@ -49,7 +50,13 @@ export default function OrderSummary({ selectedItems, totalPrice }: OrderSummary
                 <span>{totalPrice} ₽</span>
             </div>
 
-            <button className="w-full p-4 bg-blue-500 rounded-lg flex justify-center items-center">
+            <button
+                className={classNames("w-full p-4 rounded-lg flex justify-center items-center", {
+                    "bg-gray-500": selectedItems == 0,
+                    "bg-blue-500": selectedItems > 0,
+                })}
+                disabled={selectedItems == 0}
+            >
                 <span className="font-normal text-white text-base">Перейти к оформлению</span>
             </button>
         </div>

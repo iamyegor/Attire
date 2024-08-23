@@ -30,21 +30,17 @@ public class AddItemToTheCartCommandHandler
 
     public async Task<Result<Guid, Error>> Handle(
         AddItemToTheCartCommand request,
-        CancellationToken cancellationToken
+        CancellationToken ct
     )
     {
-        Product? product = await _context.Products.FindAsync(
-            [request.ProductId],
-            cancellationToken
-        );
+        Product? product = await _context.Products.FindAsync([request.ProductId], ct);
 
         if (product == null)
         {
             return Errors.Product.WithIdNotFound(request.ProductId);
         }
 
-        User? user = await _context.Users.FindAsync([request.UserId], cancellationToken);
-
+        User? user = await _context.Users.FindAsync([request.UserId], ct);
         if (user == null)
         {
             return Domain.User.Errors.Errors.User.WithIdNotFound(request.UserId);
@@ -53,7 +49,6 @@ public class AddItemToTheCartCommandHandler
         Color? color = product.Colors.FirstOrDefault(x =>
             string.Equals(x.Name, request.Color, StringComparison.OrdinalIgnoreCase)
         );
-
         if (color == null)
         {
             return Errors.Product.ColorNotFound(product.Id, request.Color);
@@ -73,7 +68,7 @@ public class AddItemToTheCartCommandHandler
             return addCartItemResult.Error;
         }
 
-        await _context.SaveChangesAsync(cancellationToken);
+        await _context.SaveChangesAsync(ct);
 
         return newCartItem.Id;
     }

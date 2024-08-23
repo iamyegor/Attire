@@ -11,7 +11,7 @@ export default function ReviewSummary({ reviewsInfo }: ReviewSummaryProps) {
         <div className="flex flex-col w-full lg:flex-1 max-w-full lg:max-w-[350px] space-y-5 order-1 lg:order-2 mb-5 lg:mb-0">
             <button className="bg-blue-500 text-white p-3 rounded-lg">Оставить отзыв</button>
             <div>
-                {reviewsInfo?.averageRating ? (
+                {reviewsInfo?.averageRating && (
                     <div className="space-y-4">
                         <div className="flex items-center justify-between">
                             <Stars stars={reviewsInfo.averageRating} starClass="w-8 h-8" />
@@ -45,8 +45,6 @@ export default function ReviewSummary({ reviewsInfo }: ReviewSummaryProps) {
                             totalStars={reviewsInfo.allStarsNumber}
                         />
                     </div>
-                ) : (
-                    <div>No reviews yet</div>
                 )}
             </div>
         </div>

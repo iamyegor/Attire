@@ -36,7 +36,9 @@ export default function CategoriesList({
                             className="text-xl text-neutral-700 text-left"
                             onClick={closeMenu}
                         >
-                            <Link to={`/catalog/${category.id}`}>{category.name}</Link>
+                            <Link to={`/catalog/${selectedType.path}/${category.id}`}>
+                                {category.name}
+                            </Link>
                         </button>
                     ))}
                 </div>

@@ -3,7 +3,6 @@ import Category from "@/components/RootLayout/Header/BurgerMenu/types/Category.t
 import Type from "@/components/RootLayout/Header/BurgerMenu/types/Type.ts";
 
 interface CategoryListProps {
-    categories: Category[];
     onTypeSelect: (type: Type) => void;
 }
 

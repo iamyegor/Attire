@@ -8,7 +8,7 @@ import UserAddressPage from "@/pages/ProfilePage/pages/UserAddressPage/UserAddre
 import UserListOrdersPage from "@/pages/ProfilePage/pages/UserListOrdersPage/UserListOrdersPage.tsx";
 import UserPersonalDataPage from "@/pages/ProfilePage/pages/UserPersonalDataPage/UserPersonalDataPage.tsx";
 import CartPage from "@/pages/CartPage/CartPage.tsx";
-import profilePageLoader from "@/pages/ProfilePage/loaders/profilePageLoader.ts";
+import redirectToSignInOnUnauthenticated from "@/pages/ProfilePage/loaders/authRedirectLoader.ts";
 import ErrorPage from "@/pages/ErrorPage/ErrorPage.tsx";
 import SignInPage from "@/pages/SigninPage/SignInPage.tsx";
 import signInPageAction from "@/pages/SigninPage/actions/signInPageAction.ts";
@@ -47,11 +47,12 @@ export const routes = [
             {
                 path: "favorites",
                 element: <FavoritesPage />,
+                loader: redirectToSignInOnUnauthenticated,
             },
             {
                 path: "profile",
                 element: <ProfilePage />,
-                loader: profilePageLoader,
+                loader: redirectToSignInOnUnauthenticated,
                 children: [
                     {
                         index: true,
@@ -112,7 +113,7 @@ export const routes = [
             {
                 path: "search",
                 element: <SearchPage />,
-            }
+            },
         ],
     },
 ];

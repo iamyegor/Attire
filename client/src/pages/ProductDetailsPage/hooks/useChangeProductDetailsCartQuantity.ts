@@ -1,13 +1,13 @@
 import { ProductDetails } from "@/pages/ProductDetailsPage/types/ProductDetails.ts";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { fetchIncreaseCartQuantity } from "@/utils/services/cart/fetchIncreaseCartQuantity.ts";
+import requestCartQuantityChange from "@/utils/services/cart/requestCartQuantityChange.ts";
 
-export function useIncreaseCartQuantityInProductDetails(queryKey: string[]) {
+export function useChangeProductDetailsCartQuantity(queryKey: string[]) {
     const queryClient = useQueryClient();
 
-    const increaseCartQuantityMutation = useMutation({
-        mutationFn: fetchIncreaseCartQuantity,
-        onMutate: async (cartItemId: string) => {
+    const changeCartQuantity = useMutation({
+        mutationFn: requestCartQuantityChange,
+        onMutate: async ({ cartItemId, newQuantity }) => {
             await queryClient.cancelQueries({ queryKey });
 
             const previousData = queryClient.getQueryData<ProductDetails>(queryKey);
@@ -18,10 +18,9 @@ export function useIncreaseCartQuantityInProductDetails(queryKey: string[]) {
                 return {
                     ...data,
                     cartItemsInfo: data.cartItemsInfo.map((x) => {
-                        if (x.cartItemId == cartItemId) {
-                            return { ...x, quantityInCart: Math.max(x.quantityInCart + 1, 0) };
-                        }
-                        return x;
+                        return x.cartItemId == cartItemId
+                            ? { ...x, quantityInCart: newQuantity }
+                            : x;
                     }),
                 };
             });
@@ -34,5 +33,5 @@ export function useIncreaseCartQuantityInProductDetails(queryKey: string[]) {
         onSettled: () => queryClient.invalidateQueries({ queryKey }),
     });
 
-    return { increaseCartQuantityMutate: increaseCartQuantityMutation.mutate };
+    return { changeCartQuantityMutate: changeCartQuantity.mutate };
 }

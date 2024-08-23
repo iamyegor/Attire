@@ -19,7 +19,7 @@ export function useRemoveFromFavorites(queryKey: string[]) {
                     ...data,
                     pages: data.pages.map((page) => ({
                         ...page,
-                        products: page.products.filter((product) => product.id !== productId),
+                        products: page.favoriteProducts.filter((product) => product.id !== productId),
                     })),
                 };
             });

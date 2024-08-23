@@ -4,13 +4,14 @@ import { Link } from "react-router-dom";
 import Checkbox from "@/pages/CartPage/components/Checkbox.tsx";
 import CartItemQuantityControl from "@/pages/CartPage/components/CartItemCard/CartItemQuantityControl.tsx";
 import CartItemActions from "@/pages/CartPage/components/CartItemCard/CartItemActionButtons.tsx";
+import productImageFullPath from "@/utils/productImageFullPath.ts";
+import ChangeCartQuantityData from "@/types/ChangeCartQuantityData.ts";
 
 interface CartItemProps {
     item: CartItem;
     isSelected: boolean;
     onSelectClick: () => void;
-    decreaseCartQuantity: (id: string) => void;
-    increaseCartQuantity: (id: string) => void;
+    changeCartQuantity: (data: ChangeCartQuantityData) => void;
     deleteCartItem: (id: string) => void;
 }
 
@@ -18,8 +19,7 @@ export default function CartItemCard({
     item,
     isSelected,
     onSelectClick,
-    decreaseCartQuantity,
-    increaseCartQuantity,
+    changeCartQuantity,
     deleteCartItem,
 }: CartItemProps) {
     const [linkCopied, setLinkCopied] = useState(false);
@@ -37,7 +37,7 @@ export default function CartItemCard({
                         className={`absolute top-2 left-2 ${isSelected ? "opacity-100" : "lg:opacity-0"} group-hover:opacity-100 transition-opacity`}
                     />
                     <img
-                        src={item.imagePath}
+                        src={productImageFullPath(item.imagePath)}
                         alt={item.productTitle}
                         className="h-full rounded-lg select-none"
                         draggable={false}
@@ -57,7 +57,7 @@ export default function CartItemCard({
                         <p className="text-[#5b5b5b] line-clamp-2 text-xs xs:text-base">
                             артикул <span className="font-medium">{item.sku}</span>
                         </p>
-                        <p className="flex items-center space-x-1.5">
+                        <div className="flex items-center space-x-1.5">
                             <span>{item.size}</span>
                             <span>|</span>
                             <div
@@ -65,7 +65,7 @@ export default function CartItemCard({
                                 style={{ backgroundColor: item.color.hex }}
                             ></div>
                             <span>{item.color.name}</span>
-                        </p>
+                        </div>
                     </div>
                     <div className="hidden md:flex space-x-1 justify-between pt-2">
                         <CartItemActions
@@ -77,11 +77,7 @@ export default function CartItemCard({
                     </div>
                 </div>
                 <div className="hidden md:flex flex-col items-end space-y-2 h-full">
-                    <CartItemQuantityControl
-                        item={item}
-                        decreaseCartQuantity={decreaseCartQuantity}
-                        increaseCartQuantity={increaseCartQuantity}
-                    />
+                    <CartItemQuantityControl item={item} changeCartQuantity={changeCartQuantity} />
                     <span className="font-medium text-black">
                         {item.productPrice * item.quantity} ₽
                     </span>
@@ -97,8 +93,7 @@ export default function CartItemCard({
                 />
                 <CartItemQuantityControl
                     item={item}
-                    decreaseCartQuantity={decreaseCartQuantity}
-                    increaseCartQuantity={increaseCartQuantity}
+                    changeCartQuantity={changeCartQuantity}
                     className="!p-0 !px-0.5"
                 />
             </div>

@@ -6,17 +6,25 @@ import useLoadSearchProducts from "@/pages/SearchPage/hooks/useLoadSearchProduct
 import SortByComponent from "@/pages/CatalogPage/components/SortByComponent/SortByComponent.tsx";
 import { useSearchParams } from "react-router-dom";
 import useValidatedSearchTerm from "@/pages/SearchPage/hooks/useValidatedSearchTerm.ts";
+import { useState } from "react";
+import LoginModal from "@/components/ui/LoginModal.tsx";
 
 export default function SearchPage() {
     const searchTerm = useValidatedSearchTerm();
     const [searchParams] = useSearchParams();
     const queryKey = ["search-products", searchParams.toString()];
     const { products, ref } = useLoadSearchProducts(queryKey);
-    const likeProductMutate = useLikeProduct(queryKey);
-    const unlikeProductMutate = useUnlikeProduct(queryKey);
+    const [isLoginModalShown, setIsLoginModalShown] = useState(false);
+    const likeProductMutate = useLikeProduct(queryKey, () => setIsLoginModalShown(true));
+    const unlikeProductMutate = useUnlikeProduct(queryKey, () => setIsLoginModalShown(true));
 
     return (
         <div>
+            <LoginModal
+                isLoginModalShown={isLoginModalShown}
+                hideLoginModal={() => setIsLoginModalShown(false)}
+                type="like"
+            />
             <div className="ml-4 space-y-3">
                 <div className="space-y-1">
                     <p>Результаты поиска для</p>

@@ -1,7 +1,7 @@
 import CategoriesList from "@/components/RootLayout/Header/BurgerMenu/CategoriesList.tsx";
 import "@/components/RootLayout/Header/BurgerMenu/burger-menu.css";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import useSelectedCategory from "@/components/RootLayout/Header/BurgerMenu/hooks/useSelectedCategory.ts";
+import useBurgerMenu from "@/components/RootLayout/Header/BurgerMenu/hooks/useBurgerMenu.ts";
 import TypesList from "@/components/RootLayout/Header/BurgerMenu/TypesList.tsx";
 import CloseButton from "@/components/ui/CloseButton.tsx";
 
@@ -10,14 +10,14 @@ interface BurgerMenuProps {
 }
 
 export default function BurgerMenu({ onClose }: BurgerMenuProps) {
-    const { selectedType, categories, selectType, clearSelectedType } = useSelectedCategory();
+    const { selectedType, categories, selectType, clearSelectedType } = useBurgerMenu();
 
     return (
         <div className="w-full h-full pl-8">
             <TransitionGroup>
                 {!selectedType ? (
                     <CSSTransition key="category-list" timeout={300} classNames="slide-left">
-                        <TypesList categories={categories} onTypeSelect={selectType} />
+                        <TypesList onTypeSelect={selectType} />
                     </CSSTransition>
                 ) : (
                     <CSSTransition key="menu-category" timeout={300} classNames="slide-right">

@@ -3,7 +3,7 @@ import Category from "@/components/RootLayout/Header/BurgerMenu/types/Category.t
 import useAttireContext from "@/context/useAttireContext.ts";
 import Type from "@/components/RootLayout/Header/BurgerMenu/types/Type.ts";
 
-export default function useSelectedCategory() {
+export default function useBurgerMenu() {
     const { menCategories, womenCategories, newCategories } = useAttireContext();
     const [selectedType, setSelectedType] = useState<Type | null>(null);
     const [categories, setCategories] = useState<Category[]>([]);
