@@ -90,8 +90,8 @@ export default function ProductsCatalog({ type, category }: ProductsCatalogProps
                             category={category}
                         />
                     ))}
-                <div ref={ref}></div>
             </div>
+            <div ref={ref}></div>
         </div>
     );
 }

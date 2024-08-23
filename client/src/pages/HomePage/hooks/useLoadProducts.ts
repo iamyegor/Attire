@@ -18,9 +18,8 @@ export function useLoadProducts(
     const { ref, inView } = useInView();
 
     async function fetchProducts({ pageParam }: { pageParam: number }): Promise<ProductsResponse> {
-        const response = await api.get<ProductsResponse>(getEndpoint(pageParam));
-
-        return response.data;
+        const { data } = await api.get<ProductsResponse>(getEndpoint(pageParam));
+        return data;
     }
 
     useEffect(() => {
