@@ -3,14 +3,15 @@ using Api.Controllers.Common;
 using Application.Categories.Queries.GetCategoryByGender;
 using Application.Categories.Queries.GetProductFilterFromCategory;
 using Application.Categories.Queries.GetProductsFromCategory;
+using Contracts.Products;
 using Domain.DomainErrors;
 using Infrastructure.Authentication;
 using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using XResults;
 using FilterParameters = Contracts.Products.FilterParameters;
-using SortParameters = Contracts.Products.SortParameters;
 
 namespace Api.Controllers;
 
@@ -38,15 +39,33 @@ public class CategoriesController : ApplicationController
     [HttpGet("{categoryId:guid}/products")]
     public async Task<IResult> GetProductsFromCategory(
         Guid categoryId,
-        [AsParameters] SortParameters sortParameters,
+        [AsParameters] SortParametersDto sortingDto,
         [AsParameters] FilterParameters filterParameters,
         int page = 1
     )
     {
+        SortParameters sortParameters;
+        if (sortingDto.Sorting == "new")
+        {
+            sortParameters = new SortParameters(null, "creationDate");
+        }
+        else if (sortingDto.Sorting == "more_expensive")
+        {
+            sortParameters = new SortParameters(null, "price");
+        }
+        else if (sortingDto.Sorting == "cheaper")
+        {
+            sortParameters = new SortParameters("price", null);
+        }
+        else
+        {
+            sortParameters = new SortParameters(sortingDto.Sorting, null);
+        }
+
         var query = new GetProductsFromCategoryQuery(
             categoryId,
             User.FindFirstValue(JwtClaims.UserId),
-            sortParameters.Adapt<Application.Categories.Queries.GetProductsFromCategory.SortParameters>(),
+            sortParameters,
             filterParameters.Adapt<Application.Categories.Queries.GetProductsFromCategory.FilterParameters>(),
             page
         );
