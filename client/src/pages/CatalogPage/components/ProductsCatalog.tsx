@@ -91,7 +91,7 @@ export default function ProductsCatalog({ type, category }: ProductsCatalogProps
                         />
                     ))}
             </div>
-            <div ref={ref}>kek</div>
+            <div ref={ref}></div>
         </div>
     );
 }

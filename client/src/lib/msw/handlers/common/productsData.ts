@@ -19,7 +19,7 @@ export const productsData: { [page: number]: ProductsResponse } = {
                 liked: true,
             },
         ],
-        nextPage: 1,
+        nextPageNumber: 1,
     },
     1: {
         products: [
@@ -38,7 +38,7 @@ export const productsData: { [page: number]: ProductsResponse } = {
                 liked: true,
             },
         ],
-        nextPage: 2,
+        nextPageNumber: 2,
     },
     2: {
         products: [
@@ -57,7 +57,7 @@ export const productsData: { [page: number]: ProductsResponse } = {
                 liked: true,
             },
         ],
-        nextPage: 3,
+        nextPageNumber: 3,
     },
     3: {
         products: [
@@ -76,7 +76,7 @@ export const productsData: { [page: number]: ProductsResponse } = {
                 liked: true,
             },
         ],
-        nextPage: 4,
+        nextPageNumber: 4,
     },
     4: {
         products: [
@@ -95,6 +95,6 @@ export const productsData: { [page: number]: ProductsResponse } = {
                 liked: true,
             },
         ],
-        nextPage: null, // No next page
+        nextPageNumber: null, // No next page
     },
 };

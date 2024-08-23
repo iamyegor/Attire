@@ -12,7 +12,7 @@ export function useLoadProducts(
         queryKey: queryKey,
         queryFn: fetchProducts,
         initialPageParam: 1,
-        getNextPageParam: (lastPage) => lastPage.nextPage,
+        getNextPageParam: (lastPage) => lastPage.nextPageNumber,
     });
 
     const { ref, inView } = useInView();
@@ -26,7 +26,7 @@ export function useLoadProducts(
         if (inView) {
             fetchNextPage();
         }
-    }, [JSON.stringify(data), inView]);
+    }, [JSON.stringify(data), inView, fetchNextPage]);
 
     const products = data?.pages.flatMap((page) => page.products) ?? [];
     return {
