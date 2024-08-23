@@ -3,10 +3,10 @@ import { useSearchParams } from "react-router-dom";
 
 export default function useLoadSearchProducts(queryKey: (string | null)[]) {
     const [searchParams, _setSearchParams] = useSearchParams();
-    const { products, ref } = useLoadProducts(
+    const { products, isLoading, ref } = useLoadProducts(
         queryKey,
         (page) => `products?page=${page}&${searchParams.toString()}`,
     );
 
-    return { products, ref };
+    return { products, isLoading, ref };
 }

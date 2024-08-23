@@ -3,7 +3,6 @@ using Api.Controllers.Common;
 using Application.Categories.Queries.GetCategoryByGender;
 using Application.Categories.Queries.GetProductFilterFromCategory;
 using Application.Categories.Queries.GetProductsFromCategory;
-using Application.Common.Models;
 using Domain.DomainErrors;
 using Infrastructure.Authentication;
 using Mapster;

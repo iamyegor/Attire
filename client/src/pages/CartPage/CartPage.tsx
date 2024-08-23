@@ -17,11 +17,8 @@ export default function CartPage() {
     const { deleteCartItemMutate } = useDeleteCartItem(queryKey);
 
     const selectedTotalPrice = cartItems.reduce((sum, item) => {
-        return selectedItems.includes(item.id) ? sum + item.productPrice : sum;
+        return selectedItems.includes(item.id) ? sum + item.productPrice * item.quantity : sum;
     }, 0);
-
-    // console.log("cartItems", cartItems);
-    // console.log("selectedItems", selectedItems);
 
     return (
         <div className="flex flex-col lg:flex-row container mx-auto space-y-6 lg:space-y-0 lg:space-x-6 max-w-screen-xl px-4 pb-8 h-full">

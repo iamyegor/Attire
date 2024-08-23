@@ -15,8 +15,8 @@ export default function SearchComponent({ onClose }: SearchComponentProps) {
 
     function onSearch(term: string) {
         if (term.trim().length > 0) {
-            navigate(`/search?searchTerm=${term}`);
             onClose();
+            navigate(`/search?searchTerm=${term}`);
         }
     }
 
@@ -30,7 +30,7 @@ export default function SearchComponent({ onClose }: SearchComponentProps) {
                 Закрыть
             </button>
             <div className="flex space-x-3">
-                <div className="text-lg font-semibold text-neutral-600 hover:text-neutral-700 bg-neutral-100 pl-3 p-2 pr-3 rounded-full flex items-center space-x-4 w-full">
+                <div className="text-lg font-semibold text-neutral-600 hover:text-neutral-700 bg-neutral-100 pl-3 p-2 pr-4 rounded-full flex items-center space-x-4 w-full">
                     <SearchSvg className="w-5 h-5 flex-shrink-0" />
                     <input
                         name="search"

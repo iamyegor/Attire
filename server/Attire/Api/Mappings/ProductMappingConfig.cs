@@ -1,10 +1,6 @@
 ﻿using Application.Products.Commands.CreateProductReview;
-using Application.Products.Queries.GetNewProductsWithGender;
 using Contracts.Products;
-using Contracts.Products.Reviews;
-using Domain.Category.ValueObject;
 using Mapster;
-using SortParameters = Contracts.Products.SortParameters;
 
 namespace Api.Mappings;
 
@@ -59,7 +55,7 @@ public class ProductMappingConfig : IRegister
 
         config
             .NewConfig<
-                (Guid ProductId, Guid UserId, ReviewForCreate ReviewForCreate),
+                (Guid ProductId, Guid UserId, Contracts.Products.Reviews.ReviewForCreate ReviewForCreate),
                 CreateProductReviewCommand
             >()
             .Map(d => d.ProductId, s => s.ProductId)

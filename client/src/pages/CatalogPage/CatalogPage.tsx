@@ -18,7 +18,7 @@ export default function CatalogPage() {
     }
 
     return (
-        <div className="mt-4 space-y-2 lg:mt-0">
+        <div className="mt-4 pb-8 space-y-3 lg:mt-0">
             <Breadcrumbs type={type} category={category} />
             <div className="flex mb-8 w-full">
                 <div className="lg:px-4 relative">

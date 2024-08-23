@@ -16,7 +16,7 @@ export default function useLoadReviews(productId: string) {
 
     const { data: reviewsResponse } = useInfiniteQuery({
         queryKey: ["reviews", productId],
-        initialPageParam: 0,
+        initialPageParam: 1,
         queryFn: fetchReviews,
         getNextPageParam: (lastPage) => lastPage.nextPage,
     });

@@ -42,7 +42,7 @@ public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, S
         {
             return Errors.EmailVerificationCode.IsExpired;
         }
-
+        
         user.ConfirmEmail();
         await _context.SaveChangesAsync(ct);
 

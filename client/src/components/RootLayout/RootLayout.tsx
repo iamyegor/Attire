@@ -7,7 +7,7 @@ export default function RootLayout() {
         <>
             <Header />
             <div className="flex justify-center">
-                <div className="pt-[65px] md:pt-[75px] min-h-screen max-w-screen-2xl w-full">
+                <div className="pt-[65px] md:pt-[75px] min-h-screen max-w-[2000px] w-full">
                     <Outlet />
                 </div>
             </div>

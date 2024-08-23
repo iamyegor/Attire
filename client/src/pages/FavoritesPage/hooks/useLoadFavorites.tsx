@@ -8,9 +8,10 @@ export function useLoadFavorites(queryKey: string[]) {
     const { data, isLoading, isSuccess, fetchNextPage } = useInfiniteQuery({
         queryKey,
         queryFn: fetchFavorites,
-        initialPageParam: 0,
+        initialPageParam: 1,
         getNextPageParam: (lastPage) => lastPage.nextPageNumber,
         retry: false,
+        gcTime: 0,
     });
 
     async function fetchFavorites({ pageParam }: { pageParam: number }) {

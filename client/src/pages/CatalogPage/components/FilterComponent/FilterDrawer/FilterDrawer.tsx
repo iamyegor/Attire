@@ -41,7 +41,7 @@ export default function FilterDrawer({ filtersResponse, closeDrawer }: FilterDra
                             {filtersResponse.sizes.map((size) => (
                                 <SelectionButton
                                     key={size}
-                                    label={size}
+                                    label={size.toUpperCase()}
                                     isSelected={sizes.includes(size)}
                                     onClick={() => toggleSelection(setSizes, size)}
                                 />

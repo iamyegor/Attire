@@ -11,7 +11,7 @@ export function useLoadProducts(
     const { data, isLoading, fetchNextPage } = useInfiniteQuery({
         queryKey: queryKey,
         queryFn: fetchProducts,
-        initialPageParam: 0,
+        initialPageParam: 1,
         getNextPageParam: (lastPage) => lastPage.nextPage,
     });
 
