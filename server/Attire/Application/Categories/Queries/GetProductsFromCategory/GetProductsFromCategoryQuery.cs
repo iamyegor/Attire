@@ -258,7 +258,7 @@ public class GetProductsFromCategoryQueryHandler
 
         if (filterParameters.Sizes?.Length > 0)
         {
-            sqlQuery.Append(" AND ps.value = ANY(@FilterSizes)");
+            sqlQuery.Append(" AND ps.value ILIKE ANY(@FilterSizes)");
         }
 
         if (filterParameters.Compositions?.Length > 0)
