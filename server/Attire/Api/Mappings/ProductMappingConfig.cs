@@ -1,5 +1,6 @@
 ﻿using Application.Products.Commands.CreateProductReview;
 using Application.Products.Queries.GetNewProductsWithGender;
+using Contracts.Products;
 using Contracts.Products.Reviews;
 using Domain.Category.ValueObject;
 using Mapster;
@@ -11,6 +12,51 @@ public class ProductMappingConfig : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
+        config
+            .NewConfig<
+                FilterParameters,
+                Application.Categories.Queries.GetProductsFromCategory.FilterParameters
+            >()
+            .Map(
+                x => x.Compositions,
+                x =>
+                    x.Compositions == null
+                        ? null
+                        : x
+                            .Compositions.Trim()
+                            .Split(
+                                ',',
+                                StringSplitOptions.RemoveEmptyEntries
+                                    | StringSplitOptions.TrimEntries
+                            )
+            )
+            .Map(
+                x => x.Colors,
+                x =>
+                    x.Colors == null
+                        ? null
+                        : x
+                            .Colors.Trim()
+                            .Split(
+                                ',',
+                                StringSplitOptions.RemoveEmptyEntries
+                                    | StringSplitOptions.TrimEntries
+                            )
+            )
+            .Map(
+                x => x.Sizes,
+                x =>
+                    x.Sizes == null
+                        ? null
+                        : x
+                            .Sizes.Trim()
+                            .Split(
+                                ',',
+                                StringSplitOptions.RemoveEmptyEntries
+                                    | StringSplitOptions.TrimEntries
+                            )
+            );
+
         config
             .NewConfig<
                 (Guid ProductId, Guid UserId, ReviewForCreate ReviewForCreate),
