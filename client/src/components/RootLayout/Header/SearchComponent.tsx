@@ -11,7 +11,12 @@ export default function SearchComponent({ onClose }: SearchComponentProps) {
     const { searchTerm, setSearchTerm } = useSearchTerm();
     const navigate = useNavigate();
 
-    const popularSearchTerms = ["Air Force 1", "Jordan", "Air Max", "Blazer"];
+    const popularSearchTerms = [
+        "Рубашка Oversize мужская",
+        "Худи мужское карго",
+        "Шорты-шорты",
+        "Джинсы удлиненные",
+    ];
 
     function onSearch(term: string) {
         if (term.trim().length > 0) {

@@ -20,7 +20,7 @@ export default function SearchPage() {
     const unlikeProductMutate = useUnlikeProduct(queryKey, () => setIsLoginModalShown(true));
 
     return (
-        <div className="h-full flex flex-col">
+        <div className="h-full flex flex-col mb-10">
             <LoginModal
                 isLoginModalShown={isLoginModalShown}
                 hideLoginModal={() => setIsLoginModalShown(false)}

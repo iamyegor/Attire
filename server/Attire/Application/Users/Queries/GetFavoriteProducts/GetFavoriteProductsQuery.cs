@@ -46,7 +46,7 @@ public class GetFavoriteProductsQueryHandler
         string sqlQuery =
             @"
             SELECT 
-                p.product_id,
+                p.product_id as id,
                 i.path as image_path,
                 p.price,
                 p.title,

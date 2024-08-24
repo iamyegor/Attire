@@ -1,11 +1,11 @@
 import { InfiniteData, useMutation, useQueryClient } from "@tanstack/react-query";
-import api from "@/lib/api.ts";
 import FavoritesResponse from "@/pages/FavoritesPage/types/FavoritesResponse.ts";
+import fetchUnlikeProduct from "@/utils/services/product/fetchUnlikeProduct.ts";
 
 export function useRemoveFromFavorites(queryKey: string[]) {
     const queryClient = useQueryClient();
     const removeFromFavoritesMutation = useMutation({
-        mutationFn: removeFromFavorites,
+        mutationFn: fetchUnlikeProduct,
         onMutate: async (productId) => {
             await queryClient.cancelQueries({ queryKey });
 
@@ -19,7 +19,9 @@ export function useRemoveFromFavorites(queryKey: string[]) {
                     ...data,
                     pages: data.pages.map((page) => ({
                         ...page,
-                        products: page.favoriteProducts.filter((product) => product.id !== productId),
+                        favoriteProducts: page.favoriteProducts.filter(
+                            (product) => product.id !== productId,
+                        ),
                     })),
                 };
             });
@@ -31,10 +33,6 @@ export function useRemoveFromFavorites(queryKey: string[]) {
         },
         onSettled: () => queryClient.invalidateQueries({ queryKey }),
     });
-
-    async function removeFromFavorites(productId: string) {
-        await api.delete(`favorites/${productId}`);
-    }
 
     return { removeFromFavorites: removeFromFavoritesMutation.mutate };
 }

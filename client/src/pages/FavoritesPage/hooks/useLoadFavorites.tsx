@@ -11,7 +11,6 @@ export function useLoadFavorites(queryKey: string[]) {
         initialPageParam: 1,
         getNextPageParam: (lastPage) => lastPage.nextPageNumber,
         retry: false,
-        gcTime: 0,
     });
 
     async function fetchFavorites({ pageParam }: { pageParam: number }) {

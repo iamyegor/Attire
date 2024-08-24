@@ -7,7 +7,7 @@ public record GetFavoriteProductsPaginationResult(
 
 public class FavoriteProductDto
 {
-    public Guid ProductId { get; set; }
+    public Guid Id { get; set; }
     public string ImagePath { get; set; }
     public int Price { get; set; }
     public string Title { get; set; }
