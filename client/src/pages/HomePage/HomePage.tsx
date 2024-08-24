@@ -1,7 +1,6 @@
 import MainCarousel from "@/pages/HomePage/Components/MainCarousel/MainCarousel.tsx";
-import featuredImage from "@/assets/going_out_outfits.webp";
 import GenderSelection from "@/pages/HomePage/Components/GenderSelection/GenderSelection.tsx";
-import FeaturedImage from "@/pages/HomePage/Components/FeaturedImage.tsx";
+import NewCollection from "@/pages/HomePage/Components/NewCollection.tsx";
 import Section from "@/pages/HomePage/Components/Section/Section.tsx";
 import useLikeProduct from "@/pages/HomePage/hooks/useLikeProduct.ts";
 import useUnlikeProduct from "@/pages/HomePage/hooks/useUnlikeProduct.ts";
@@ -56,7 +55,7 @@ export default function HomePage() {
                 unlikeProduct={unlikeNewProduct}
                 type={Type.New}
             />
-            <FeaturedImage imageSrc={featuredImage} text="Новая коллекция" />
+            <NewCollection />
             <Section
                 title="Вам может понравиться"
                 products={recommendedProducts}

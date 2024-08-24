@@ -10,10 +10,10 @@ export default function CustomIndicator(
         <button
             type="button"
             onClick={clickHandler}
-            className={`w-20 h-2 mx-2 rounded-full transition duration-300 ease-in-out shadow-md focus:outline-none ${
+            className={`w-10 h-2 mx-1.5 rounded-full transition duration-300 ease-in-out shadow-md focus:outline-none ${
                 isSelected
-                    ? "bg-neutral-800 scale-110" // Darker gray and slightly larger size for the selected indicator
-                    : "bg-neutral-200 hover:bg-neutral-400 focus:ring-2 focus:ring-gray-600"
+                    ? "bg-white/80 scale-110" 
+                    : "bg-white/30 hover:bg-white/50"
             }`}
             title={`Slide ${index + 1}`}
             aria-label={label}
