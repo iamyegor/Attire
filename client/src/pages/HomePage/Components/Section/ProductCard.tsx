@@ -39,7 +39,7 @@ export default function ProductCard({
             draggable={false}
         >
             <img
-                className="w-full object-cover rounded-lg"
+                className="w-full object-cover rounded-lg h-full"
                 src={productImageFullPath(product.imagePath)}
                 alt={product.title}
                 style={{ userSelect: "none" }}
@@ -57,7 +57,9 @@ export default function ProductCard({
                         onClick={handleLikeButtonClick}
                     />
                 </div>
-                <p className="mt-1 text-gray-700 line-clamp-2 text-left">{product.title}</p>
+                <p className="mt-1 text-gray-700 line-clamp-2 text-wrap text-left">
+                    {product.title}
+                </p>
             </div>
         </Link>
     );

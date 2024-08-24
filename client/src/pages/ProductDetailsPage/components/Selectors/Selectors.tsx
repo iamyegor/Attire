@@ -22,7 +22,7 @@ export default function Selectors({
 }: SelectorsProps) {
     return (
         <>
-            <div className="flex space-x-2">
+            <div className="flex gap-x-3.5">
                 {colors.map((color) => (
                     <ColorButton
                         key={color.name}

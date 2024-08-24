@@ -5,6 +5,8 @@ import ProductListSkeleton from "@/pages/HomePage/Components/Section/ProductList
 import React from "react";
 import ProductCarousel from "@/pages/HomePage/Components/Section/ProductCarousel.tsx";
 import Type from "@/components/RootLayout/Header/BurgerMenu/types/Type.ts";
+import ProductSkeleton from "@/pages/HomePage/Components/Section/ProductSkeleton.tsx";
+import FlexibleSkeleton from "@/components/ui/FlexibleSkeleton.tsx";
 
 interface SectionProps {
     title: string;
@@ -44,6 +46,11 @@ const Section = React.forwardRef<HTMLDivElement, SectionProps>(
                         unlikeProduct={unlikeProduct}
                         type={type}
                     />
+                    {areProductsLoading && (
+                        <div className="w-full" style={{ aspectRatio: "10/16" }}>
+                            <FlexibleSkeleton />
+                        </div>
+                    )}
                 </div>
             </section>
         );

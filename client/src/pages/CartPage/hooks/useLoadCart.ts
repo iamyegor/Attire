@@ -11,7 +11,6 @@ export function useLoadCart(queryKey: string[]) {
     });
 
     async function fetchCart() {
-        await new Promise((resolve) => setTimeout(resolve, 2000));
         const { data } = await api.get<CartItem[]>(`users/carts`);
         return data;
     }

@@ -50,7 +50,7 @@ export default function FilterDrawer({ filtersResponse, closeDrawer }: FilterDra
                     </div>
                     <div>
                         <h3 className="font-semibold mb-3 text-lg text-gray-800">Colors</h3>
-                        <div className="flex flex-wrap space-x-2">
+                        <div className="flex flex-wrap gap-y-2 gap-x-3.5">
                             {filtersResponse.colors.map((color) => (
                                 <ColorButton
                                     key={color.name}
@@ -63,7 +63,7 @@ export default function FilterDrawer({ filtersResponse, closeDrawer }: FilterDra
                     </div>
                     <div>
                         <h3 className="font-semibold mb-3 text-lg text-gray-800">Materials</h3>
-                        <div className="flex flex-wrap space-x-2">
+                        <div className="flex flex-wrap gap-y-1 gap-x-3.5">
                             {filtersResponse.compositions.map((material) => (
                                 <SelectionButton
                                     key={material}

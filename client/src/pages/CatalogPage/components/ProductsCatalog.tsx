@@ -79,19 +79,22 @@ export default function ProductsCatalog({ type, category }: ProductsCatalogProps
                     Array.from({ length: 8 }).map((_, index) => (
                         <ProductCardSkeleton key={index} />
                     ))}
-                {products.length > 0 &&
-                    products.map((product) => (
-                        <ProductCard
-                            key={product.id}
-                            product={product}
-                            likeProduct={likeProduct}
-                            unlikeProduct={unlikeProduct}
-                            type={type}
-                            category={category}
-                        />
-                    ))}
+                {products.length > 0 && (
+                    <>
+                        {products.map((product) => (
+                            <ProductCard
+                                key={product.id}
+                                product={product}
+                                likeProduct={likeProduct}
+                                unlikeProduct={unlikeProduct}
+                                type={type}
+                                category={category}
+                            />
+                        ))}
+                        <div ref={ref}></div>
+                    </>
+                )}
             </div>
-            <div ref={ref}></div>
         </div>
     );
 }
