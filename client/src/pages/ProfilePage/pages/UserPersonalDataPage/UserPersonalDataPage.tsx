@@ -3,7 +3,6 @@ import { useState } from "react";
 import CurrentPersonalDataPage from "./types/CurrentPersonalDataPage";
 import ChangeUserPersonalDataFormPage from "./pages/ChangeUserPersonalDataFormPage";
 import ChangeUserPasswordFormPage from "./pages/ChangeUserPasswordFormPage/ChangeUserPasswordFormPage";
-import { toShowFormatPhoneNumber } from "@/utils/phoneNumberConverter.ts";
 
 function UserPersonalDataPage() {
     const { personalData, setPersonalData, isPending } = useLoadUserPersonalData();
@@ -19,9 +18,6 @@ function UserPersonalDataPage() {
                     <div className="text-[16px]">
                         <div className="pb-[16px]">{"Имя: " + personalData?.firstName}</div>
                         <div className="pb-[16px]">{"Фамилия: " + personalData?.lastName}</div>
-                        <div className="pb-[16px]">
-                            {"Телефон: " + toShowFormatPhoneNumber(personalData?.phone)}
-                        </div>
                         <div className="pb-[32px]">{"Почта: " + personalData?.email}</div>
 
                         <div className="mb-[16px]">

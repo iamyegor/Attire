@@ -17,8 +17,6 @@ export default async function fetchChangePersonalData(
     if (
         changedPersonalData.firstName.trim() === "" ||
         changedPersonalData.lastName.trim() === "" ||
-        changedPersonalData.phone.trim() === "" ||
-        changedPersonalData.phone.trim().length !== 12 ||
         changedPersonalData.email.trim() === "" ||
         !/^[^@]+@[^@]+\.[^@]+$/.test(changedPersonalData.email.trim())
     ) {
