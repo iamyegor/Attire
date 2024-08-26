@@ -70,7 +70,7 @@ export default function SignUpPage() {
                     <div className="flex items-center space-x-3">
                         <Checkbox isChecked={subscribe} onClick={() => setSubscribe(!subscribe)} />
                         <label htmlFor="subscribe" className="text-gray-700">
-                            Получать spam рассылку
+                            Получать уведомления об акциях и скидках
                         </label>
                     </div>
                 </div>
