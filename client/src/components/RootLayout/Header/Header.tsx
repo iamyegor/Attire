@@ -46,7 +46,7 @@ function Header() {
 
     return (
         <header className="fixed top-0 left-0 right-0 bg-white py-3 px-4 md:px-8 shadow-lg z-20">
-            <div className="max-w-[1950px] mx-auto flex justify-between items-center ">
+            <div className="max-w-[1500px] mx-auto flex justify-between items-center ">
                 <Drawer
                     open={searchOpen}
                     onClose={handleSearchClose}
