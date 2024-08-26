@@ -1,20 +1,19 @@
 import { useLoadAddress } from "./hooks/useLoadAddress";
 import { useState } from "react";
 import { CurrentAddressPage } from "./types/CurrentAddressPage";
-import ReadUserAddressPage from "./pages/ReadUserAddressPage";
 import ChangeUserAddressForm from "./pages/ChangeUserAddressFormPage";
-import { Address } from "./types/Address";
+import AddressData from "@/pages/ProfilePage/pages/UserAddressPage/pages/AddressData.tsx";
 
 function UserAddressPage() {
     const [currentPage, setCurrentPage] = useState<CurrentAddressPage>("readPage");
-    const { address, setAddress, isPending } = useLoadAddress();
+    const { address, setAddress, isLoading } = useLoadAddress();
 
     return (
         <div className="pb-[30px] pt-[30px] lg:pt-0 lg:pl-[50px] w-full">
-            {isPending ? (
-                <>Загрузка данных...</>
+            {isLoading ? (
+                <p>Загрузка данных...</p>
             ) : currentPage == "readPage" ? (
-                <ReadUserAddressPage address={address!} setCurrentPage={setCurrentPage} />
+                <AddressData address={address!} setCurrentPage={setCurrentPage} />
             ) : (
                 <ChangeUserAddressForm
                     initialAddress={address!}

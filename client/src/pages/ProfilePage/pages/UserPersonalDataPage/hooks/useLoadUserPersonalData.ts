@@ -4,7 +4,8 @@ import { PersonalData } from "../types/PersonalData";
 import { useEffect, useState } from "react";
 
 export function useLoadUserPersonalData() {
-    const { data = null, isPending } = useQuery({
+    const [personalData, setPersonalData] = useState<PersonalData | null>(null);
+    const { data = null, isLoading } = useQuery({
         queryKey: ["user-personal-data"],
         queryFn: () => fetchPersonalData(),
     });
@@ -14,13 +15,9 @@ export function useLoadUserPersonalData() {
         return data;
     }
 
-    const [personalData, setPersonalData] = useState<PersonalData | null>(data);
-
     useEffect(() => {
-        if (!isPending) {
-            setPersonalData(data);
-        }
-    }, [isPending]);
+        setPersonalData(data);
+    }, [data]);
 
-    return { personalData, setPersonalData, isPending };
+    return { personalData, setPersonalData, isLoading };
 }

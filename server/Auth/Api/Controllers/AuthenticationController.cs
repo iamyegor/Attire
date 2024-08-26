@@ -41,7 +41,7 @@ public class AuthenticationController : ApplicationController
             return Problem(tokensOrError.Error);
         }
 
-        HttpContext.Response.Cookies.Append(tokensOrError.Value);
+        Response.Cookies.Append(tokensOrError.Value);
 
         return Ok();
     }

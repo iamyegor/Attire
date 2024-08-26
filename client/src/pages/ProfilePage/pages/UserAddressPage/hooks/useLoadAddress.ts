@@ -4,23 +4,20 @@ import { Address } from "../types/Address";
 import { useEffect, useState } from "react";
 
 export function useLoadAddress() {
-    const { data = null, isPending } = useQuery({
+    const [address, setAddress] = useState<Address | null>(null);
+    const { data = null, isLoading } = useQuery({
         queryKey: ["user-address"],
         queryFn: () => fetchAddress(),
     });
-
+    
+    useEffect(() => {
+        setAddress(data);
+    }, [data]);
+    
     async function fetchAddress() {
         const { data } = await api.get<Address>("users/address");
         return data;
     }
 
-    const [address, setAddress] = useState<Address | null>(data);
-
-    useEffect(() => {
-        if (!isPending) {
-            setAddress(data);
-        }
-    }, [isPending]);
-
-    return { address, setAddress, isPending };
+    return { address, setAddress, isLoading };
 }

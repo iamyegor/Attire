@@ -4,7 +4,6 @@ import { http, HttpResponse } from "msw";
 const userPersonalData: PersonalData = {
     firstName: "Денис",
     lastName: "Игнатенко",
-    phone: "+79776662264",
     email: "den@gmail.com",
 };
 
