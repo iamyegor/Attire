@@ -10,6 +10,7 @@ export function useLoadFavorites(queryKey: string[]) {
         queryFn: fetchFavorites,
         initialPageParam: 1,
         getNextPageParam: (lastPage) => lastPage.nextPageNumber,
+        gcTime: 0,
         retry: false,
     });
 
