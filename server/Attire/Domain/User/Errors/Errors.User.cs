@@ -1,5 +1,4 @@
 ﻿using Domain.DomainErrors;
-using XResults;
 
 namespace Domain.User.Errors;
 
@@ -10,11 +9,6 @@ public static partial class Errors
         public static Error FirstNameIsRequired()
         {
             return new Error("user.first.name.is.required", "User first name is required.");
-        }
-
-        public static Error LastNameIsRequired()
-        {
-            return new Error("user.last.name.is.required", "User last name is required.");
         }
 
         public static Error WithIdNotFound(Guid userId)

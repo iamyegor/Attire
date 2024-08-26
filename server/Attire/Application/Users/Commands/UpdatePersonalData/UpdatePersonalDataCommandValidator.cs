@@ -9,17 +9,7 @@ public class UpdatePersonalDataCommandValidator : AbstractValidator<UpdatePerson
 {
     public UpdatePersonalDataCommandValidator()
     {
-        RuleFor(x => x.Phone).MustBeOk(PhoneNumber.Create);
         RuleFor(x => x.Email).MustBeOk(Email.Create);
-        // RuleFor(x => x)
-        //     .MustBeOk(x =>
-        //         User.Create(
-        //             x.FirstName,
-        //             x.LastName,
-        //             PhoneNumber.Create(x.Phone),
-        //             Email.Create(x.Email),
-        //             Address.Create("city", "123456", "street", "house", "flat")
-        //         )
-        //     );
+        RuleFor(x => x).MustBeOk(x => User.Create(x.FirstName, Email.Create(x.Email)));
     }
 }

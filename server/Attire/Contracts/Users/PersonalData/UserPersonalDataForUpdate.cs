@@ -1,8 +1,3 @@
 ﻿namespace Contracts.Users.PersonalData;
 
-public record UserPersonalDataForUpdate(
-    string FirstName,
-    string LastName,
-    string Phone,
-    string Email
-);
+public record UserPersonalDataForUpdate(string FirstName, string Email);

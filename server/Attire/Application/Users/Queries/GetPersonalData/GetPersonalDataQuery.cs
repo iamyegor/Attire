@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using Domain.DomainErrors;
-using Infrastructure.Data;
 using Infrastructure.Data.Dapper;
 using MediatR;
 using Npgsql;
@@ -32,8 +31,6 @@ public class GetPersonalDataQueryHandler
             @"
             SELECT 
                 first_name, 
-                last_name, 
-                phone,
                 email
             FROM users
             WHERE user_id = @UserId
