@@ -3,7 +3,7 @@ import Breadcrumbs from "@/pages/CatalogPage/components/Breadcrumbs.tsx";
 import CategoriesDashboard from "@/pages/CatalogPage/components/CategoryDashboard/CategoriesDashboard.tsx";
 import SortByComponent from "@/pages/CatalogPage/components/SortByComponent/SortByComponent.tsx";
 import FilterComponent from "@/pages/CatalogPage/components/FilterComponent/FilterComponent.tsx";
-import useCurrentCategoryAndType from "@/pages/CatalogPage/hooks/useCurrentTypeAndCategory.tsx";
+import useCurrentCategoryAndType from "@/pages/CatalogPage/hooks/useCurrentTypeAndCategory.ts";
 import Category from "@/components/RootLayout/Header/BurgerMenu/types/Category.ts";
 import Type from "@/components/RootLayout/Header/BurgerMenu/types/Type.ts";
 import ProductsCatalog from "@/pages/CatalogPage/components/ProductsCatalog.tsx";

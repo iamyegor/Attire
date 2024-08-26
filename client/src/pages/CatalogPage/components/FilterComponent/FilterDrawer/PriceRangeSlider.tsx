@@ -10,7 +10,7 @@ interface PriceRangeSliderProps {
 export default function PriceRangeSlider({ minPrice, maxPrice, priceRange, onChange }: PriceRangeSliderProps) {
     return (
         <div>
-            <h3 className="font-semibold mb-3 text-lg text-gray-800">Price Range</h3>
+            <h3 className="font-semibold mb-3 text-lg text-gray-800">Диапазон цены</h3>
             <Slider
                 getAriaLabel={() => "Price range"}
                 value={priceRange}

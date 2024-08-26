@@ -36,7 +36,7 @@ export default function FilterDrawer({ filtersResponse, closeDrawer }: FilterDra
             <div className="flex flex-col h-full justify-between sm:justify-start sm:space-y-3 pb-4">
                 <div className="flex flex-col space-y-4">
                     <div>
-                        <h3 className="font-semibold mb-3 text-lg text-gray-800">Sizes</h3>
+                        <h3 className="font-semibold mb-3 text-lg text-gray-800">Размеры</h3>
                         <div className="space-x-2">
                             {filtersResponse.sizes.map((size) => (
                                 <SelectionButton
@@ -49,7 +49,7 @@ export default function FilterDrawer({ filtersResponse, closeDrawer }: FilterDra
                         </div>
                     </div>
                     <div>
-                        <h3 className="font-semibold mb-3 text-lg text-gray-800">Colors</h3>
+                        <h3 className="font-semibold mb-3 text-lg text-gray-800">Цвета</h3>
                         <div className="flex flex-wrap gap-y-2 gap-x-3.5">
                             {filtersResponse.colors.map((color) => (
                                 <ColorButton
@@ -62,7 +62,7 @@ export default function FilterDrawer({ filtersResponse, closeDrawer }: FilterDra
                         </div>
                     </div>
                     <div>
-                        <h3 className="font-semibold mb-3 text-lg text-gray-800">Materials</h3>
+                        <h3 className="font-semibold mb-3 text-lg text-gray-800">Материалы</h3>
                         <div className="flex flex-wrap gap-y-1 gap-x-3.5">
                             {filtersResponse.compositions.map((material) => (
                                 <SelectionButton

@@ -2,7 +2,6 @@ import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 export default function useFilters(minPrice: number, maxPrice: number) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [searchParams, setSearchParams] = useSearchParams();
     const [priceRange, setPriceRange] = useState([minPrice, maxPrice]);
     const [sizes, setSizes] = useState<string[]>([]);
@@ -12,7 +11,7 @@ export default function useFilters(minPrice: number, maxPrice: number) {
     useEffect(() => {
         const colors = searchParams.get("colors")?.split(",") ?? [];
         const sizes = searchParams.get("sizes")?.split(",") ?? [];
-        const materials = searchParams.get("materials")?.split(",") ?? [];
+        const materials = searchParams.get("compositions")?.split(",") ?? [];
         const minPrice = searchParams.get("minPrice");
         const maxPrice = searchParams.get("maxPrice");
 
@@ -42,9 +41,9 @@ export default function useFilters(minPrice: number, maxPrice: number) {
             }
 
             if (materials.length > 0) {
-                prevParams.set("materials", materials.join(","));
+                prevParams.set("compositions", materials.join(","));
             } else {
-                prevParams.delete("materials");
+                prevParams.delete("compositions");
             }
             return prevParams;
         });
