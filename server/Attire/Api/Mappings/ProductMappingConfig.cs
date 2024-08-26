@@ -10,7 +10,7 @@ public class ProductMappingConfig : IRegister
     {
         config
             .NewConfig<
-                FilterParameters,
+                FilterParametersDto,
                 Application.Categories.Queries.GetProductsFromCategory.FilterParameters
             >()
             .Map(

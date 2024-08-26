@@ -2,7 +2,6 @@
 using Application.Common.Models;
 using Dapper;
 using Domain.DomainErrors;
-using Infrastructure.Data;
 using Infrastructure.Data.Dapper;
 using MediatR;
 using Npgsql;
@@ -19,12 +18,10 @@ public record FilterParameters(
     int? MaxPrice
 );
 
-public record SortParameters(string? SortBy, string? SortByDescending);
-
 public record GetProductsFromCategoryQuery(
     Guid CategoryId,
     string? UserId,
-    SortParameters SortParameters,
+    string? Sorting,
     FilterParameters FilterParameters,
     int Page
 ) : IRequest<Result<GetProductFromCategoryPaginationResultDto, Error>>;
@@ -37,14 +34,13 @@ public class GetProductsFromCategoryQueryHandler
 {
     private const int PageLimit = 10;
 
-    private readonly Dictionary<string, Func<ProductShortDto, dynamic>> _sortBy =
-        new() { ["popularity"] = product => product.Id, ["price"] = product => product.Price };
-
-    private readonly Dictionary<string, Func<ProductShortDto, object>> _sortByDescending =
+    private readonly Dictionary<string, string> _sorting =
         new()
         {
-            ["creationDate"] = product => product.CreationDate,
-            ["price"] = product => product.Price
+            ["new"] = " ORDER BY p.creation_date DESC",
+            ["more_expensive"] = " ORDER BY p.price DESC",
+            ["cheaper"] = " ORDER BY p.price",
+            ["popularity"] = " ORDER BY p.product_id"
         };
 
     private readonly DapperConnectionFactory _dapperConnectionFactory;
@@ -79,14 +75,14 @@ public class GetProductsFromCategoryQueryHandler
         {
             sqlQuery = GetProductsFromCategoriesWithUnauthorizedUser(
                 request.FilterParameters,
-                currentPage
+                request.Sorting
             );
         }
         else
         {
             sqlQuery = GetProductsFromCategoriesWithAuthorizedUser(
                 request.FilterParameters,
-                currentPage
+                request.Sorting
             );
         }
 
@@ -108,25 +104,6 @@ public class GetProductsFromCategoryQueryHandler
                     Skip = (currentPage - 1) * PageLimit
                 }
             );
-
-        if (
-            request.SortParameters.SortBy != null
-            && _sortBy.TryGetValue(request.SortParameters.SortBy, out var sortBy)
-        )
-        {
-            productsFromCategory = productsFromCategory.OrderBy(sortBy);
-        }
-
-        if (
-            request.SortParameters.SortByDescending != null
-            && _sortByDescending.TryGetValue(
-                request.SortParameters.SortByDescending,
-                out var sortByDescending
-            )
-        )
-        {
-            productsFromCategory = productsFromCategory.OrderByDescending(sortByDescending);
-        }
 
         int? nextPageNumber = await GetNextPageNumberOrNull(
             connection,
@@ -155,7 +132,7 @@ public class GetProductsFromCategoryQueryHandler
 
     private string GetProductsFromCategoriesWithUnauthorizedUser(
         FilterParameters filterParameters,
-        int page
+        string? sorting
     )
     {
         var sqlQuery = new StringBuilder(
@@ -181,14 +158,14 @@ public class GetProductsFromCategoryQueryHandler
 
         AddFilterToSqlQuery(filterParameters, sqlQuery);
 
-        AddGroupByAndGetRangeOrProducts(sqlQuery);
+        AddGroupByAndGetRangeOrProducts(sqlQuery, sorting);
 
         return sqlQuery.ToString();
     }
 
     private string GetProductsFromCategoriesWithAuthorizedUser(
         FilterParameters filterParameters,
-        int page
+        string? sorting
     )
     {
         var sqlQuery = new StringBuilder(
@@ -238,14 +215,20 @@ public class GetProductsFromCategoryQueryHandler
 
         AddFilterToSqlQuery(filterParameters, sqlQuery);
 
-        AddGroupByAndGetRangeOrProducts(sqlQuery);
+        AddGroupByAndGetRangeOrProducts(sqlQuery, sorting);
 
         return sqlQuery.ToString();
     }
 
-    private void AddGroupByAndGetRangeOrProducts(StringBuilder sqlQuery)
+    private void AddGroupByAndGetRangeOrProducts(StringBuilder sqlQuery, string? sortBy)
     {
-        sqlQuery.Append(" GROUP BY p.product_id, pi.path");
+        sqlQuery.Append(" GROUP BY p.product_id, pi.path, p.price, p.creation_date");
+
+        if (sortBy != null && _sorting.TryGetValue(sortBy, out string? sorting))
+        {
+            sqlQuery.Append(sorting);
+        }
+
         sqlQuery.Append($" LIMIT @PageLimit OFFSET @Skip");
     }
 

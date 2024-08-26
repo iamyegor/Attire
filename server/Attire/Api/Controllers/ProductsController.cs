@@ -5,13 +5,11 @@ using Application.Products.Queries.GetNewProductsWithGender;
 using Application.Products.Queries.GetProductDetails;
 using Application.Products.Queries.GetProductsByGender;
 using Application.Products.Queries.GetProductStatistics;
-using Contracts.Products;
 using Domain.DomainErrors;
 using Infrastructure.Authentication;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using XResults;
-using SortParameters = Application.Products.Queries.GetNewProductsWithGender.SortParameters;
 
 namespace Api.Controllers;
 
@@ -62,31 +60,13 @@ public class ProductsController : ApplicationController
     [HttpGet("new")]
     public async Task<IResult> GetNewProductsWithGender(
         string? gender,
-        [AsParameters] SortParametersDto sortingDto,
+        string? sorting,
         int page = 1
     )
     {
-        SortParameters sortParameters;
-        if (sortingDto.Sorting == "new")
-        {
-            sortParameters = new SortParameters(null, "creationDate");
-        }
-        else if (sortingDto.Sorting == "more_expensive")
-        {
-            sortParameters = new SortParameters(null, "price");
-        }
-        else if (sortingDto.Sorting == "cheaper")
-        {
-            sortParameters = new SortParameters("price", null);
-        }
-        else
-        {
-            sortParameters = new SortParameters(sortingDto.Sorting, null);
-        }
-
         var query = new GetNewProductsWithGenderQuery(
             gender,
-            sortParameters,
+            sorting,
             page,
             User.FindFirstValue(JwtClaims.UserId)
         );
@@ -97,45 +77,11 @@ public class ProductsController : ApplicationController
     }
 
     [HttpGet("genders/{gender}")]
-    public async Task<IResult> GetProductsByGender(
-        string gender,
-        [AsParameters] SortParametersDto sortingDto,
-        int page = 1
-    )
+    public async Task<IResult> GetProductsByGender(string gender, string? sorting, int page = 1)
     {
-        Application.Products.Queries.GetProductsByGender.SortParameters sortParameters;
-        if (sortingDto.Sorting == "new")
-        {
-            sortParameters = new Application.Products.Queries.GetProductsByGender.SortParameters(
-                null,
-                "creationDate"
-            );
-        }
-        else if (sortingDto.Sorting == "more_expensive")
-        {
-            sortParameters = new Application.Products.Queries.GetProductsByGender.SortParameters(
-                null,
-                "price"
-            );
-        }
-        else if (sortingDto.Sorting == "cheaper")
-        {
-            sortParameters = new Application.Products.Queries.GetProductsByGender.SortParameters(
-                "price",
-                null
-            );
-        }
-        else
-        {
-            sortParameters = new Application.Products.Queries.GetProductsByGender.SortParameters(
-                sortingDto.Sorting,
-                null
-            );
-        }
-
         var query = new GetProductsByGenderQuery(
             gender,
-            sortParameters,
+            sorting,
             page,
             User.FindFirstValue(JwtClaims.UserId)
         );

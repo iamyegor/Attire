@@ -1,6 +1,6 @@
 ﻿namespace Contracts.Products;
 
-public record FilterParameters(
+public record FilterParametersDto(
     string? Sizes,
     string? Colors,
     string? Compositions,

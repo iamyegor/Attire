@@ -1,9 +1,8 @@
-﻿using Application.Common.Models;
-using Application.Products.Queries.GetNewProductsWithGender;
+﻿using System.Text;
+using Application.Common.Models;
 using Dapper;
 using Domain.Category.ValueObject;
 using Domain.DomainErrors;
-using Infrastructure.Data;
 using Infrastructure.Data.Dapper;
 using Infrastructure.Services;
 using MediatR;
@@ -12,14 +11,8 @@ using XResults;
 
 namespace Application.Products.Queries.GetProductsByGender;
 
-public record SortParameters(string? SortBy, string? SortByDescending);
-
-public record GetProductsByGenderQuery(
-    string Gender,
-    SortParameters SortParameters,
-    int Page,
-    string? UserId
-) : IRequest<Result<GetProductsByGenderPaginationResult, Error>>;
+public record GetProductsByGenderQuery(string Gender, string? Sorting, int Page, string? UserId)
+    : IRequest<Result<GetProductsByGenderPaginationResult, Error>>;
 
 public class GetProductsByGenderQueryHandler
     : IRequestHandler<GetProductsByGenderQuery, Result<GetProductsByGenderPaginationResult, Error>>
@@ -27,14 +20,14 @@ public class GetProductsByGenderQueryHandler
     private readonly DapperConnectionFactory _dapperConnectionFactory;
 
     private const int PageLimit = 10;
-    private readonly Dictionary<string, Func<ProductShortDto, dynamic>> _sortBy =
-        new() { ["popularity"] = product => product.Id, ["price"] = product => product.Price };
 
-    private readonly Dictionary<string, Func<ProductShortDto, object>> _sortByDescending =
+    private readonly Dictionary<string, string> _sorting =
         new()
         {
-            ["creationDate"] = product => product.CreationDate,
-            ["price"] = product => product.Price
+            ["new"] = " ORDER BY p.creation_date DESC",
+            ["more_expensive"] = " ORDER BY p.price DESC",
+            ["cheaper"] = " ORDER BY p.price",
+            ["popularity"] = " ORDER BY p.product_id"
         };
 
     public GetProductsByGenderQueryHandler(DapperConnectionFactory dapperConnectionFactory)
@@ -55,11 +48,11 @@ public class GetProductsByGenderQueryHandler
 
         if (request.UserId == null)
         {
-            sqlQuery = GetProductsByGenderWithUnauthorizedUser();
+            sqlQuery = GetProductsByGenderWithUnauthorizedUser(request.Sorting);
         }
         else
         {
-            sqlQuery = GetProductsByGenderWithAuthorizedUser();
+            sqlQuery = GetProductsByGenderWithAuthorizedUser(request.Sorting);
         }
 
         Guid? userId = request.UserId == null ? null : Guid.Parse(request.UserId);
@@ -76,25 +69,6 @@ public class GetProductsByGenderQueryHandler
                     Gender = gender
                 }
             );
-
-        if (
-            request.SortParameters.SortBy != null
-            && _sortBy.TryGetValue(request.SortParameters.SortBy, out var sortBy)
-        )
-        {
-            productsByGender = productsByGender.OrderBy(sortBy);
-        }
-
-        if (
-            request.SortParameters.SortByDescending != null
-            && _sortByDescending.TryGetValue(
-                request.SortParameters.SortByDescending,
-                out var sortByDescending
-            )
-        )
-        {
-            productsByGender = productsByGender.OrderByDescending(sortByDescending);
-        }
 
         int? nextPageNumber = await GetNextPageNumberOrNull(connection, gender, currentPage);
 
@@ -122,9 +96,9 @@ public class GetProductsByGenderQueryHandler
         return nextPage;
     }
 
-    private string GetProductsByGenderWithAuthorizedUser()
+    private string GetProductsByGenderWithAuthorizedUser(string? sorting)
     {
-        string sqlQuery =
+        var sqlQuery = new StringBuilder(
             @"
             SELECT p.product_id as id,
                 p.creation_date, 
@@ -164,15 +138,17 @@ public class GetProductsByGenderQueryHandler
             WHERE 
                 pi.order_index = 1 AND
                 c.gender = @Gender
-            LIMIT @PageLimit
-            OFFSET @Skip";
+            "
+        );
 
-        return sqlQuery;
+        AddSortingProducts(sqlQuery, sorting);
+
+        return sqlQuery.ToString();
     }
 
-    private string GetProductsByGenderWithUnauthorizedUser()
+    private string GetProductsByGenderWithUnauthorizedUser(string? sorting)
     {
-        string sqlQuery =
+        var sqlQuery = new StringBuilder(
             @"
             SELECT 
                 p.product_id as id,
@@ -191,9 +167,21 @@ public class GetProductsByGenderQueryHandler
             WHERE 
                 pi.order_index = 1 AND
                 c.gender = @Gender
-            LIMIT @PageLimit
-            OFFSET @Skip";
+            "
+        );
 
-        return sqlQuery;
+        AddSortingProducts(sqlQuery, sorting);
+
+        return sqlQuery.ToString();
+    }
+
+    private void AddSortingProducts(StringBuilder sqlQuery, string? sortBy)
+    {
+        if (sortBy != null && _sorting.TryGetValue(sortBy, out string? sorting))
+        {
+            sqlQuery.Append(sorting);
+        }
+
+        sqlQuery.Append(" LIMIT @PageLimit OFFSET @Skip");
     }
 }
