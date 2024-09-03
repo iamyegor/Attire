@@ -9,26 +9,26 @@ export default function Footer() {
                     <FooterSection
                         title="КОМПАНИИЯ"
                         links={[
-                            { name: "О бренде", path: "/about" },
-                            { name: "Карьера", path: "/careers" },
-                            { name: "Блог", path: "/blog" },
-                            { name: "Контакты", path: "/contact" },
+                            { name: "О бренде", path: "/" },
+                            { name: "Карьера", path: "/" },
+                            { name: "Блог", path: "/" },
+                            { name: "Контакты", path: "/" },
                         ]}
                     />
                     <FooterSection
                         title="ПРАВИЛА"
                         links={[
-                            { name: "Политика конфиденциальности", path: "/privacy-policy" },
-                            { name: "Публичная оферта", path: "/public-offer" },
+                            { name: "Политика конфиденциальности", path: "/" },
+                            { name: "Публичная оферта", path: "/" },
                         ]}
                     />
                     <FooterSection
                         title="ПОКУПАТЕЛЮ"
                         links={[
-                            { name: "Доставка", path: "/shipping" },
-                            { name: "Оплата", path: "/payment" },
-                            { name: "Возврат", path: "/returns" },
-                            { name: "Таблица размеров", path: "/size-chart" },
+                            { name: "Доставка", path: "/" },
+                            { name: "Оплата", path: "/" },
+                            { name: "Возврат", path: "/" },
+                            { name: "Таблица размеров", path: "/" },
                         ]}
                     />
                     <AboutSection />

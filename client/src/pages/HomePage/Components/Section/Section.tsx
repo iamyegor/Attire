@@ -5,7 +5,6 @@ import ProductListSkeleton from "@/pages/HomePage/Components/Section/ProductList
 import React from "react";
 import ProductCarousel from "@/pages/HomePage/Components/Section/ProductCarousel.tsx";
 import Type from "@/components/RootLayout/Header/BurgerMenu/types/Type.ts";
-import ProductSkeleton from "@/pages/HomePage/Components/Section/ProductSkeleton.tsx";
 import FlexibleSkeleton from "@/components/ui/FlexibleSkeleton.tsx";
 
 interface SectionProps {
@@ -20,14 +19,15 @@ interface SectionProps {
 const Section = React.forwardRef<HTMLDivElement, SectionProps>(
     ({ title, products, areProductsLoading, likeProduct, unlikeProduct, type = null }, ref) => {
         return (
-            <section className="my-8 md:ml-20">
-                <h2 className="text-3xl font-bold text-gray-600 mb-3 sm:ml-3">{title}</h2>
+            <section className="my-4 mt-6 md:ml-20">
+                <h2 className="text-3xl text-center sm:text-left font-bold text-gray-600 mb-3 sm:ml-3">
+                    {title}
+                </h2>
                 <div className="hidden sm:block">
                     <HorizontalScroll>
                         {products.map((product, index) => (
-                            <div className="max-w-[280px] flex-shrink-0">
+                            <div className="max-w-[280px] flex-shrink-0" key={index}>
                                 <ProductCard
-                                    key={index}
                                     product={product}
                                     likeProduct={likeProduct}
                                     unlikeProduct={unlikeProduct}

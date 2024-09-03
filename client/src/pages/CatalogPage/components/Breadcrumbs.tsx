@@ -11,7 +11,7 @@ interface BreadcrumbsProps {
 
 export default function Breadcrumbs({ type, category, productName = null }: BreadcrumbsProps) {
     return (
-        <div className="flex flex-wrap items-center text-sm text-neutral-600 space-x-2 px-4">
+        <div className="flex flex-wrap items-center text-sm text-neutral-600 gap-x-2 gap-y-1 px-4">
             <Link to="/">Главная</Link>
             {type && (
                 <>

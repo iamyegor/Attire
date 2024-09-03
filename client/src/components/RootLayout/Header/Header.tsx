@@ -45,8 +45,8 @@ function Header() {
     }
 
     return (
-        <header className="fixed top-0 left-0 right-0 bg-white py-3 px-4 md:px-8 shadow-lg z-20">
-            <div className="max-w-[1500px] mx-auto flex justify-between items-center ">
+        <header className="fixed top-0 left-0 right-0 bg-white py-3 md:px-8 shadow-lg z-20 flex justify-center">
+            <div className="container w-full flex justify-between items-center">
                 <Drawer
                     open={searchOpen}
                     onClose={handleSearchClose}
@@ -65,7 +65,7 @@ function Header() {
                 >
                     <BurgerMenu onClose={handleBurgerMenuClose} />
                 </Drawer>
-                <h1 className="text-3xl font-medium italic">
+                <h1 className="text-3xl xs:text-4xl font-medium italic">
                     <Link to="/">Attire</Link>
                 </h1>
                 <div className="text-lg font-semibold hidden lg:flex space-x-10">
@@ -101,12 +101,12 @@ function Header() {
                     onMouseLeave={hideDropdown}
                     currentType={hoveredType}
                 />
-                <div className="flex items-center space-x-3 md:space-x-5">
+                <div className="flex items-center space-x-5">
                     <button
                         className="text-lg font-semibold text-neutral-500 hover:text-neutral-600 md:bg-neutral-100 md:p-1 md:pr-4 rounded-full flex items-center md:space-x-3"
                         onClick={() => setSearchOpen(true)}
                     >
-                        <SearchSvg className="w-5 h-5 ml-1" />
+                        <SearchSvg className="w-5 h-5 ml-2 focus:outline-0 active:outline-0 outline-0 md:fill-neutral-800" />
                         <p className="hidden md:block max-w-[14ch] truncate overflow-hidden whitespace-nowrap">
                             {searchTerm ? searchTerm : <span className="mr-16">Искать</span>}
                         </p>

@@ -21,7 +21,7 @@ async function enableMocking() {
     return worker.start();
 }
 
-enableMocking().then(() => {
+// enableMocking().then(() => {
     ReactDOM.createRoot(document.getElementById("root")!).render(
         <QueryClientProvider client={queryClient}>
             <AttireProvider>
@@ -29,4 +29,4 @@ enableMocking().then(() => {
             </AttireProvider>
         </QueryClientProvider>,
     );
-});
+// });

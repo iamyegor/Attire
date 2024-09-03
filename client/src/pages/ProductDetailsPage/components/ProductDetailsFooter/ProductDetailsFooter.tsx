@@ -23,7 +23,7 @@ export default function ProductDetailsFooter({ productDetails }: ProductDetailsF
 
     return (
         <div className="px-4 space-y-2">
-            <div className="flex space-x-1 -ml-2">
+            <div className="flex space-x-3">
                 {button("О товаре")}
                 {button("Отзывы")}
             </div>

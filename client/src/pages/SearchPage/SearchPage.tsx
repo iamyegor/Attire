@@ -20,16 +20,16 @@ export default function SearchPage() {
     const unlikeProductMutate = useUnlikeProduct(queryKey, () => setIsLoginModalShown(true));
 
     return (
-        <div className="h-full flex flex-col mb-10">
+        <div className="h-full flex flex-col mb-10 container">
             <LoginModal
                 isLoginModalShown={isLoginModalShown}
                 hideLoginModal={() => setIsLoginModalShown(false)}
                 type="like"
             />
-            <div className="ml-8 space-y-3">
+            <div className="mx-4 space-y-3">
                 <div className="space-y-1">
                     <p>Результаты поиска для</p>
-                    <p className="text-3xl font-medium">{searchTerm}</p>
+                    <p className="text-3xl font-medium w-full break-words line-clamp-3">{searchTerm}</p>
                 </div>
                 <SortByComponent />
             </div>
@@ -41,7 +41,7 @@ export default function SearchPage() {
                     </p>
                 </div>
             )}
-            <div className="ml-4 mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center w-full">
+            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-center w-full">
                 {isLoading
                     ? Array.from({ length: 8 }).map((_, index) => (
                           <div key={index}>

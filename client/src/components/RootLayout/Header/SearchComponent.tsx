@@ -30,16 +30,16 @@ export default function SearchComponent({ onClose }: SearchComponentProps) {
     }
 
     return (
-        <div className="w-full min-h-screen sm:min-h-full md:max-w-[700px] px-2 xs:px-8 mx-auto py-4">
-            <button className="text-neutral-700 mb-3 font-medium block sm:hidden" onClick={onClose}>
+        <div className="w-full min-h-screen sm:min-h-full md:max-w-[700px] p-5 xs:px-8 mx-auto">
+            <button className="text-neutral-700 w-full text-right mb-8 font-medium block sm:hidden" onClick={onClose}>
                 Закрыть
             </button>
             <div className="flex space-x-3">
-                <div className="text-lg font-semibold text-neutral-600 hover:text-neutral-700 bg-neutral-100 pl-3 p-2 pr-4 rounded-full flex items-center space-x-4 w-full">
-                    <SearchSvg className="w-5 h-5 flex-shrink-0" />
+                <div className="text-lg font-semibold text-neutral-600 hover:text-neutral-700 bg-neutral-100 pl-3 p-2 pr-4 rounded-full flex items-center gap-x-2 w-full">
+                    <SearchSvg className="hidden sm:block sm:mr-2 w-5 h-5 flex-shrink-0 fill-neutral-800" />
                     <input
                         name="search"
-                        className="text-sm xs:text-base focus:outline-none bg-transparent w-full placeholder:text-neutral-400"
+                        className="focus:outline-none bg-transparent w-full placeholder:text-neutral-400"
                         type="text"
                         placeholder="Искать"
                         aria-label="Search input"
@@ -49,7 +49,7 @@ export default function SearchComponent({ onClose }: SearchComponentProps) {
                     />
                     {searchTerm.length > 0 && (
                         <button onClick={clearSearchTerm}>
-                            <CrossSvg className="w-4 h-4 text-neutral-500" />
+                            <CrossSvg className="w-7 h-7 fill-neutral-400" />
                         </button>
                     )}
                 </div>
@@ -60,14 +60,14 @@ export default function SearchComponent({ onClose }: SearchComponentProps) {
                     Поиск
                 </button>
                 <button
-                    className="lg:absolute hidden sm:block top-4 right-4 text-neutral-700 font-medium"
+                    className="lg:absolute hidden sm:block top-7 right-7 text-neutral-700 font-medium"
                     onClick={onClose}
                 >
                     Закрыть
                 </button>
             </div>
             <div className="mt-4">
-                <p className="text-gray-600 text-lg mb-4">Популярные поисковые запросы</p>
+                <p className="text-gray-600 text-base xs:text-lg mb-4">Популярные поисковые запросы</p>
                 <ul className="space-y-2">
                     {popularSearchTerms.map((term, index) => (
                         <li

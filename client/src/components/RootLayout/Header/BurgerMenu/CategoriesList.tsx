@@ -17,7 +17,7 @@ export default function CategoriesList({
     closeMenu,
 }: MenuCategoryProps) {
     return (
-        <div className="absolute top-4">
+        <div className="absolute top-5">
             <button
                 className="text-3xl font-medium flex items-center space-x-3"
                 onClick={onBackButtonClick}

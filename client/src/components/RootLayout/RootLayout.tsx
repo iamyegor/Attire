@@ -11,14 +11,14 @@ export default function RootLayout() {
     }, [pathname]);
 
     return (
-        <>
+        <div className="overflow-y-auto">
             <Header />
             <div className="flex justify-center">
-                <div className="pt-[65px] md:pt-[75px] min-h-screen max-w-[2500px] w-full">
+                <div className="pt-[75px] min-h-screen max-w-[2500px] w-full">
                     <Outlet />
                 </div>
             </div>
             <Footer />
-        </>
+        </div>
     );
 }

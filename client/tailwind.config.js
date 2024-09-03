@@ -13,6 +13,17 @@ export default {
                 xs: "430px",
             },
         },
+        container: {
+            center: true,
+            padding: "20px",
+            screens: {
+                sm: "1240px",
+                md: "1240px",
+                lg: "1240px",
+                xl: "1240px",
+                "2xl": "1700px",
+            },
+        },
     },
     plugins: [],
 };

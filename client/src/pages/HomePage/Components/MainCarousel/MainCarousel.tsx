@@ -21,12 +21,13 @@ export default function MainCarousel() {
             renderIndicator={CustomIndicator}
         >
             {elements.map((e, index) => (
-                <div className="relative w-full h-full">
+                <div className="relative w-full h-full" key={index}>
                     <div className="absolute inset-0 flex items-center justify-center px-16">
-                        <h1 className="text-xl xs:text-2xl sm:text-4xl lg:text-5xl text-white font-medium">{e.text}</h1>
+                        <h1 className="text-xl xs:text-2xl sm:text-4xl lg:text-5xl text-white font-medium">
+                            {e.text}
+                        </h1>
                     </div>
                     <img
-                        key={index}
                         className="h-[280px] sm:h-[330px] md:h-[500px] lg:h-[600px] object-cover lg:object-cover rounded-xl"
                         src={e.image}
                         alt="Carousel item"

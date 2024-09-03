@@ -26,12 +26,12 @@ function DropdownMenu({
             onMouseLeave={onMouseLeave}
         >
             <div className="flex justify-center bg-white">
-                <div className="grid grid-cols-[repeat(5,180px)] gap-2 p-4 max-w-screen-xl rounded-md">
+                <div className="flex gap-2 p-4 rounded-md max-w-[800px] flex-wrap">
                     {categories.map((category, index) => (
                         <Link
                             key={index}
                             to={`catalog/${currentType?.path}/${category.id}`}
-                            className="hover:bg-neutral-100 font-medium text-base px-4 py-2 rounded-lg text-center"
+                            className="hover:bg-neutral-100 font-medium text-sm px-6 py-2 rounded-lg text-center"
                             onClick={onMouseLeave}
                         >
                             {category.name}

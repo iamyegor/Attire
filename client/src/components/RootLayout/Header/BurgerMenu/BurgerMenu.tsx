@@ -13,7 +13,7 @@ export default function BurgerMenu({ onClose }: BurgerMenuProps) {
     const { selectedType, categories, selectType, clearSelectedType } = useBurgerMenu();
 
     return (
-        <div className="w-full h-full pl-8">
+        <div className="w-full h-full p-8">
             <TransitionGroup>
                 {!selectedType ? (
                     <CSSTransition key="category-list" timeout={300} classNames="slide-left">

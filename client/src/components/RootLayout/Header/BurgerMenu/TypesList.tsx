@@ -8,7 +8,7 @@ interface CategoryListProps {
 
 function TypesList({ onTypeSelect }: CategoryListProps) {
     return (
-        <div className="space-y-8 pt-32">
+        <div className="space-y-8 pt-24">
             <button
                 className="text-3xl font-medium flex items-center space-x-3"
                 onClick={() => onTypeSelect(Type.Men)}
