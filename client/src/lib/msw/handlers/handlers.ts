@@ -9,7 +9,7 @@ import { ordersHandlers } from "./ordersHandlers";
 import { addressesHandlers } from "./addressesHandler";
 import { userPersonalDataHandlers } from "./userPersonalDataHandlers";
 import { usersHandlers } from "./usersHandlers";
-import { cartHandlers } from "@/lib/msw/handlers/cartHandlers.ts";
+// import { cartHandlers } from "@/lib/msw/handlers/cartHandlers.ts";
 
 export const handlers = [
     ...categoryHandlers,
@@ -22,5 +22,5 @@ export const handlers = [
     ...addressesHandlers,
     ...userPersonalDataHandlers,
     ...usersHandlers,
-    ...cartHandlers,
+    // ...cartHandlers,
 ];

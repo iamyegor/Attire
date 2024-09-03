@@ -14,7 +14,7 @@ export default function CartItemQuantityControl({
     changeCartQuantity,
 }: CartItemQuantityControlProps) {
     return (
-        <div className={`flex items-center space-x-3`}>
+        <div className={`flex items-center gap-x-1`}>
             <QuantityButton
                 className={className}
                 label="-"

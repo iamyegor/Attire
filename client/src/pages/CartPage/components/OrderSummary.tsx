@@ -14,7 +14,7 @@ export default function OrderSummary({ selectedItems, totalPrice }: OrderSummary
     const [deliveryDetailsOpen, setDeliveryDetailsOpen] = useState(false);
 
     return (
-        <div className="w-full lg:max-w-[420px] h-min mx-auto bg-neutral-200 rounded-xl overflow-hidden p-4 md:p-6 space-y-4">
+        <div className="w-full lg:max-w-[420px] h-min mx-auto bg-neutral-200 rounded-[1.75rem] sm:rounded-2xl overflow-hidden p-4 md:p-6 space-y-4">
             <h2 className="font-semibold text-black text-xl tracking-normal">Сумма заказа</h2>
 
             <div className="grid grid-cols-2 gap-2 text-base text-black">

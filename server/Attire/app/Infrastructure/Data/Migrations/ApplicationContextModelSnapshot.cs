@@ -333,6 +333,10 @@ namespace Infrastructure.Data.Migrations
                                 .HasColumnType("uuid")
                                 .HasColumnName("cart_item_id");
 
+                            b1.Property<DateTime>("CreatedAt")
+                                .HasColumnType("timestamp with time zone")
+                                .HasColumnName("created_at");
+
                             b1.Property<Guid>("ProductId")
                                 .HasColumnType("uuid")
                                 .HasColumnName("product_id");

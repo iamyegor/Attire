@@ -21,12 +21,12 @@ export default function CartPage() {
     }, 0);
 
     return (
-        <div className="flex flex-col lg:flex-row container mx-auto space-y-6 lg:space-y-0 lg:space-x-6 max-w-screen-xl px-4 pb-8 h-full">
+        <div className="flex flex-col lg:flex-row sm:container sm:px-4 mx-auto space-y-4 lg:space-y-0 lg:space-x-6 max-w-screen-xl pb-2 h-full">
             {isLoading ? (
                 <CartPageSkeleton />
             ) : (
                 <>
-                    <div className="bg-neutral-200 w-full rounded-2xl p-6 space-y-4 h-min">
+                    <div className="bg-neutral-200 w-full rounded-[1.75rem] sm:rounded-2xl p-4 sm:p-6 space-y-4 h-min">
                         <div className="flex items-center justify-between">
                             <h2 className="font-semibold text-black text-2xl">Корзина</h2>
                             <span className="font-normal text-neutral-500">
@@ -41,7 +41,9 @@ export default function CartPage() {
                                         isChecked={selectedItems.length == cartItems.length}
                                         onClick={toggleSelectAll}
                                     />
-                                    <span>Выбрать все товары</span>
+                                    <label htmlFor="select-all" className="hover:cursor-pointer">
+                                        Выбрать все товары
+                                    </label>
                                 </div>
 
                                 <div className="space-y-6">

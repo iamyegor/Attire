@@ -1,29 +1,25 @@
-import LinkCopiedNotification from "@/pages/CartPage/components/LinkCopiedNotification.tsx";
 import IconButton from "@/pages/CartPage/components/CartItemCard/IconButton.tsx";
 import TrashSvg from "@/assets/trash.svg?react";
 import ShareSvg from "@/assets/share.svg?react";
 
 interface CartItemActionsProps {
-    linkCopied: boolean;
-    setLinkCopied: (value: boolean) => void;
+    onLinkCopied: () => void;
     itemId: string;
     deleteCartItem: (id: string) => void;
 }
 
 export default function CartItemActions({
-    linkCopied,
-    setLinkCopied,
+    onLinkCopied,
     itemId,
     deleteCartItem,
 }: CartItemActionsProps) {
     return (
-        <div className="flex space-x-1">
-            <IconButton onClick={() => setLinkCopied(true)}>
-                <ShareSvg className="w-4 h-4" />
+        <div className="flex gap-x-3 sm:gap-x-2 items-center">
+            <IconButton onClick={onLinkCopied}>
+                <ShareSvg className="w-full h-full" />
             </IconButton>
-            <LinkCopiedNotification isOpen={linkCopied} onClose={() => setLinkCopied(false)} />
             <IconButton onClick={() => deleteCartItem(itemId)}>
-                <TrashSvg className="w-4 h-4" />
+                <TrashSvg className="w-full h-full" />
             </IconButton>
         </div>
     );

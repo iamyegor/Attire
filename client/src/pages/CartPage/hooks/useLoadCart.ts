@@ -12,7 +12,9 @@ export function useLoadCart(queryKey: string[]) {
 
     async function fetchCart() {
         const { data } = await api.get<CartItem[]>(`users/carts`);
-        return data;
+        return data.sort(
+            (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+        );
     }
 
     return { cartItems: data || [], isLoading };

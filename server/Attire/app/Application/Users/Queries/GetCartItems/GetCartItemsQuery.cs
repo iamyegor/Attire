@@ -50,7 +50,8 @@ public class GetCartItemsQueryHandler
                 uci.size,
                 uci.color_hex,
                 uci.color_name,
-                uci.quantity
+                uci.quantity,
+                uci.created_at
             FROM user_cart_items uci
             LEFT JOIN products p
                 ON p.product_id = uci.product_id

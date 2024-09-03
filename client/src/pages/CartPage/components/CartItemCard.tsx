@@ -6,6 +6,7 @@ import CartItemQuantityControl from "@/pages/CartPage/components/CartItemCard/Ca
 import CartItemActions from "@/pages/CartPage/components/CartItemCard/CartItemActionButtons.tsx";
 import productImageFullPath from "@/utils/productImageFullPath.ts";
 import ChangeCartQuantityData from "@/types/ChangeCartQuantityData.ts";
+import LinkCopiedNotification from "@/pages/CartPage/components/LinkCopiedNotification.tsx";
 
 interface CartItemProps {
     item: CartItem;
@@ -24,11 +25,17 @@ export default function CartItemCard({
 }: CartItemProps) {
     const [linkCopied, setLinkCopied] = useState(false);
 
+    async function handleLinkCopied() {
+        setLinkCopied(true);
+        const productLink = `${window.location.origin}/products/${item.productId}`;
+        await navigator.clipboard.writeText(productLink);
+    }
+
     return (
-        <div className="h-[195px] flex flex-col md:flex-row justify-between text-sm xs:text-base bg-white rounded-2xl p-4 group">
-            <div className="flex flex-1 md:h-full md:items-center w-full space-x-4">
+        <div className="flex flex-col md:flex-row justify-between bg-white rounded-2xl p-4 gap-y-4 group">
+            <div className="flex flex-1 h-full w-full space-x-4">
                 <div
-                    className="h-[120px] md:h-full bg-[#c7c7c7] rounded-2xl flex items-center justify-center relative"
+                    className="max-w-[80px] sm:max-w-[110px] md:h-full bg-[#c7c7c7] rounded-2xl flex items-center justify-center relative"
                     style={{ aspectRatio: "10/16" }}
                 >
                     <Checkbox
@@ -39,11 +46,11 @@ export default function CartItemCard({
                     <img
                         src={productImageFullPath(item.imagePath)}
                         alt={item.productTitle}
-                        className="h-full rounded-lg select-none"
+                        className="h-full rounded-lg select-none object-cover"
                         draggable={false}
                     />
                 </div>
-                <div className="flex flex-col justify-between h-full w-full">
+                <div className="flex flex-col justify-between flex-grow">
                     <div className="space-y-1">
                         <p className="block md:hidden font-medium text-medium">
                             {item.productPrice * item.quantity} ₽
@@ -54,7 +61,7 @@ export default function CartItemCard({
                         >
                             {item.productTitle}
                         </Link>
-                        <p className="text-[#5b5b5b] line-clamp-2 text-xs xs:text-base">
+                        <p className="text-[#5b5b5b] line-clamp-2">
                             артикул <span className="font-medium">{item.sku}</span>
                         </p>
                         <div className="flex items-center space-x-1.5">
@@ -70,9 +77,8 @@ export default function CartItemCard({
                     <div className="hidden md:flex space-x-1 justify-between pt-2">
                         <CartItemActions
                             itemId={item.id}
-                            linkCopied={linkCopied}
                             deleteCartItem={deleteCartItem}
-                            setLinkCopied={setLinkCopied}
+                            onLinkCopied={handleLinkCopied}
                         />
                     </div>
                 </div>
@@ -87,9 +93,8 @@ export default function CartItemCard({
             <div className="flex md:hidden justify-between">
                 <CartItemActions
                     itemId={item.id}
-                    linkCopied={linkCopied}
                     deleteCartItem={deleteCartItem}
-                    setLinkCopied={setLinkCopied}
+                    onLinkCopied={handleLinkCopied}
                 />
                 <CartItemQuantityControl
                     item={item}
@@ -97,6 +102,7 @@ export default function CartItemCard({
                     className="!p-0 !px-0.5"
                 />
             </div>
+            <LinkCopiedNotification isOpen={linkCopied} onClose={() => setLinkCopied(false)} />
         </div>
     );
 }

@@ -15,7 +15,7 @@ export default function QuantityButton({
     return (
         <button
             className={classNames(
-                "p-1 text-white w-full h-full rounded-lg flex items-center justify-center",
+                "p-1 text-white w-8 h-8 rounded-lg flex items-center justify-center",
                 {
                     "bg-blue-500": !isDisabled,
                     "bg-blue-300": isDisabled,

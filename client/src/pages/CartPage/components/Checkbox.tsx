@@ -9,12 +9,13 @@ interface CheckboxProps {
 
 export default function Checkbox({ isChecked, onClick, className }: CheckboxProps) {
     return (
-        <div
+        <button
+            id="select-all"
             className={`w-[22px] h-[22px] rounded-md flex justify-center items-center cursor-pointer border 
                              ${isChecked ? "bg-blue-500 border-blue-500" : "border-neutral-400"} pl-0.5 pt-0.5 flex-shrink-0 ${className}`}
             onClick={onClick}
         >
             {isChecked && <CheckSvg className="w-full h-full" />}
-        </div>
+        </button>
     );
 }

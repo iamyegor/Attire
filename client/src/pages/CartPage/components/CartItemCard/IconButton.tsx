@@ -9,7 +9,7 @@ export default function IconButton({
 }) {
     return (
         <button
-            className="p-1.5 flex items-center justify-center bg-neutral-200 rounded-md"
+            className="p-1.5 flex items-center justify-center bg-neutral-200 rounded-md h-7 w-7"
             onClick={onClick}
         >
             {children}

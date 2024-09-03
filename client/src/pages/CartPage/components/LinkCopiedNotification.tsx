@@ -9,31 +9,33 @@ interface LinkCopiedNotificationProps {
 }
 
 export default function LinkCopiedNotification({ isOpen, onClose }: LinkCopiedNotificationProps) {
+    if (!isOpen) {
+        return null;
+    }
+
     return (
-        <div>
-            <Snackbar
-                open={isOpen}
-                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-                onClose={(_, reason) => reason != "clickaway" && onClose()}
-                autoHideDuration={4000}
+        <Snackbar
+            open={isOpen}
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            onClose={(_, reason) => reason != "clickaway" && onClose()}
+            autoHideDuration={4000}
+        >
+            <Alert
+                onClose={onClose}
+                severity="info"
+                variant="filled"
+                icon={false}
+                sx={{
+                    width: "100%",
+                    backgroundColor: "#3b82f6",
+                    color: "#ffffff",
+                }}
             >
-                <Alert
-                    onClose={onClose}
-                    severity="info"
-                    variant="filled"
-                    icon={false}
-                    sx={{
-                        width: "100%",
-                        backgroundColor: "#3b82f6",
-                        color: "#ffffff",
-                    }}
-                >
-                    <div className="flex items-center">
-                        <CopySvg className="w-4 h-4 mr-3" />
-                        Ссылка скопирована
-                    </div>
-                </Alert>
-            </Snackbar>
-        </div>
+                <div className="flex items-center">
+                    <CopySvg className="w-4 h-4 mr-3" />
+                    Ссылка скопирована
+                </div>
+            </Alert>
+        </Snackbar>
     );
 }

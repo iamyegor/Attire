@@ -12,4 +12,5 @@ public class CartItemModel
     public string ColorName { get; set; }
     public string ColorHex { get; set; }
     public int Quantity { get; set; }
+    public DateTime CreatedAt { get; set; }
 }

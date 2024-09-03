@@ -10,4 +10,5 @@ export default interface CartItem {
     size: string;
     color: Color;
     quantity: number;
+    createdAt: Date;
 }

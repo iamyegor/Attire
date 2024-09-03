@@ -64,6 +64,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                     }
                 );
 
+                builder.Property(x => x.CreatedAt).HasColumnName("created_at");
                 builder.WithOwner().HasForeignKey("user_id");
                 builder.Property("user_id").IsRequired();
             }

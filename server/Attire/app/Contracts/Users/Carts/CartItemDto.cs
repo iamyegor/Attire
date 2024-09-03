@@ -11,4 +11,5 @@ public class CartItemDto
     public string Size { get; set; }
     public ColorDto Color { get; set; }
     public int Quantity { get; set; }
+    public DateTime CreatedAt { get; set; }
 }

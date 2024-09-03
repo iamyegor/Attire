@@ -11,6 +11,7 @@ public class CartItem : Entity<Guid>
     public int Quantity { get; private set; }
     public Size Size { get; }
     public Color Color { get; private set; }
+    public DateTime CreatedAt { get; } = DateTime.UtcNow;
 
     private CartItem(Guid productId, int quantity, Size size, Color color)
         : base(Guid.NewGuid())
