@@ -18,8 +18,6 @@ export default function FavoritesPage() {
         );
     }
 
-    console.log("favoriteProducts", products);
-
     return (
         <div className="w-full sm:container mx-auto pb-10 h-full">
             {isSuccess && products.length === 0 && renderErrorState("В избранном пока ничего нет")}

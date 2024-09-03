@@ -13,7 +13,15 @@ import { worker } from "@/lib/msw/browser.ts";
 
 const queryClient = new QueryClient();
 
-worker.start().then(() => {
+async function enableMocking() {
+    if (import.meta.env.MODE !== "development") {
+        return;
+    }
+
+    return worker.start();
+}
+
+enableMocking().then(() => {
     ReactDOM.createRoot(document.getElementById("root")!).render(
         <QueryClientProvider client={queryClient}>
             <AttireProvider>

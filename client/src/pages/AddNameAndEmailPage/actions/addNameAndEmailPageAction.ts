@@ -16,6 +16,8 @@ export default async function addNameAndEmailPageAction({ request }: any) {
 
     try {
         await fetchAddNameAndEmail({ email, name });
+        localStorage.setItem("email", email);
+        
         return redirect("/confirm-email");
     } catch (err) {
         const error = throwOnIncorrectError(err);

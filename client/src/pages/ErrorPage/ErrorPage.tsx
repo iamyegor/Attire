@@ -7,8 +7,6 @@ export default function ErrorPage() {
     const [message, _setMessage] = useState<string>(error.message);
     const [title, _setTitle] = useState<string>(error.title);
 
-    console.log(error);
-
     function reloadPage() {
         window.location.reload();
     }

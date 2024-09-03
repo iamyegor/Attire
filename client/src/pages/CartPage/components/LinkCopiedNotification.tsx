@@ -9,8 +9,6 @@ interface LinkCopiedNotificationProps {
 }
 
 export default function LinkCopiedNotification({ isOpen, onClose }: LinkCopiedNotificationProps) {
-    console.log("isOpen", isOpen);
-
     return (
         <div>
             <Snackbar
