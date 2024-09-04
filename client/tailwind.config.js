@@ -7,6 +7,7 @@ export default {
         extend: {
             fontFamily: {
                 sans: ["Inter", ...defaultTheme.fontFamily.sans],
+                baumans: ["Baumans", defaultTheme.fontFamily.sans],
             },
             screens: {
                 sm: "620px",

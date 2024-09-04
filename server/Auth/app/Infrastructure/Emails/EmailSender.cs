@@ -15,26 +15,21 @@ public class EmailSender
 
     public async Task SendAsync(string html, string recepient)
     {
-        using (
-            SmtpClient client = new SmtpClient(_emailSettings.MailServer, _emailSettings.MailPort)
-        )
+        SmtpClient client = new SmtpClient(_emailSettings.MailServer, _emailSettings.MailPort)
         {
-            client.Credentials = new NetworkCredential(
-                _emailSettings.Username,
-                _emailSettings.Password
-            );
-            client.EnableSsl = true;
+            Credentials = new NetworkCredential(_emailSettings.Username, _emailSettings.Password),
+            EnableSsl = true
+        };
 
-            MailMessage mailMessage = new MailMessage
-            {
-                From = new MailAddress(_emailSettings.SenderEmail, _emailSettings.SenderName),
-                Subject = "Verification code for CleanAuth",
-                Body = html,
-                IsBodyHtml = true
-            };
-            mailMessage.To.Add(recepient);
+        MailMessage mailMessage = new MailMessage
+        {
+            From = new MailAddress(_emailSettings.SenderEmail, _emailSettings.SenderName),
+            Subject = "Код подтверждения Attire",
+            Body = html,
+            IsBodyHtml = true
+        };
+        mailMessage.To.Add(recepient);
 
-            await client.SendMailAsync(mailMessage);
-        }
+        await client.SendMailAsync(mailMessage);
     }
 }

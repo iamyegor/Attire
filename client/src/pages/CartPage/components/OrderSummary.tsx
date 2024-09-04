@@ -3,6 +3,7 @@ import { useState } from "react";
 import CustomDialog from "@/components/ui/CustomDialog.tsx";
 import classNames from "classnames";
 import RedFaceSvg from "@/assets/red-face.svg?react";
+import { TbHandStop } from "react-icons/tb";
 
 interface OrderSummaryProps {
     selectedItems: number;
@@ -67,10 +68,9 @@ export default function OrderSummary({ selectedItems, totalPrice }: OrderSummary
                 onClose={() => setPurchaseFailedDialogOpen(false)}
             >
                 <div className="px-6 flex flex-col items-center space-y-4">
-                    <RedFaceSvg className="w-20 h-20" />
+                    <TbHandStop className="w-20 h-20 text-red-500" />
                     <p className="text-xl font-medium text-center">
-                        Что-то пошло не так при попытке совершить покупку, пожалуйста попробуйте
-                        позже.
+                        Оформление заказа временно недоступно
                     </p>
                 </div>
             </CustomDialog>
