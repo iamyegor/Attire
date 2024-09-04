@@ -34,3 +34,10 @@ body {
 .error-message {
     @apply text-red-600;
 }
+
+@font-face {
+    font-family: "Sofa";
+    src: url("/src/assets/fonts/sofa.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}

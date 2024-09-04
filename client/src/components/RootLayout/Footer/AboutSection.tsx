@@ -16,10 +16,11 @@ export default function AboutSection() {
             <p>
                 <span>Разработано</span>{" "}
                 <a
-                    className="font-baumans text-neutral-400 font-semibold hover:text-neutral-100 transition"
+                    className="font-sofa text-neutral-400 hover:text-neutral-100 transition"
                     href="https://kwork.ru/user/gdigital_development"
                 >
-                    GDigital
+                    <span>GD</span>
+                    <span className="text-xs">igital</span>
                 </a>
             </p>
         </div>
