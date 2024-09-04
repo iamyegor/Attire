@@ -55,7 +55,7 @@ public static class DependencyInjection
         services.Configure<EmailSettings>(config.GetSection(nameof(EmailSettings)));
         services.PostConfigure<EmailSettings>(settings =>
         {
-            settings.Password = Environment.GetEnvironmentVariable("OUTLOOK_PASSWORD")!;
+            settings.Password = Environment.GetEnvironmentVariable("YANDEX_MAIL_PASSWORD")!;
         });
 
         services.AddTransient<DomainEmailSender>();

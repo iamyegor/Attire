@@ -157,10 +157,10 @@ VALUES
 
 insert into product_colors (id, hex, name, product_id)
 VALUES
-    ('1ad12c3e-906b-4a90-8b21-0a431345eef1', '#FFFFFF', 'Белый', '1a672a63-a5b7-4e73-a160-8a53b2d97801'),
+    ('1ad12c3e-906b-4a90-8b21-0a431345eef1', '#fff', 'Белый', '1a672a63-a5b7-4e73-a160-8a53b2d97801'),
     ('1a672a63-a5b2-4e73-a160-8a53b2d97801', '#c5ad89', '8-кофейный', '1a672a63-a5b7-4e73-a160-8a53b2d97801'),
-    ('2bdc48d3-f38a-4e98-810b-bd7ac5b17b3a', '#000000', 'Чёрный', '2a982f29-5f3e-4c69-b8d9-214a43d3451e'),
-    ('2bdc48d3-f38a-4e98-810b-bd7ac5b17b4a', '#FFFFFF', 'Белый', '2a982f29-5f3e-4c69-b8d9-214a43d3451e'),
+    ('2bdc48d3-f38a-4e98-810b-bd7ac5b17b3a', '#000', 'Чёрный', '2a982f29-5f3e-4c69-b8d9-214a43d3451e'),
+    ('2bdc48d3-f38a-4e98-810b-bd7ac5b17b4a', '#fff', 'Белый', '2a982f29-5f3e-4c69-b8d9-214a43d3451e'),
     ('3cf4f637-37f2-4a9e-bf6f-d5b496f8a601', '#313133', 'Тёмно-серый', '3b239cf8-dcfa-446e-8d39-e4b5089e75f8'),
     ('4d57c69b-97b3-4a9b-bfda-8eeb69e12b14', '#dfd6c9', 'Бежевый', '4b52e5df-0541-41a3-bcfb-d5d287c6a655'),
     ('5ef64c7b-120d-4a2f-99ad-6ad10b6b30a1', '#ff69b4', 'Розовый', '4b52e5df-0541-41a3-bcfb-d5d287c6a655');
@@ -219,9 +219,9 @@ insert into product_colors (id, hex, name, product_id)
 VALUES
     ('1ad12c3e-906b-4a90-7b21-0a431345eef1', '#2477b2', 'Синий', '7a672a41-a5b7-4e73-a160-8a53b2d94801'),
     ('1a641a61-a5b2-4e73-a160-8a53b2d97801', '#313133', 'Тёмно-серый', '1a881f21-5f3e-4c69-b8d9-214a43d3251e'),
-    ('1bdc48d3-f38a-3e22-810b-bd7ac5b17b3a', '#000000', 'Чёрный', '1b229cf8-dcfa-446e-8d28-e4b3089e15f8'),
-    ('2bdc32d3-f38a-4e98-810b-bd7ac5b17b4a', '#FFFFFF', 'Белый', '2b51e5df-0541-41a3-bcfb-d3d287c2a655'),
-    ('3cf4f612-37f2-4a9e-bf6f-d5b496f8a601', '#000000', 'Чёрный', '2b51e5df-0541-41a3-bcfb-d3d287c2a655');
+    ('1bdc48d3-f38a-3e22-810b-bd7ac5b17b3a', '#000', 'Чёрный', '1b229cf8-dcfa-446e-8d28-e4b3089e15f8'),
+    ('2bdc32d3-f38a-4e98-810b-bd7ac5b17b4a', '#fff', 'Белый', '2b51e5df-0541-41a3-bcfb-d3d287c2a655'),
+    ('3cf4f612-37f2-4a9e-bf6f-d5b496f8a601', '#000', 'Чёрный', '2b51e5df-0541-41a3-bcfb-d3d287c2a655');
 
 insert into product_sizes (id, value, product_id)
 VALUES
@@ -340,14 +340,14 @@ VALUES
 
 insert into product_colors (id, hex, name, product_id)
 VALUES
-    ('2d252384-3e1a-42f5-96bf-17581883c572', '#ffffff', 'Белый', '5a1d2c34-9a1b-4e1d-8a6c-7b8e234f12bc'),
-    ('d63d6cd5-3285-4fe2-8145-4147f52ff34e', '#000000', 'Чёрный', '5a1d2c34-9a1b-4e1d-8a6c-7b8e234f12bc'),
+    ('2d252384-3e1a-42f5-96bf-17581883c572', '#fff', 'Белый', '5a1d2c34-9a1b-4e1d-8a6c-7b8e234f12bc'),
+    ('d63d6cd5-3285-4fe2-8145-4147f52ff34e', '#000', 'Чёрный', '5a1d2c34-9a1b-4e1d-8a6c-7b8e234f12bc'),
     ('187bd885-e696-4c92-8b6f-90ecd761f185', '#40E0D0', 'Бирюзовый', '5a1d2c34-9a1b-4e1d-8a6c-7b8e234f12bc'),
     ('f872e98c-bbb0-4cd2-853d-726782c16406', '#2c5bbf', 'Синий', 'a806f63f-205a-49f0-b6f0-c00b8b53da32'),
     ('5660fa7f-0591-466d-af16-ba17f64f2e1c', '#F5F5DC', 'Бежевый', 'a806f63f-205a-49f0-b6f0-c00b8b53da32'),
     ('319099ed-13eb-4f00-9bbe-810c7d698e80', '#64ba18', 'Зелёный', 'a806f63f-205a-49f0-b6f0-c00b8b53da32'),
-    ('a074a7b5-a7ee-4354-8bcc-d2e04d6ff951', '#ffffff', 'Белый', '66904811-b707-4031-918c-4978805fb8ae'),
-    ('ca552ad7-943c-42be-94f0-5ff390db5053', '#000000', 'Чёрный', 'ff609921-0b41-4b4f-af62-d107366aed75'),
+    ('a074a7b5-a7ee-4354-8bcc-d2e04d6ff951', '#fff', 'Белый', '66904811-b707-4031-918c-4978805fb8ae'),
+    ('ca552ad7-943c-42be-94f0-5ff390db5053', '#000', 'Чёрный', 'ff609921-0b41-4b4f-af62-d107366aed75'),
     ('e6e4dd9d-e89a-4317-8414-a1a5872244ef', '#40E0D0', 'Бирюзовый', 'ff609921-0b41-4b4f-af62-d107366aed75');
 
 
@@ -411,8 +411,8 @@ VALUES
     ('5d3e6f7f-2345-4f9e-c84d-db3c4d123456', '#F5F5DC', 'Бежевый', '7f2d8d1c-9b4b-4b83-9f91-cb4d12345678'),
     ('6e8f12a1-d66b-47d5-b1ca-f600ab8646cf', '#64ba18', 'Зеленый', '1d2e5f8b-4c3a-47ab-937d-cf1234567890'),
     ('e39bb549-f2b7-425d-bfcf-fa2844e60fb4', '#40E0D0', 'Бирюзовый', '8a9d6b7f-3b7d-40a1-a289-bc4d12345678'),
-    ('7f2d8d1c-9b4b-4b83-9f91-cb4d12345678', '#ffffff', 'Белый', '6b3c7d9f-5d9c-4123-89ad-ec3b4d123456'),
-    ('e05588af-7094-4548-a0c0-3397d9c4dd23', '#000000', 'Черный', '9c7d8e2f-1e2a-4a4b-b93a-db4c12345678'),
+    ('7f2d8d1c-9b4b-4b83-9f91-cb4d12345678', '#fff', 'Белый', '6b3c7d9f-5d9c-4123-89ad-ec3b4d123456'),
+    ('e05588af-7094-4548-a0c0-3397d9c4dd23', '#000', 'Черный', '9c7d8e2f-1e2a-4a4b-b93a-db4c12345678'),
     ('8fd6c51c-de33-428c-b00c-4ba0a3be0a61', '#2c5bbf', 'Синий', '3f5e7c8a-2b1a-4b2f-9d1a-db3b4d123456'),
     ('0868eab8-0fa8-4ae4-8069-082558edf2b4', '#64ba18', 'Зеленый', '7b8c9d4f-6a7b-4c1f-89bd-ec2b4d123456');
 
@@ -481,19 +481,19 @@ INSERT INTO products (product_id, price, title, description, stars, creation_dat
                                                                                                                                      ('98200c89-727f-44af-88c3-d919cb7ec258', 2990, 'Майка с асимметричным кроем', 'Майка с асимметричным кроем для стильного образа', 0, '2024-08-01', true, '82c46ab3-0854-4caa-a421-14060f75b6ff', 'BrandName', 'Хлопок', 'SKU007');
 
 INSERT INTO product_colors (id, hex, name, product_id) VALUES
-                                                           ('0033de60-58c5-44c8-abd9-61e178ebae12', '#ffffff', 'Белый', '06666fc2-eb23-498a-9d73-90c4257f8719'),
-                                                           ('74d981e7-080e-4730-bbe8-6cf3b4874e74', '#000000', 'Черный', '06666fc2-eb23-498a-9d73-90c4257f8719'),
+                                                           ('0033de60-58c5-44c8-abd9-61e178ebae12', '#fff', 'Белый', '06666fc2-eb23-498a-9d73-90c4257f8719'),
+                                                           ('74d981e7-080e-4730-bbe8-6cf3b4874e74', '#000', 'Черный', '06666fc2-eb23-498a-9d73-90c4257f8719'),
                                                            ('0ba42362-c50c-4659-8040-5b62139b464e', '#2c5bbf', 'Синий', '6c72bc48-69d6-41d1-b3a9-5c109fae2f40'),
                                                            ('d7c68f99-13c1-4ed4-bf29-92c1d062ab43', '#40E0D0', 'Бирюзовый', '6c72bc48-69d6-41d1-b3a9-5c109fae2f40'),
                                                            ('c37f948f-cbcb-4865-9882-1b3e1274cc84', '#F5F5DC', 'Бежевый', '2f58bd6d-6f68-48f2-b7a5-a90b51dec60e'),
                                                            ('b04f8b8e-0adf-4b56-bf35-cd4fcd2af9cc', '#64ba18', 'Зеленый', '11c0d193-b5a8-43b6-9219-2e8e7438ff28'),
-                                                           ('8dfbfc8a-1f11-45fa-8982-0dfb71c1585e', '#ffffff', 'Белый', '11c0d193-b5a8-43b6-9219-2e8e7438ff28'),
-                                                           ('f65dd9fc-cf1c-4de4-8f6f-3f8fe729a7f2', '#000000', 'Черный', '2633b56c-e990-4011-b23a-5edf1a9f6fbe'),
+                                                           ('8dfbfc8a-1f11-45fa-8982-0dfb71c1585e', '#fff', 'Белый', '11c0d193-b5a8-43b6-9219-2e8e7438ff28'),
+                                                           ('f65dd9fc-cf1c-4de4-8f6f-3f8fe729a7f2', '#000', 'Черный', '2633b56c-e990-4011-b23a-5edf1a9f6fbe'),
                                                            ('59dd06b7-1740-464e-8447-b9b302bb48e1', '#2c5bbf', 'Синий', '2633b56c-e990-4011-b23a-5edf1a9f6fbe'),
                                                            ('703eb44b-6b41-4c24-9a02-5cc3d3fbdeed', '#40E0D0', 'Бирюзовый', '0e9507f2-527f-4d57-a997-8b9514549e74'),
                                                            ('e5a0a973-f9d8-4972-a27c-0f99eeb90bc6', '#F5F5DC', 'Бежевый', '0e9507f2-527f-4d57-a997-8b9514549e74'),
                                                            ('490147b3-7d2b-4201-8be3-8658a399a3a2', '#64ba18', 'Зеленый', '98200c89-727f-44af-88c3-d919cb7ec258'),
-                                                           ('8e61f243-89aa-4f4d-8752-1d6ff54f59b8', '#ffffff', 'Белый', '98200c89-727f-44af-88c3-d919cb7ec258');
+                                                           ('8e61f243-89aa-4f4d-8752-1d6ff54f59b8', '#fff', 'Белый', '98200c89-727f-44af-88c3-d919cb7ec258');
 
 INSERT INTO product_sizes (id, value, product_id) VALUES
                                                       ('6e7f0017-57bf-4da1-8449-4bc7b284c0f0', 'M', '06666fc2-eb23-498a-9d73-90c4257f8719'),
@@ -574,20 +574,20 @@ VALUES
 
 INSERT INTO product_colors (id, hex, name, product_id)
 VALUES
-    ('08e9c170-123b-458b-857f-8429c2e2d2f7', '#ffffff', 'Белый', 'ae3c2b1a-394b-41f1-9df5-89e334f8b7cd'),
-    ('28e9c170-14c2-46f1-857f-8429c2e2d2f7', '#000000', 'Черный', 'ae3c2b1a-394b-41f1-9df5-89e334f8b7cd'),
+    ('08e9c170-123b-458b-857f-8429c2e2d2f7', '#fff', 'Белый', 'ae3c2b1a-394b-41f1-9df5-89e334f8b7cd'),
+    ('28e9c170-14c2-46f1-857f-8429c2e2d2f7', '#000', 'Черный', 'ae3c2b1a-394b-41f1-9df5-89e334f8b7cd'),
     ('48e9c170-16e3-4b12-857f-8429c2e2d2f7', '#2c5bbf', 'Синий', 'ae3c2b1a-394b-41f1-9df5-89e334f8b7cd'),
     ('58f2a1c1-8d7f-4a3d-9d56-c3b14d5f24f1', '#40E0D0', 'Бирюзовый', 'efc52b3a-7cda-4266-a65d-60a1f72e8749'),
     ('68f2a1c1-7c4a-4c35-9d56-c3b14d5f24f1', '#F5F5DC', 'Бежевый', 'efc52b3a-7cda-4266-a65d-60a1f72e8749'),
     ('78f2a1c1-8d1a-403d-9d56-c3b14d5f24f1', '#64ba18', 'Зеленый', 'efc52b3a-7cda-4266-a65d-60a1f72e8749'),
-    ('88f2a1c1-8d2c-481d-9d56-c3b14d5f24f1', '#ffffff', 'Белый', 'd81a620e-c441-4f3d-b08b-29f50a9c1c76'),
-    ('98f2a1c1-9e2f-4e7b-9d56-c3b14d5f24f1', '#000000', 'Черный', 'd81a620e-c441-4f3d-b08b-29f50a9c1c76'),
+    ('88f2a1c1-8d2c-481d-9d56-c3b14d5f24f1', '#fff', 'Белый', 'd81a620e-c441-4f3d-b08b-29f50a9c1c76'),
+    ('98f2a1c1-9e2f-4e7b-9d56-c3b14d5f24f1', '#000', 'Черный', 'd81a620e-c441-4f3d-b08b-29f50a9c1c76'),
     ('a8f2a1c1-7b23-4c6e-9d56-c3b14d5f24f1', '#2c5bbf', 'Синий', 'a5e9c10b-78b9-4533-a1a7-568fcd42d11b'),
     ('b8f2a1c1-7c3f-43b8-9d56-c3b14d5f24f1', '#40E0D0', 'Бирюзовый', 'a5e9c10b-78b9-4533-a1a7-568fcd42d11b'),
     ('c8f2a1c1-7d12-4a23-9d56-c3b14d5f24f1', '#F5F5DC', 'Бежевый', 'b5c91d37-71cb-4c31-81ab-124fc72a1468'),
     ('d8f2a1c1-7e24-40c2-9d56-c3b14d5f24f1', '#64ba18', 'Зеленый', 'b5c91d37-71cb-4c31-81ab-124fc72a1468'),
-    ('e8f2a1c1-7f13-4b76-9d56-c3b14d5f24f1', '#ffffff', 'Белый', 'b5c91d37-71cb-4c31-81ab-124fc72a1468'),
-    ('f8f2a1c1-803e-48e2-9d56-c3b14d5f24f1', '#000000', 'Черный', 'e5a2f539-b392-4c9e-b57f-b8b8f29b129e'),
+    ('e8f2a1c1-7f13-4b76-9d56-c3b14d5f24f1', '#fff', 'Белый', 'b5c91d37-71cb-4c31-81ab-124fc72a1468'),
+    ('f8f2a1c1-803e-48e2-9d56-c3b14d5f24f1', '#000', 'Черный', 'e5a2f539-b392-4c9e-b57f-b8b8f29b129e'),
     ('09f2a1c1-805f-42de-9d56-c3b14d5f24f1', '#2c5bbf', 'Синий', 'e5a2f539-b392-4c9e-b57f-b8b8f29b129e'),
     ('19f2a1c1-814d-43fd-9d56-c3b14d5f24f1', '#40E0D0', 'Бирюзовый', 'f4c6713e-573f-4c9e-877e-6a0f5c9e3e53'),
     ('29f2a1c1-824e-40bf-9d56-c3b14d5f24f1', '#F5F5DC', 'Бежевый', 'f4c6713e-573f-4c9e-877e-6a0f5c9e3e53');
@@ -669,14 +669,14 @@ VALUES
 
 INSERT INTO product_colors (id, hex, name, product_id)
 VALUES
-    ('81e9c480-123a-46e3-912a-2429c2e2d2d2', '#ffffff', 'Белый', 'e23c5a1b-392f-4f1b-8a65-345f9f45adcd'),
-    ('91e9c470-22c2-46f1-857f-3429c2e2d2e2', '#000000', 'Черный', 'e23c5a1b-392f-4f1b-8a65-345f9f45adcd'),
+    ('81e9c480-123a-46e3-912a-2429c2e2d2d2', '#fff', 'Белый', 'e23c5a1b-392f-4f1b-8a65-345f9f45adcd'),
+    ('91e9c470-22c2-46f1-857f-3429c2e2d2e2', '#000', 'Черный', 'e23c5a1b-392f-4f1b-8a65-345f9f45adcd'),
     ('a1e9c460-32e2-46f2-857f-4429c2e2d2f3', '#2c5bbf', 'Синий', 'e23c5a1b-392f-4f1b-8a65-345f9f45adcd'),
     ('b1e9c450-42f2-46f3-857f-5429c2e2d2d4', '#40E0D0', 'Бирюзовый', '7e12d845-ef6a-45b5-9448-6a18b58e5e43'),
     ('c1e9c440-52f2-46f4-857f-6429c2e2d2d5', '#F5F5DC', 'Бежевый', '7e12d845-ef6a-45b5-9448-6a18b58e5e43'),
     ('d1e9c430-62f2-46f5-857f-7429c2e2d2d6', '#64ba18', 'Зеленый', '7e12d845-ef6a-45b5-9448-6a18b58e5e43'),
-    ('e1e9c420-72f2-46f6-857f-8429c2e2d2d7', '#ffffff', 'Белый', 'be43531c-f4c4-467d-9a35-652c8f9e6757'),
-    ('f1e9c410-82f2-46f7-857f-9429c2e2d2d8', '#000000', 'Черный', 'cf129f8e-46f4-4e6f-bb7e-3c92652867d2'),
+    ('e1e9c420-72f2-46f6-857f-8429c2e2d2d7', '#fff', 'Белый', 'be43531c-f4c4-467d-9a35-652c8f9e6757'),
+    ('f1e9c410-82f2-46f7-857f-9429c2e2d2d8', '#000', 'Черный', 'cf129f8e-46f4-4e6f-bb7e-3c92652867d2'),
     ('01e9c400-92f2-46f8-857f-a429c2e2d2d9', '#2c5bbf', 'Синий', 'd127c72e-65b4-4a1a-8a8c-3e68f9f5eeb7'),
     ('11e9c3f0-a2f2-46f9-857f-b429c2e2d2d1', '#40E0D0', 'Бирюзовый', 'f5c7ab8f-48c9-4bb8-8a2e-8fa9f3f7d934'),
     ('21e9c3e0-b2f2-46fa-857f-c429c2e2d2d2', '#F5F5DC', 'Бежевый', 'b8f5c4d9-3cf5-4873-ae83-1b8d8a4f7e65');
@@ -788,24 +788,24 @@ INSERT INTO product_colors (id, hex, name, product_id)
 VALUES
     (uuid_generate_v4(), '#2c5bbf', 'Синий', 'b1e25f2c-4d8c-42e2-9269-33dfb5a2d1e4'),
     (uuid_generate_v4(), '#40E0D0', 'Бирюзовый', 'b1e25f2c-4d8c-42e2-9269-33dfb5a2d1e4'),
-    (uuid_generate_v4(), '#000000', 'Черный', 'b1e25f2c-4d8c-42e2-9269-33dfb5a2d1e4'),
+    (uuid_generate_v4(), '#000', 'Черный', 'b1e25f2c-4d8c-42e2-9269-33dfb5a2d1e4'),
     (uuid_generate_v4(), '#F5F5DC', 'Бежевый', 'c1f36e7a-5a4b-4b8f-8ecf-f5e097654a75'),
-    (uuid_generate_v4(), '#ffffff', 'Белый', 'c1f36e7a-5a4b-4b8f-8ecf-f5e097654a75'),
+    (uuid_generate_v4(), '#fff', 'Белый', 'c1f36e7a-5a4b-4b8f-8ecf-f5e097654a75'),
     (uuid_generate_v4(), '#64ba18', 'Зеленый', 'c1f36e7a-5a4b-4b8f-8ecf-f5e097654a75'),
     (uuid_generate_v4(), '#2c5bbf', 'Синий', 'd2b87c3a-6c5d-4fa6-8e1e-2d6e458f79cd'),
-    (uuid_generate_v4(), '#000000', 'Черный', 'd2b87c3a-6c5d-4fa6-8e1e-2d6e458f79cd'),
+    (uuid_generate_v4(), '#000', 'Черный', 'd2b87c3a-6c5d-4fa6-8e1e-2d6e458f79cd'),
     (uuid_generate_v4(), '#F5F5DC', 'Бежевый', 'd2b87c3a-6c5d-4fa6-8e1e-2d6e458f79cd'),
     (uuid_generate_v4(), '#40E0D0', 'Бирюзовый', 'e3d78e4b-7e6f-4bb8-9a2f-3e7f578c89de'),
     (uuid_generate_v4(), '#64ba18', 'Зеленый', 'e3d78e4b-7e6f-4bb8-9a2f-3e7f578c89de'),
     (uuid_generate_v4(), '#2c5bbf', 'Синий', 'e3d78e4b-7e6f-4bb8-9a2f-3e7f578c89de'),
-    (uuid_generate_v4(), '#ffffff', 'Белый', 'f4e89f5c-8f70-4bc9-9b3f-4f80a6989aef'),
+    (uuid_generate_v4(), '#fff', 'Белый', 'f4e89f5c-8f70-4bc9-9b3f-4f80a6989aef'),
     (uuid_generate_v4(), '#F5F5DC', 'Бежевый', 'f4e89f5c-8f70-4bc9-9b3f-4f80a6989aef'),
     (uuid_generate_v4(), '#40E0D0', 'Бирюзовый', 'f4e89f5c-8f70-4bc9-9b3f-4f80a6989aef'),
     (uuid_generate_v4(), '#2c5bbf', 'Синий', 'a5f9a06d-9a81-4cba-9c4f-5f90b7a9abef'),
-    (uuid_generate_v4(), '#000000', 'Черный', 'a5f9a06d-9a81-4cba-9c4f-5f90b7a9abef'),
+    (uuid_generate_v4(), '#000', 'Черный', 'a5f9a06d-9a81-4cba-9c4f-5f90b7a9abef'),
     (uuid_generate_v4(), '#64ba18', 'Зеленый', 'a5f9a06d-9a81-4cba-9c4f-5f90b7a9abef'),
-    (uuid_generate_v4(), '#ffffff', 'Белый', 'b6fa0b7e-ac92-4dab-9d5f-6fa1c8c8bcf0'),
-    (uuid_generate_v4(), '#000000', 'Черный', 'b6fa0b7e-ac92-4dab-9d5f-6fa1c8c8bcf0'),
+    (uuid_generate_v4(), '#fff', 'Белый', 'b6fa0b7e-ac92-4dab-9d5f-6fa1c8c8bcf0'),
+    (uuid_generate_v4(), '#000', 'Черный', 'b6fa0b7e-ac92-4dab-9d5f-6fa1c8c8bcf0'),
     (uuid_generate_v4(), '#2c5bbf', 'Синий', 'b6fa0b7e-ac92-4dab-9d5f-6fa1c8c8bcf0');
 
 
@@ -859,15 +859,15 @@ VALUES
 
 INSERT INTO product_colors (id, hex, name, product_id)
 VALUES
-    (uuid_generate_v4(), '#ffffff', 'Белый', '1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d'),
-    (uuid_generate_v4(), '#000000', 'Черный', '1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d'),
+    (uuid_generate_v4(), '#fff', 'Белый', '1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d'),
+    (uuid_generate_v4(), '#000', 'Черный', '1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d'),
     (uuid_generate_v4(), '#2c5bbf', 'Синий', '1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d'),
 
     (uuid_generate_v4(), '#40E0D0', 'Бирюзовый', 'e73dc324-155f-4322-8e2f-d8303da6300c'),
     (uuid_generate_v4(), '#F5F5DC', 'Бежевый', 'e73dc324-155f-4322-8e2f-d8303da6300c'),
     (uuid_generate_v4(), '#64ba18', 'Зеленый', 'e73dc324-155f-4322-8e2f-d8303da6300c'),
 
-    (uuid_generate_v4(), '#ffffff', 'Белый', '9aecd02c-7a5b-4d15-960a-7d5943cf5e87'),
+    (uuid_generate_v4(), '#fff', 'Белый', '9aecd02c-7a5b-4d15-960a-7d5943cf5e87'),
     (uuid_generate_v4(), '#2c5bbf', 'Синий', '9aecd02c-7a5b-4d15-960a-7d5943cf5e87'),
     (uuid_generate_v4(), '#64ba18', 'Зеленый', '9aecd02c-7a5b-4d15-960a-7d5943cf5e87');
 
