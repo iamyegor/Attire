@@ -1,6 +1,7 @@
-using System.Net;
-using System.Net.Mail;
+using MailKit.Net.Smtp;
+using MailKit.Security;
 using Microsoft.Extensions.Options;
+using MimeKit;
 
 namespace Infrastructure.Emails;
 
@@ -13,23 +14,25 @@ public class EmailSender
         _emailSettings = emailSettings.Value;
     }
 
-    public async Task SendAsync(string html, string recepient)
+    public async Task SendAsync(string html, string recipient)
     {
-        SmtpClient client = new SmtpClient(_emailSettings.MailServer, _emailSettings.MailPort)
-        {
-            Credentials = new NetworkCredential(_emailSettings.Username, _emailSettings.Password),
-            EnableSsl = true
-        };
+        MimeMessage email = new();
+        email.From.Add(new MailboxAddress(_emailSettings.SenderName, _emailSettings.SenderEmail));
+        email.To.Add(MailboxAddress.Parse(recipient));
+        email.Subject = "Код подтверждения Attire";
 
-        MailMessage mailMessage = new MailMessage
-        {
-            From = new MailAddress(_emailSettings.SenderEmail, _emailSettings.SenderName),
-            Subject = "Код подтверждения Attire",
-            Body = html,
-            IsBodyHtml = true
-        };
-        mailMessage.To.Add(recepient);
+        BodyBuilder bodyBuilder = new BodyBuilder { HtmlBody = html };
+        email.Body = bodyBuilder.ToMessageBody();
 
-        await client.SendMailAsync(mailMessage);
+        using SmtpClient client = new();
+        await client.ConnectAsync(
+            _emailSettings.MailServer,
+            _emailSettings.MailPort,
+            SecureSocketOptions.StartTls
+        );
+        await client.AuthenticateAsync(_emailSettings.Username, _emailSettings.Password);
+        await client.SendAsync(email);
+
+        await client.DisconnectAsync(true);
     }
 }

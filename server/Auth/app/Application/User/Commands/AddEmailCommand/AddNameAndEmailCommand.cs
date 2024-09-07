@@ -1,5 +1,6 @@
 ﻿using Domain.DomainErrors;
 using Domain.User.ValueObjects;
+using Infrastructure.Auth.VkAuth;
 using Infrastructure.Data;
 using Infrastructure.Emails;
 using MediatR;
@@ -31,9 +32,17 @@ public class AddNameAndEmailCommandHandler
             x => x.Email != null && x.Email.Value == email.Value,
             ct
         );
-        if (userWithSameEmail != null && userWithSameEmail.IsEmailVerified)
+        if (userWithSameEmail != null)
         {
-            return Errors.User.EmailAlreadyExists;
+            if (userWithSameEmail.IsEmailVerified)
+            {
+                return Errors.User.EmailAlreadyExists;
+            }
+            else
+            {
+                userWithSameEmail.ResetEmail();
+                await _context.SaveChangesAsync(ct);
+            }
         }
 
         Domain.User.User? user = await _context.Users.SingleOrDefaultAsync(

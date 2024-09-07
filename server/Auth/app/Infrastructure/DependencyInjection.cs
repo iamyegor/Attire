@@ -1,3 +1,5 @@
+using System.Net;
+using System.Net.Mail;
 using Infrastructure.Auth.Authentication;
 using Infrastructure.Auth.VkAuth;
 using Infrastructure.Cookies;
@@ -7,6 +9,7 @@ using Infrastructure.Emails;
 using Infrastructure.Utils;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using SharedKernel.Auth;
 using SharedKernel.Communication.Extensions;
 
@@ -55,11 +58,22 @@ public static class DependencyInjection
         services.Configure<EmailSettings>(config.GetSection(nameof(EmailSettings)));
         services.PostConfigure<EmailSettings>(settings =>
         {
-            settings.Password = Environment.GetEnvironmentVariable("YANDEX_MAIL_PASSWORD")!;
+            settings.Password = Environment.GetEnvironmentVariable("MAIL_PASSWORD")!;
         });
 
         services.AddTransient<DomainEmailSender>();
         services.AddTransient<EmailSender>();
+        services.AddTransient(serviceProvider =>
+        {
+            EmailSettings emailSettings = serviceProvider
+                .GetRequiredService<IOptions<EmailSettings>>()
+                .Value;
+            return new SmtpClient(emailSettings.MailServer, emailSettings.MailPort)
+            {
+                Credentials = new NetworkCredential(emailSettings.Username, emailSettings.Password),
+                EnableSsl = true
+            };
+        });
 
         return services;
     }

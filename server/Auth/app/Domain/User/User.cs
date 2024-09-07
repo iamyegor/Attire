@@ -76,4 +76,9 @@ public class User : AggregateRoot<UserId>
         Name = name;
         Email = email;
     }
+
+    public void ResetEmail()
+    {
+        Email = null;
+    }
 }
