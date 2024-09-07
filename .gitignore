@@ -80,6 +80,7 @@ ScaffoldingReadMe.txt
 /build
 
 # Environment files
+**/.asp-env
 .env
 .env.local
 .env.*.local

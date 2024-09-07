@@ -1,5 +1,6 @@
 using Api.Utils;
 using Application;
+using DotNetEnv;
 using Infrastructure;
 
 namespace Api;
@@ -10,6 +11,7 @@ public static class Startup
 
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
+        Env.Load(".asp-env");
         builder.Host.AddSerilog();
 
         builder
