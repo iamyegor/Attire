@@ -55,10 +55,11 @@ export default function SignInPage() {
                 <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
                         <Checkbox
+                            id="remember-me"
                             isChecked={rememberMe}
                             onClick={() => setRememberMe(!rememberMe)}
                         />
-                        <label htmlFor="rememberMe" className="text-gray-700">
+                        <label htmlFor="remember-me" className="text-gray-700">
                             Запомнить меня
                         </label>
                     </div>

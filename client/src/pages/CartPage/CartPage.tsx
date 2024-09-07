@@ -38,6 +38,7 @@ export default function CartPage() {
                             <>
                                 <div className="flex items-center space-x-3">
                                     <Checkbox
+                                        id="select-all"
                                         isChecked={selectedItems.length == cartItems.length}
                                         onClick={toggleSelectAll}
                                     />

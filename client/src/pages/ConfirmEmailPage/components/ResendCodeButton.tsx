@@ -6,6 +6,7 @@ import AppError from "@/types/errors/AppError.ts";
 import LoadingSpinner from "@/components/ui/LoadingSpinner.tsx";
 import FeedbackMessage from "@/utils/FeedbackMessage.ts";
 import DisabledSendSvg from "@/assets/disabled-send.svg?react";
+import authApi from "@/lib/authApi.ts";
 
 interface ResendCodeButtonProps {
     setSecondsLeft: (seconds: number) => void;
@@ -37,7 +38,7 @@ export default function ResendCodeButton({
         setIsLoading(true);
 
         try {
-            await api.post("resend-email-code");
+            await authApi.post("resend-email-code");
             setMessage(FeedbackMessage.createSuccess("Код подтверждения отправлен успешно!"));
             setSecondsLeft(maxSeconds);
         } catch (err) {

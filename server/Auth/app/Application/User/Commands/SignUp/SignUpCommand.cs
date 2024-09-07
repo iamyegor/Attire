@@ -40,7 +40,7 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, Result<Tokens
         Name name = Name.Create(command.Name);
         DeviceId deviceId = DeviceId.Create(command.DeviceId);
 
-        Error? userAlreadyExistsError = await GetErrorIfUserAlreadyExists(name, email, ct);
+        Error? userAlreadyExistsError = await GetErrorIfUserAlreadyExists(email, ct);
         if (userAlreadyExistsError != null)
         {
             return userAlreadyExistsError;
@@ -62,23 +62,8 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, Result<Tokens
         return tokens;
     }
 
-    private async Task<Error?> GetErrorIfUserAlreadyExists(
-        Name login,
-        Email email,
-        CancellationToken ct
-    )
+    private async Task<Error?> GetErrorIfUserAlreadyExists(Email email, CancellationToken ct)
     {
-        Domain.User.User? userWithSameLogin = await _context.Users.SingleOrDefaultAsync(
-            x => x.Name != null && x.Name.Value == login.Value,
-            ct
-        );
-        if (userWithSameLogin != null && userWithSameLogin.IsEmailVerified)
-        {
-            return Errors.Login.IsAlreadyTaken;
-        }
-
-        await _userRemover.RemoveUserIfExists(userWithSameLogin, ct);
-
         Domain.User.User? userWithSameEmail = await _context.Users.SingleOrDefaultAsync(
             x => x.Email != null && x.Email.Value == email.Value,
             ct

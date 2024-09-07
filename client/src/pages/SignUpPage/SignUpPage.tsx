@@ -62,13 +62,21 @@ export default function SignUpPage() {
 
                 <div className="space-y-4">
                     <div className="flex items-center space-x-3">
-                        <Checkbox isChecked={agree} onClick={() => setAgree(!agree)} />
+                        <Checkbox
+                            id="agree"
+                            isChecked={agree}
+                            onClick={() => setAgree(!agree)}
+                        />
                         <label htmlFor="agree" className="text-gray-700">
                             Согласие на обработку персональных данных
                         </label>
                     </div>
                     <div className="flex items-center space-x-3">
-                        <Checkbox isChecked={subscribe} onClick={() => setSubscribe(!subscribe)} />
+                        <Checkbox
+                            id="subscribe"
+                            isChecked={subscribe}
+                            onClick={() => setSubscribe(!subscribe)}
+                        />
                         <label htmlFor="subscribe" className="text-gray-700">
                             Получать уведомления об акциях и скидках
                         </label>
