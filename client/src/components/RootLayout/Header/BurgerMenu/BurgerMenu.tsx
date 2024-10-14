@@ -1,8 +1,8 @@
-import CategoriesList from "@/components/RootLayout/Header/BurgerMenu/CategoriesList.tsx";
+import CategoriesList from "@/components/RootLayout/Header/BurgerMenu/CategoriesList/CategoriesList";
 import "@/components/RootLayout/Header/BurgerMenu/burger-menu.css";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import useBurgerMenu from "@/components/RootLayout/Header/BurgerMenu/hooks/useBurgerMenu.ts";
-import TypesList from "@/components/RootLayout/Header/BurgerMenu/TypesList.tsx";
+import TypesList from "@/components/RootLayout/Header/BurgerMenu/TypesList/TypesList";
 import CloseButton from "@/components/ui/CloseButton.tsx";
 
 interface BurgerMenuProps {

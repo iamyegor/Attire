@@ -1,11 +1,11 @@
 import HorizontalScroll from "@/components/HorizontalScroll/HorizontalScroll.tsx";
-import ProductCard from "@/pages/HomePage/Components/Section/ProductCard.tsx";
-import Product from "@/types/Product.ts";
-import ProductListSkeleton from "@/pages/HomePage/Components/Section/ProductListSkeleton.tsx";
-import React from "react";
-import ProductCarousel from "@/pages/HomePage/Components/Section/ProductCarousel.tsx";
 import Type from "@/components/RootLayout/Header/BurgerMenu/types/Type.ts";
 import FlexibleSkeleton from "@/components/ui/FlexibleSkeleton.tsx";
+import ProductCard from "@/pages/HomePage/Components/Section/ProductCard/ProductCard";
+import ProductCarousel from "@/pages/HomePage/Components/Section/ProductCarousel.tsx";
+import ProductListSkeleton from "@/pages/HomePage/Components/Section/ProductListSkeleton.tsx";
+import Product from "@/types/Product.ts";
+import React from "react";
 
 interface SectionProps {
     title: string;

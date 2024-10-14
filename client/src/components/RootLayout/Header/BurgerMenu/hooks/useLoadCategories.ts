@@ -4,12 +4,12 @@ import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 
 export default function useLoadCategories() {
-    const { data: menCategories = [] } = useQuery<Category[]>({
+    const { data: menCategoriesRu = [] } = useQuery<Category[]>({
         queryKey: ["men-categories"],
         queryFn: fetchMenCategories,
     });
 
-    const { data: womenCategories = [] } = useQuery<Category[]>({
+    const { data: womenCategoriesRu = [] } = useQuery<Category[]>({
         queryKey: ["women-categories"],
         queryFn: fetchWomenCategories,
     });
@@ -24,7 +24,7 @@ export default function useLoadCategories() {
         return data;
     }
 
-    const newCategories = useMemo(() => {
+    const newCategoriesRu = useMemo(() => {
         const newMaleCategory: Category = {
             id: "25a5e11f-ca7a-43f4-94be-e9fb3a6c25f5",
             name: "Мужчинам",
@@ -36,5 +36,5 @@ export default function useLoadCategories() {
         return [newMaleCategory, newFemaleCategory];
     }, []);
 
-    return { menCategories, womenCategories, newCategories };
+    return { menCategoriesRu, womenCategoriesRu, newCategoriesRu };
 }

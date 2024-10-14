@@ -1,13 +1,14 @@
-import MainCarousel from "@/pages/HomePage/Components/MainCarousel/MainCarousel.tsx";
+import LoginModal from "@/components/LoginModal/LoginModal";
+import Type from "@/components/RootLayout/Header/BurgerMenu/types/Type.ts";
 import GenderSelection from "@/pages/HomePage/Components/GenderSelection/GenderSelection.tsx";
-import NewCollection from "@/pages/HomePage/Components/NewCollection.tsx";
+import MainCarousel from "@/pages/HomePage/Components/MainCarousel/MainCarousel.tsx";
+import NewCollection from "@/pages/HomePage/Components/NewCollection/NewCollection";
 import Section from "@/pages/HomePage/Components/Section/Section.tsx";
 import useLikeProduct from "@/pages/HomePage/hooks/useLikeProduct.ts";
-import useUnlikeProduct from "@/pages/HomePage/hooks/useUnlikeProduct.ts";
-import Type from "@/components/RootLayout/Header/BurgerMenu/types/Type.ts";
 import { useLoadProducts } from "@/pages/HomePage/hooks/useLoadProducts.ts";
+import useUnlikeProduct from "@/pages/HomePage/hooks/useUnlikeProduct.ts";
 import { useState } from "react";
-import LoginModal from "@/components/ui/LoginModal.tsx";
+import useHomePageTranslation from "./hooks/useHomePageTranslation";
 
 export default function HomePage() {
     const newProductsQueryKey = ["new-products"];
@@ -18,6 +19,7 @@ export default function HomePage() {
         ref: lastNewProductRef,
     } = useLoadProducts(newProductsQueryKey, (page) => `products/new?page=${page}`);
     const [isLoginModalShown, setIsLoginModalShown] = useState(false);
+    const t = useHomePageTranslation();
 
     const {
         products: recommendedProducts,
@@ -47,7 +49,7 @@ export default function HomePage() {
             <MainCarousel />
             <GenderSelection />
             <Section
-                title="Новинки"
+                title={t?.new ?? ""}
                 products={newProducts}
                 areProductsLoading={areNewProductsLoading}
                 ref={lastNewProductRef}
@@ -57,7 +59,7 @@ export default function HomePage() {
             />
             <NewCollection />
             <Section
-                title="Вам может понравиться"
+                title={t?.recommended ?? ""}
                 products={recommendedProducts}
                 areProductsLoading={areRecommendedProductsLoading}
                 ref={lastRecommendedProductRef}

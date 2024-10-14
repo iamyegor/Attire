@@ -1,11 +1,11 @@
-import FiltersResponse from "@/pages/CatalogPage/components/FilterComponent/types/FiltersResponse.ts";
-import React from "react";
-import PriceRangeSlider from "@/pages/CatalogPage/components/FilterComponent/FilterDrawer/PriceRangeSlider.tsx";
-import SelectionButton from "@/pages/CatalogPage/components/FilterComponent/FilterDrawer/SelectionButton.tsx";
+import CloseButton from "@/components/ui/CloseButton.tsx";
 import ColorButton from "@/components/ui/ColorButton.tsx";
 import useFilters from "@/pages/CatalogPage/components/FilterComponent/FilterDrawer/hooks/useFilters.ts";
-import CloseButton from "@/components/ui/CloseButton.tsx";
+import PriceRangeSlider from "@/pages/CatalogPage/components/FilterComponent/FilterDrawer/PriceRangeSlider.tsx";
+import SelectionButton from "@/pages/CatalogPage/components/FilterComponent/FilterDrawer/SelectionButton.tsx";
+import FiltersResponse from "@/pages/CatalogPage/components/FilterComponent/types/FiltersResponse.ts";
 import toggleSelection from "@/utils/toggleSelection.ts";
+import useFilterDrawerTranslation from "./hooks/useFilterDrawerTranslation";
 
 interface FilterDrawerProps {
     filtersResponse: FiltersResponse;
@@ -25,6 +25,8 @@ export default function FilterDrawer({ filtersResponse, closeDrawer }: FilterDra
         applyFilters,
     } = useFilters(filtersResponse.minPrice, filtersResponse.maxPrice);
 
+    const t = useFilterDrawerTranslation();
+
     function handleApply() {
         closeDrawer();
         applyFilters();
@@ -36,7 +38,7 @@ export default function FilterDrawer({ filtersResponse, closeDrawer }: FilterDra
             <div className="flex flex-col h-full justify-between sm:justify-start sm:space-y-3 pb-4">
                 <div className="flex flex-col space-y-4">
                     <div>
-                        <h3 className="font-semibold mb-3 text-lg text-gray-800">Размеры</h3>
+                        <h3 className="font-semibold mb-3 text-lg text-gray-800">{t.sizes}</h3>
                         <div className="space-x-2">
                             {filtersResponse.sizes.map((size) => (
                                 <SelectionButton
@@ -49,7 +51,7 @@ export default function FilterDrawer({ filtersResponse, closeDrawer }: FilterDra
                         </div>
                     </div>
                     <div>
-                        <h3 className="font-semibold mb-3 text-lg text-gray-800">Цвета</h3>
+                        <h3 className="font-semibold mb-3 text-lg text-gray-800">{t.colors}</h3>
                         <div className="flex flex-wrap gap-y-2 gap-x-3.5">
                             {filtersResponse.colors.map((color) => (
                                 <ColorButton
@@ -62,7 +64,7 @@ export default function FilterDrawer({ filtersResponse, closeDrawer }: FilterDra
                         </div>
                     </div>
                     <div>
-                        <h3 className="font-semibold mb-3 text-lg text-gray-800">Материалы</h3>
+                        <h3 className="font-semibold mb-3 text-lg text-gray-800">{t.materials}</h3>
                         <div className="flex flex-wrap gap-y-1 gap-x-3.5">
                             {filtersResponse.compositions.map((material) => (
                                 <SelectionButton
@@ -86,7 +88,7 @@ export default function FilterDrawer({ filtersResponse, closeDrawer }: FilterDra
                         onClick={handleApply}
                         className="w-full py-2 rounded-lg bg-blue-500 text-white font-medium hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300 transition duration-150 ease-in-out"
                     >
-                        Применить
+                        {t.apply}
                     </button>
                 </div>
             </div>

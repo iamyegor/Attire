@@ -1,20 +1,22 @@
-import { useState } from "react";
-import { Drawer } from "@mui/material";
-import SearchSvg from "@/assets/search.svg?react";
-import PersonSvg from "@/assets/person.svg?react";
-import HeartSvg from "@/assets/heart.svg?react";
-import CartSvg from "@/assets/cart.svg?react";
 import BurgerMenuSvg from "@/assets/burger-menu.svg?react";
-import SearchComponent from "@/components/RootLayout/Header/SearchComponent.tsx";
+import CartSvg from "@/assets/cart.svg?react";
+import HeartSvg from "@/assets/heart.svg?react";
+import PersonSvg from "@/assets/person.svg?react";
+import SearchSvg from "@/assets/search.svg?react";
+import SmSearchSvg from "@/assets/sm-search.svg?react";
 import BurgerMenu from "@/components/RootLayout/Header/BurgerMenu/BurgerMenu.tsx";
+import Category from "@/components/RootLayout/Header/BurgerMenu/types/Category.ts";
+import Type from "@/components/RootLayout/Header/BurgerMenu/types/Type.ts";
+import DropdownMenu from "@/components/RootLayout/Header/DropdownMenu.tsx";
 import HeaderIconLink from "@/components/RootLayout/Header/HeaderIconLink.tsx";
 import HeaderLink from "@/components/RootLayout/Header/HeaderLink.tsx";
-import DropdownMenu from "@/components/RootLayout/Header/DropdownMenu.tsx";
-import { Link } from "react-router-dom";
-import Category from "@/components/RootLayout/Header/BurgerMenu/types/Category.ts";
-import useAttireContext from "@/context/useAttireContext.ts";
-import Type from "@/components/RootLayout/Header/BurgerMenu/types/Type.ts";
 import useSearchTerm from "@/components/RootLayout/Header/hooks/useSearchTerm.ts";
+import SearchComponent from "@/components/RootLayout/Header/SearchComponent/SearchComponent";
+import useAttireContext from "@/context/useAttireContext.ts";
+import { Drawer } from "@mui/material";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import useHeaderTranslations from "./hooks/useHeaderTranslations";
 
 function Header() {
     const { searchTerm } = useSearchTerm();
@@ -23,6 +25,7 @@ function Header() {
     const [activeCategories, setActiveCategories] = useState<Category[]>([]);
     const [dropdownVisible, setDropdownVisible] = useState<boolean>(false);
     const [hoveredType, setHoveredType] = useState<Type | null>(null);
+    const t = useHeaderTranslations();
 
     const { menCategories, womenCategories, newCategories } = useAttireContext();
 
@@ -45,8 +48,8 @@ function Header() {
     }
 
     return (
-        <header className="fixed top-0 left-0 right-0 bg-white py-3 md:px-8 shadow-lg z-20 flex justify-center">
-            <div className="container w-full flex justify-between items-center">
+        <header className="fixed top-0 left-0 right-0 bg-white py-3 px-5 md:px-8 shadow-lg z-20 flex justify-center">
+            <div className="max-w-[1500px] w-full flex justify-between items-center">
                 <Drawer
                     open={searchOpen}
                     onClose={handleSearchClose}
@@ -75,7 +78,7 @@ function Header() {
                         onMouseLeave={hideDropdown}
                         onClick={hideDropdown}
                     >
-                        {Type.New.name}
+                        {t?.new}
                     </HeaderLink>
                     <HeaderLink
                         to={Type.Men.path}
@@ -83,7 +86,7 @@ function Header() {
                         onMouseLeave={hideDropdown}
                         onClick={hideDropdown}
                     >
-                        {Type.Men.name}
+                        {t?.men}
                     </HeaderLink>
                     <HeaderLink
                         to={Type.Women.path}
@@ -91,7 +94,7 @@ function Header() {
                         onMouseLeave={hideDropdown}
                         onClick={hideDropdown}
                     >
-                        {Type.Women.name}
+                        {t?.women}
                     </HeaderLink>
                 </div>
                 <DropdownMenu
@@ -103,19 +106,20 @@ function Header() {
                 />
                 <div className="flex items-center space-x-5">
                     <button
-                        className="text-lg font-semibold text-neutral-500 hover:text-neutral-600 md:bg-neutral-100 md:p-1 md:pr-4 rounded-full flex items-center md:space-x-3"
+                        className="text-lg font-semibold text-neutral-500 hover:text-neutral-600 group md:bg-neutral-100 md:p-1 md:pr-4 rounded-full flex items-center md:space-x-3"
                         onClick={() => setSearchOpen(true)}
                     >
-                        <SearchSvg className="w-5 h-5 ml-2 focus:outline-0 active:outline-0 outline-0 md:fill-neutral-800" />
+                        <SearchSvg className="hidden md:block w-5 h-5 ml-2 focus:outline-0 active:outline-0 outline-0 fill-neutral-500 group-hover:fill-neutral-600" />
+                        <SmSearchSvg className="block md:hidden w-5 h-5 ml-2 fill-neutral-800" />
                         <p className="hidden md:block max-w-[14ch] truncate overflow-hidden whitespace-nowrap">
-                            {searchTerm ? searchTerm : <span className="mr-16">Искать</span>}
+                            {searchTerm ? searchTerm : <span className="mr-16">{t?.search}</span>}
                         </p>
                     </button>
                     <HeaderIconLink to="/profile" SvgIcon={PersonSvg} />
                     <HeaderIconLink to="/favorites" SvgIcon={HeartSvg} />
                     <HeaderIconLink to="/cart" SvgIcon={CartSvg} />
                     <BurgerMenuSvg
-                        className="block lg:hidden w-5 h-5 hover:cursor-pointer"
+                        className="block lg:hidden w-5 h-5 hover:cursor-pointer fill-neutral-800"
                         onClick={() => setBurgerMenuOpen(true)}
                     />
                 </div>

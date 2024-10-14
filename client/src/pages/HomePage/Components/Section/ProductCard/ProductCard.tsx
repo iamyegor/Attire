@@ -5,6 +5,8 @@ import Category from "@/components/RootLayout/Header/BurgerMenu/types/Category.t
 import Type from "@/components/RootLayout/Header/BurgerMenu/types/Type.ts";
 import LikeButton from "@/components/ui/LikeButton.tsx";
 import productImageFullPath from "@/utils/productImageFullPath.ts";
+import useProductCardTranslation from "./hooks/useProductCardTranslation";
+import formatPrice from "@/utils/formatPrice";
 
 interface ProductCardProps {
     product: Product;
@@ -50,7 +52,7 @@ export default function ProductCard({
                 style={{ userSelect: "none" }}
             >
                 <div className="flex justify-between items-center">
-                    <p className="font-medium text-gray-900">{product.price} ₽</p>
+                    <p className="font-medium text-gray-900">{formatPrice(product.price)}</p>
                     <LikeButton
                         isLiked={product.liked}
                         className="w-7 h-7"

@@ -17,7 +17,7 @@ export default function LikeButton({ className, isLiked, onClick }: LikeButtonPr
             {isLiked ? (
                 <RedHeartIcon className="w-[90%] h-[90%]" />
             ) : (
-                <EmptyHeartIcon className="w-[90%] h-[90%]" />
+                <EmptyHeartIcon className="w-[90%] h-[90%] fill-neutral-800" />
             )}
         </button>
     );

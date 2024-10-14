@@ -27,7 +27,7 @@ public class Name : ValueObject
             return Errors.Name.MustBeAtLeastTwoCharacters;
         }
 
-        if (Regex.IsMatch(name, "^[a-zA-Z]+$"))
+        if (!Regex.IsMatch(name, "^[a-zA-Zа-яА-ЯёЁ]+$"))
         {
             return Errors.Name.MustContainOnlyLetters;
         }

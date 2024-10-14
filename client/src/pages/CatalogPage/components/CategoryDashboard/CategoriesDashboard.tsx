@@ -1,6 +1,6 @@
 import useAttireContext from "@/context/useAttireContext.ts";
 import Type from "@/components/RootLayout/Header/BurgerMenu/types/Type.ts";
-import CategorySection from "@/pages/CatalogPage/components/CategoryDashboard/CategorySection.tsx";
+import CategorySection from "@/pages/CatalogPage/components/CategoryDashboard/CategorySection/CategorySection";
 
 interface CategoriesDashboardProps {
     currentType: Type | null;
@@ -14,7 +14,7 @@ export default function CategoriesDashboard({
     const { menCategories, womenCategories, newCategories } = useAttireContext();
 
     return (
-        <div className="flex-col w-min min-w-[240px] p-4 py-4 space-y-4 bg-white rounded-2xl border border-gray-200 hidden lg:block">
+        <div className="flex-col w-min min-w-[240px] p-2 space-y-2 bg-white rounded-2xl border border-gray-200 hidden lg:block">
             <CategorySection
                 type={Type.Men}
                 categories={menCategories}

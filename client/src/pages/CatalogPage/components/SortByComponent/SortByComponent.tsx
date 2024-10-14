@@ -4,10 +4,12 @@ import SortBy from "@/pages/CatalogPage/components/SortByComponent/types/SortyBy
 import SortDropdownButton from "@/pages/CatalogPage/components/SortByComponent/SortDropdownButton.tsx";
 import useDropdown from "./hooks/useDropdown";
 import useSorting from "@/pages/CatalogPage/components/SortByComponent/hooks/useSorting.ts";
+import useSortByComponentTranslation from "./hooks/useSortByComponentTranslation";
 
 export default function SortByComponent() {
     const { isDropdownOpen, anchorEl, showDropdown, hideDropdown } = useDropdown();
     const { sorting, changeSorting } = useSorting();
+    const t = useSortByComponentTranslation();
 
     function changeSortAndCloseDropdown(sortBy: SortBy) {
         hideDropdown();
@@ -15,10 +17,10 @@ export default function SortByComponent() {
     }
 
     const sortOptions = [
-        { type: SortBy.Popular, label: "Популярные" },
-        { type: SortBy.New, label: "Новинки" },
-        { type: SortBy.Cheaper, label: "Дешевле" },
-        { type: SortBy.MoreExpensive, label: "Дороже" },
+        { type: SortBy.Popular, label: t.popular },
+        { type: SortBy.New, label: t.new },
+        { type: SortBy.Cheaper, label: t.cheaper },
+        { type: SortBy.MoreExpensive, label: t.moreExpensive },
     ];
 
     return (
@@ -29,7 +31,7 @@ export default function SortByComponent() {
                 }`}
                 onClick={showDropdown}
             >
-                <p>{sorting.value}</p>
+                <p>{t.getSortingValue(sorting)}</p>
                 <SortSvg className="w-6 h-6" />
             </div>
             <Menu

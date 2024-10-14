@@ -1,8 +1,8 @@
-import ProductCard from "@/pages/HomePage/Components/Section/ProductCard.tsx";
+import HeartSvg from "@/assets/heart-red.svg?react";
+import ProductCardSkeleton from "@/components/ui/ProductCardSkeleton.tsx";
 import { useLoadFavorites } from "@/pages/FavoritesPage/hooks/useLoadFavorites.tsx";
 import { useRemoveFromFavorites } from "@/pages/FavoritesPage/hooks/useRemoveFromFavorites.tsx";
-import ProductCardSkeleton from "@/components/ui/ProductCardSkeleton.tsx";
-import HeartSvg from "@/assets/heart-red.svg?react";
+import ProductCard from "@/pages/HomePage/Components/Section/ProductCard/ProductCard";
 
 export default function FavoritesPage() {
     const queryKey = ["favorites"];

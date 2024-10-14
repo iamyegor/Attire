@@ -1,7 +1,7 @@
-import ProductCard from "@/pages/HomePage/Components/Section/ProductCard.tsx";
+import Type from "@/components/RootLayout/Header/BurgerMenu/types/Type.ts";
+import ProductCard from "@/pages/HomePage/Components/Section/ProductCard/ProductCard";
 import Product from "@/types/Product.ts";
 import Slider from "react-slick";
-import Type from "@/components/RootLayout/Header/BurgerMenu/types/Type.ts";
 
 interface ProductCarouselProps {
     products: Product[];

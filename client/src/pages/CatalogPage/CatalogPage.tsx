@@ -1,12 +1,12 @@
-import { useParams } from "react-router-dom";
-import Breadcrumbs from "@/pages/CatalogPage/components/Breadcrumbs.tsx";
-import CategoriesDashboard from "@/pages/CatalogPage/components/CategoryDashboard/CategoriesDashboard.tsx";
-import SortByComponent from "@/pages/CatalogPage/components/SortByComponent/SortByComponent.tsx";
-import FilterComponent from "@/pages/CatalogPage/components/FilterComponent/FilterComponent.tsx";
-import useCurrentCategoryAndType from "@/pages/CatalogPage/hooks/useCurrentTypeAndCategory.ts";
 import Category from "@/components/RootLayout/Header/BurgerMenu/types/Category.ts";
 import Type from "@/components/RootLayout/Header/BurgerMenu/types/Type.ts";
-import ProductsCatalog from "@/pages/CatalogPage/components/ProductsCatalog.tsx";
+import Breadcrumbs from "@/pages/CatalogPage/components/Breadcrumbs/Breadcrumbs";
+import CategoriesDashboard from "@/pages/CatalogPage/components/CategoryDashboard/CategoriesDashboard.tsx";
+import FilterComponent from "@/pages/CatalogPage/components/FilterComponent/FilterComponent.tsx";
+import ProductsCatalog from "@/pages/CatalogPage/components/ProductsCatalog/ProductsCatalog";
+import SortByComponent from "@/pages/CatalogPage/components/SortByComponent/SortByComponent.tsx";
+import useCurrentCategoryAndType from "@/pages/CatalogPage/hooks/useCurrentTypeAndCategory.ts";
+import { useParams } from "react-router-dom";
 
 export default function CatalogPage() {
     const { "*": path } = useParams();

@@ -1,4 +1,5 @@
 import FilterSvg from "@/assets/filter.svg?react";
+import useFilterButtonTranslation from "./FilterDrawer/hooks/useFilterButtonTranslation";
 
 interface FilterButtonProps {
     isDrawerOpen: boolean;
@@ -6,6 +7,8 @@ interface FilterButtonProps {
 }
 
 export default function FilterButton({ isDrawerOpen, openDrawer }: FilterButtonProps) {
+    const t = useFilterButtonTranslation();
+
     return (
         <div
             className={`flex items-center justify-between space-x-2 border p-2 px-4 rounded-lg transition hover:cursor-pointer text-xs xs:text-base h-full ${
@@ -14,7 +17,7 @@ export default function FilterButton({ isDrawerOpen, openDrawer }: FilterButtonP
             onClick={openDrawer}
         >
             <FilterSvg className="w-5 h-5" />
-            <p>Фильтры</p>
+            <p>{t.filters}</p>
         </div>
     );
 }

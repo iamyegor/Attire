@@ -1,14 +1,15 @@
-import useLikeProduct from "@/pages/HomePage/hooks/useLikeProduct.ts";
-import useUnlikeProduct from "@/pages/HomePage/hooks/useUnlikeProduct.ts";
-import { useLoadProducts } from "@/pages/HomePage/hooks/useLoadProducts.ts";
-import ProductCard from "@/pages/HomePage/Components/Section/ProductCard.tsx";
+import EmptySvg from "@/assets/empty.svg?react";
+import LoginModal from "@/components/LoginModal/LoginModal";
 import Category from "@/components/RootLayout/Header/BurgerMenu/types/Category.ts";
 import Type from "@/components/RootLayout/Header/BurgerMenu/types/Type.ts";
 import ProductCardSkeleton from "@/components/ui/ProductCardSkeleton.tsx";
-import { useSearchParams } from "react-router-dom";
+import ProductCard from "@/pages/HomePage/Components/Section/ProductCard/ProductCard";
+import useLikeProduct from "@/pages/HomePage/hooks/useLikeProduct.ts";
+import { useLoadProducts } from "@/pages/HomePage/hooks/useLoadProducts.ts";
+import useUnlikeProduct from "@/pages/HomePage/hooks/useUnlikeProduct.ts";
 import { useState } from "react";
-import LoginModal from "@/components/ui/LoginModal.tsx";
-import EmptySvg from "@/assets/empty.svg?react";
+import { useSearchParams } from "react-router-dom";
+import useProductsCatalogTranslation from "./hooks/useProductsCatalogTranslation";
 
 interface ProductsCatalogProps {
     type: Type | null;
@@ -22,6 +23,7 @@ export default function ProductsCatalog({ type, category }: ProductsCatalogProps
         getFullProductPath(page),
     );
     const [isLoginModalShown, setIsLoginModalShown] = useState(false);
+    const t = useProductsCatalogTranslation();
 
     function getFullProductPath(page: number) {
         const basePath = getProductsPath();
@@ -71,7 +73,7 @@ export default function ProductsCatalog({ type, category }: ProductsCatalogProps
             {!isLoading && products.length === 0 && (
                 <div className="flex flex-col w-full h-full justify-center items-center text-2xl space-y-4">
                     <EmptySvg className="w-10 h-10" />
-                    <p className="">В этой категории нет товаров</p>
+                    <p className="">{t.categoryEmpty}</p>
                 </div>
             )}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center w-full">
