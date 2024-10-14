@@ -78,6 +78,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
                 details.Property(d => d.Brand).HasColumnName("brand");
                 details.Property(d => d.SKU).HasColumnName("sku");
                 details.Property(d => d.Composition).HasColumnName("composition");
+                details.Property(d => d.CompositionEn).HasColumnName("composition_en");
             }
         );
 

@@ -17,6 +17,7 @@ public class ProductDetailsDto
     public string Brand { get; set; }
     public string SKU { get; set; }
     public string Composition { get; set; }
+    public string CompositionEn { get; set; }
     public int CountOfReviews { get; set; }
     public Guid CategoryId { get; set; }
     public string CategoryName { get; set; }

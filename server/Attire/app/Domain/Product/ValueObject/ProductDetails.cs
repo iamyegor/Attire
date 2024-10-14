@@ -8,17 +8,24 @@ public class ProductDetails : Common.ValueObject
     public string Brand { get; }
     public string SKU { get; }
     public string Composition { get; }
+    public string CompositionEn { get; }
 
-    private ProductDetails(string brand, string sku, string composition)
+    private ProductDetails(string brand, string sku, string composition, string compositionEn)
     {
         Brand = brand;
         SKU = sku;
         Composition = composition;
+        CompositionEn = compositionEn;
     }
 
     protected ProductDetails() { }
 
-    public static Result<ProductDetails, Error> Create(string brand, string sku, string composition)
+    public static Result<ProductDetails, Error> Create(
+        string brand,
+        string sku,
+        string composition,
+        string compositionEn
+    )
     {
         if (string.IsNullOrWhiteSpace(brand))
         {
@@ -35,11 +42,17 @@ public class ProductDetails : Common.ValueObject
             return Errors.Errors.ProductDetails.CompositionIsRequired();
         }
 
+        if (string.IsNullOrWhiteSpace(compositionEn))
+        {
+            return Errors.Errors.ProductDetails.CompositionIsRequired();
+        }
+
         brand = brand.Trim();
         sku = sku.Trim();
         composition = composition.Trim();
+        compositionEn = compositionEn.Trim();
 
-        return new ProductDetails(brand, sku, composition);
+        return new ProductDetails(brand, sku, composition, compositionEn);
     }
 
     protected override IEnumerable<object?> GetEqualityComponents()

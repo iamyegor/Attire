@@ -41,6 +41,7 @@ public class GetProductDetailsQueryHandler
                 p.brand,
                 p.sku as s_k_u,
                 p.composition,
+                p.composition_en,
                 c.category_id,
                 c.name as category_name,
                 CASE 

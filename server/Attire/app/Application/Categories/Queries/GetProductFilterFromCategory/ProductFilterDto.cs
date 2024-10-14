@@ -10,6 +10,7 @@ public record ProductFilterDto(
     string[] Sizes,
     ColorDto[] Colors,
     string[] Compositions,
+    string[] CompositionsEn,
     int? MinPrice,
     int? MaxPrice
 );

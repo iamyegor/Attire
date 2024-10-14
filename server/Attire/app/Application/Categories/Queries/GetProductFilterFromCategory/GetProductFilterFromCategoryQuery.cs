@@ -61,6 +61,10 @@ public class GetProductFilterFromCategoryQueryHandler
             SELECT MIN(price) as min_price FROM products;
 
             SELECT MAX(price) as max_price FROM products;
+
+            SELECT DISTINCT LOWER(composition_en)
+            FROM products
+            WHERE category_id = @CategoryId;
             ";
 
         SqlMapper.GridReader reader = await connection.QueryMultipleAsync(
@@ -78,10 +82,13 @@ public class GetProductFilterFromCategoryQueryHandler
 
         int? filteredMaxPrice = await reader.ReadFirstOrDefaultAsync<int>();
 
+        string[] filteredCompositionsEn = (await reader.ReadAsync<string>()).ToArray();
+
         return new ProductFilterDto(
             filteredSizes,
             filteredColors,
             filteredCompositions,
+            filteredCompositionsEn,
             filteredMinPrice,
             filteredMaxPrice
         );
