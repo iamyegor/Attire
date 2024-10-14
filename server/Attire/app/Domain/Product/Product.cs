@@ -15,7 +15,9 @@ public class Product : AggregateRoot<Guid>
 
     public int Price { get; }
     public string Title { get; }
+    public string TitleEn { get; }
     public string Description { get; }
+    public string DescriptionEn { get; }
     public ProductDetails Details { get; }
     public double Stars { get; private set; }
     public DateTime CreationDate { get; }
@@ -30,7 +32,9 @@ public class Product : AggregateRoot<Guid>
     private Product(
         int price,
         string title,
+        string titleEn,
         string description,
+        string descriptionEn,
         ProductDetails details,
         double stars,
         DateTime creationDate,
@@ -43,7 +47,9 @@ public class Product : AggregateRoot<Guid>
     {
         Price = price;
         Title = title;
+        TitleEn = titleEn;
         Description = description;
+        DescriptionEn = descriptionEn;
         Details = details;
         Stars = stars;
         CreationDate = creationDate;

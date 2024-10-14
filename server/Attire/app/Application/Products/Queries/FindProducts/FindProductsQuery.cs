@@ -1,6 +1,5 @@
 ﻿using Application.Common.Models;
 using Dapper;
-using Infrastructure.Data;
 using Infrastructure.Data.Dapper;
 using MediatR;
 using Npgsql;
@@ -71,7 +70,7 @@ public class FindProductsQueryHandler
     )
     {
         int productTotalCount = await connection.QuerySingleAsync<int>(
-            "SELECT COUNT(1) FROM products WHERE title ILIKE @SearchText",
+            "SELECT COUNT(1) FROM products WHERE title ILIKE @SearchText OR title_en ILIKE @SearchText",
             new { SearchText = "%" + searchText + "%" }
         );
 
@@ -88,7 +87,8 @@ public class FindProductsQueryHandler
                 p.product_id as id,
                 p.creation_date, 
                 p.price, 
-                p.title, 
+                p.title,
+                p.title_en, 
                 pi.path as image_path, 
                 false AS liked,
                 false AS is_in_cart,
@@ -98,7 +98,8 @@ public class FindProductsQueryHandler
                 ON p.product_id = pi.product_id
             WHERE 
                 pi.order_index = 1 AND
-                p.title ILIKE @SearchText
+                (p.title ILIKE @SearchText OR
+                p.title_en ILIKE @SearchText)
             LIMIT @PageLimit
             OFFSET @Skip
             ";
@@ -114,6 +115,7 @@ public class FindProductsQueryHandler
                 p.creation_date, 
                 p.price, 
                 p.title, 
+                p.title_en,
                 pi.path as image_path,
                 p.is_new,
                 CASE
@@ -143,8 +145,10 @@ public class FindProductsQueryHandler
             FROM products p
             INNER JOIN product_images pi
                 ON p.product_id = pi.product_id
-            WHERE pi.order_index = 1 AND
-                  p.title ILIKE @SearchText
+            WHERE 
+                pi.order_index = 1 AND
+                (p.title ILIKE @SearchText OR
+                p.title_en ILIKE @SearchText)
             LIMIT @PageLimit
             OFFSET @Skip";
 

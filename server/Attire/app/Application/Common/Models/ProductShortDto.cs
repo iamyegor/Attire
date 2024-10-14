@@ -7,6 +7,7 @@ public class ProductShortDto
     public DateTime CreationDate { get; set; }
     public int Price { get; set; }
     public string Title { get; set; }
+    public string TitleEn { get; set; }
     public bool Liked { get; set; }
     public bool IsInCart { get; set; }
     public bool IsNew { get; set; }

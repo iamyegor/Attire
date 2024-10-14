@@ -9,9 +9,11 @@ public class ColorDto
 public class ProductDetailsDto
 {
     public string Title { get; set; }
+    public string TitleEn { get; set; }
     public int Price { get; set; }
     public bool Liked { get; set; }
     public string Description { get; set; }
+    public string DescriptionEn { get; set; }
     public string Brand { get; set; }
     public string SKU { get; set; }
     public string Composition { get; set; }

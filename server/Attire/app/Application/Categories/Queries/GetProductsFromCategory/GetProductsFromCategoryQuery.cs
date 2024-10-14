@@ -141,6 +141,7 @@ public class GetProductsFromCategoryQueryHandler
                    p.creation_date, 
                    p.price, 
                    p.title, 
+                   p.title_en,
                    pi.path as image_path, 
                    false AS liked, 
                    false AS is_in_cart,
@@ -174,6 +175,7 @@ public class GetProductsFromCategoryQueryHandler
                 p.creation_date, 
                 p.price, 
                 p.title, 
+                p.title_en,
                 pi.path as image_path,
                 p.is_new,
                 CASE

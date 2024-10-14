@@ -34,8 +34,10 @@ public class GetProductDetailsQueryHandler
             @"
             SELECT 
                 p.title,
+                p.title_en,
                 p.price,
                 p.description,
+                p.description_en,
                 p.brand,
                 p.sku as s_k_u,
                 p.composition,
