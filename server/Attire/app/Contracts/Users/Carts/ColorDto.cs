@@ -3,5 +3,6 @@
 public class ColorDto
 {
     public string Name { get; set; }
+    public string NameEn { get; set; }
     public string Hex { get; set; }
 }

@@ -49,6 +49,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
 
                 builder.Property(c => c.Hex).HasColumnName("hex");
                 builder.Property(c => c.Name).HasColumnName("name");
+                builder.Property(c => c.NameEn).HasColumnName("name_en");
 
                 builder.WithOwner().HasForeignKey("product_id");
                 builder.Property("product_id").IsRequired();

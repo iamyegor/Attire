@@ -45,11 +45,13 @@ public class GetCartItemsQueryHandler
                 i.path as image_path,
                 p.product_id, 
                 p.title as product_title,
+                p.title_en as product_title_en,
                 p.price as product_price,
                 p.sku as s_k_u,
                 uci.size,
                 uci.color_hex,
                 uci.color_name,
+                uci.color_name_en,
                 uci.quantity,
                 uci.created_at
             FROM user_cart_items uci

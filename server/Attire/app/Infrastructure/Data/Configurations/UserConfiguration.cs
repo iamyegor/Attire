@@ -61,6 +61,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                     {
                         color.Property(c => c.Hex).HasColumnName("color_hex");
                         color.Property(c => c.Name).HasColumnName("color_name");
+                        color.Property(c => c.NameEn).HasColumnName("color_name_en");
                     }
                 );
 
@@ -111,6 +112,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                             {
                                 color.Property(c => c.Hex).HasColumnName("color_hex");
                                 color.Property(c => c.Name).HasColumnName("color_name");
+                                color.Property(c => c.NameEn).HasColumnName("color_name_en");
                             }
                         );
 

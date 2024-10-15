@@ -13,7 +13,7 @@ public class CartMappingConfig : IRegister
             .NewConfig<CartItemModel, CartItemDto>()
             .Map(
                 dest => dest.Color,
-                src => new ColorDto { Hex = src.ColorHex, Name = src.ColorName }
+                src => new ColorDto { Hex = src.ColorHex, Name = src.ColorName, NameEn = src.ColorNameEn }
             );
     }
 }
