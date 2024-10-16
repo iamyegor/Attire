@@ -17,10 +17,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.Property(p => p.Price).HasColumnName("price");
 
         builder.Property(p => p.Title).HasColumnName("title");
-        builder.HasIndex(p => p.Title).IsUnique();
-
         builder.Property(p => p.TitleEn).HasColumnName("title_en");
-        builder.HasIndex(p => p.TitleEn).IsUnique();
 
         builder.Property(p => p.Description).HasColumnName("description");
         builder.Property(p => p.DescriptionEn).HasColumnName("description_en");

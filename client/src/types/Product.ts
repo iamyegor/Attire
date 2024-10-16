@@ -3,5 +3,6 @@ export default interface Product {
     imagePath: string;
     price: number;
     title: string;
+    titleEn: string;
     liked: boolean;
 }

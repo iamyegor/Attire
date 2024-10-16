@@ -14,8 +14,6 @@ export function useLoadFavorites(queryKey: string[]) {
         retry: false,
     });
 
-    console.log({ error });
-
     async function fetchFavorites({ pageParam }: { pageParam: number }) {
         const { data } = await api.get<FavoritesResponse>(
             `users/favoriteProducts?page=${pageParam}`,

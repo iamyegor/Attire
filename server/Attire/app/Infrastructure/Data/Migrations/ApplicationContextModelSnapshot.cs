@@ -121,12 +121,6 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("Title")
-                        .IsUnique();
-
-                    b.HasIndex("TitleEn")
-                        .IsUnique();
-
                     b.ToTable("products", (string)null);
                 });
 

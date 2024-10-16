@@ -36,6 +36,11 @@ export default function ProductDetailsPage() {
         selectedColor,
     );
 
+    if (productDetails && category) {
+        console.log({ productDetails, category });
+        productDetails.categoryName = category.name;
+    }
+
     const [loginModalType, setLoginModalType] = useState<"like" | "cart" | null>(null);
     const { addToCartMutation } = useAddToCart(queryKey, () => setLoginModalType("cart"));
     const { changeCartQuantityMutate } = useChangeProductDetailsCartQuantity(queryKey);

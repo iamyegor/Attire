@@ -13,5 +13,15 @@ export function useLoadProductDetails(productId: string) {
         return data;
     }
 
-    return { productDetails: data, isLoading };
+    let productDetails = data;
+    if (window.uiLanguage === "en" && data) {
+        productDetails = {
+            ...data,
+            title: data.titleEn,
+            description: data.descriptionEn,
+            composition: data.compositionEn,
+        };
+    }
+
+    return { productDetails, isLoading };
 }

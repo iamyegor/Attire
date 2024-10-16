@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20241014171138_AddTitleEnAndDescriptionnEnToProduct")]
-    partial class AddTitleEnAndDescriptionnEnToProduct
+    [Migration("20241016124357_add_american_localization")]
+    partial class add_american_localization
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -109,6 +109,11 @@ namespace Infrastructure.Data.Migrations
                                 .HasColumnType("text")
                                 .HasColumnName("composition");
 
+                            b1.Property<string>("CompositionEn")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("composition_en");
+
                             b1.Property<string>("SKU")
                                 .IsRequired()
                                 .HasColumnType("text")
@@ -118,12 +123,6 @@ namespace Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("Title")
-                        .IsUnique();
-
-                    b.HasIndex("TitleEn")
-                        .IsUnique();
 
                     b.ToTable("products", (string)null);
                 });
@@ -256,6 +255,11 @@ namespace Infrastructure.Data.Migrations
                                 .IsRequired()
                                 .HasColumnType("text")
                                 .HasColumnName("name");
+
+                            b1.Property<string>("NameEn")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("name_en");
 
                             b1.Property<Guid>("product_id")
                                 .HasColumnType("uuid");
@@ -393,6 +397,11 @@ namespace Infrastructure.Data.Migrations
                                         .HasColumnType("text")
                                         .HasColumnName("color_name");
 
+                                    b2.Property<string>("NameEn")
+                                        .IsRequired()
+                                        .HasColumnType("text")
+                                        .HasColumnName("color_name_en");
+
                                     b2.HasKey("CartItemId");
 
                                     b2.ToTable("user_cart_items");
@@ -476,6 +485,11 @@ namespace Infrastructure.Data.Migrations
                                                 .IsRequired()
                                                 .HasColumnType("text")
                                                 .HasColumnName("color_name");
+
+                                            b3.Property<string>("NameEn")
+                                                .IsRequired()
+                                                .HasColumnType("text")
+                                                .HasColumnName("color_name_en");
 
                                             b3.HasKey("OrderItemId");
 

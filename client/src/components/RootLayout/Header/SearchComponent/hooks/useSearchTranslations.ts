@@ -4,7 +4,7 @@ export const searchTranslations = [
         popularSearchTerms: {
             name: "Popular search terms",
             terms: [
-                "Oversized Shirt",
+                "Classic Shirt",
                 "Cargo Hoodie",
                 "Short Shorts",
                 "Extended Jeans",

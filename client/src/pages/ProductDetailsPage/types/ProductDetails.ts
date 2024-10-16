@@ -4,12 +4,15 @@ import ProductDetailsCartInfo from "@/pages/ProductDetailsPage/types/ProductDeta
 export interface ProductDetails {
     id: string;
     title: string;
+    titleEn: string;
     price: number;
     liked: boolean;
     description: string;
+    descriptionEn: string;
     brand: string;
     sku: string;
     composition: string;
+    compositionEn: string;
     categoryName: string;
     imagePaths: string[];
     colors: Color[];
