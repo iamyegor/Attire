@@ -3,6 +3,8 @@ import CustomDialog from "@/components/CustomDialog/CustomDialog";
 import classNames from "classnames";
 import { useState } from "react";
 import { TbHandStop } from "react-icons/tb";
+import useOrderSummaryTranslation from "./hooks/useOrderSummaryTranslation";
+import formatPrice from "@/utils/formatPrice";
 
 interface OrderSummaryProps {
     selectedItems: number;
@@ -12,44 +14,47 @@ interface OrderSummaryProps {
 export default function OrderSummary({ selectedItems, totalPrice }: OrderSummaryProps) {
     const [purchaseFailedDialogOpen, setPurchaseFailedDialogOpen] = useState(false);
     const [deliveryDetailsOpen, setDeliveryDetailsOpen] = useState(false);
+    const t = useOrderSummaryTranslation();
 
     return (
         <div className="w-full lg:max-w-[420px] h-min mx-auto bg-neutral-200 rounded-[1.75rem] sm:rounded-2xl overflow-hidden p-4 md:p-6 space-y-4">
-            <h2 className="font-semibold text-black text-xl tracking-normal">Сумма заказа</h2>
+            <h2 className="font-semibold text-black text-xl tracking-normal">{t.orderTotal}</h2>
 
             <div className="grid grid-cols-2 gap-2 text-base text-black">
-                <span className="font-normal">выбранные товары ({selectedItems})</span>
-                <span className="justify-self-end font-semibold">{totalPrice} ₽</span>
+                <span className="font-normal">
+                    {t.selectedItems} ({selectedItems})
+                </span>
+                <span className="justify-self-end font-semibold">{formatPrice(totalPrice)}</span>
 
-                <span className="font-normal">скидка</span>
-                <span className="justify-self-end font-semibold">0 ₽</span>
+                <span className="font-normal">{t.discount}</span>
+                <span className="justify-self-end font-semibold">{formatPrice(0)}</span>
             </div>
 
             <div className="w-full h-[1px] bg-neutral-400" />
 
             <div className="flex items-center text-base text-black space-x-3">
                 <TruckSvg className="w-5 h-5" />
-                <span>Доставка бесплатно от 0 ₽</span>
+                <span>{t.freeDelivery}</span>
             </div>
 
             <button
                 className="text-blue-500 text-base font-normal cursor-pointer"
                 onClick={() => setDeliveryDetailsOpen(true)}
             >
-                Подробнее
+                {t.moreDetails}
             </button>
             <CustomDialog
                 isOpen={deliveryDetailsOpen}
                 onClose={() => setDeliveryDetailsOpen(false)}
             >
-                <p>При заказе от 0₽ доставка осуществляется бесплатно</p>
+                <p>{t.freeDeliveryDetails}</p>
             </CustomDialog>
 
             <div className="w-full h-[1px] bg-neutral-400" />
 
             <div className="flex justify-between text-xl font-medium text-black">
-                <span>Итого</span>
-                <span>{totalPrice} ₽</span>
+                <span>{t.total}</span>
+                <span>{formatPrice(totalPrice)}</span>
             </div>
 
             <button
@@ -60,7 +65,7 @@ export default function OrderSummary({ selectedItems, totalPrice }: OrderSummary
                 disabled={selectedItems == 0}
                 onClick={() => setPurchaseFailedDialogOpen(true)}
             >
-                <span className="font-normal text-white text-base">Перейти к оформлению</span>
+                <span className="font-normal text-white text-base">{t.proceedToCheckout}</span>
             </button>
             <CustomDialog
                 isOpen={purchaseFailedDialogOpen}
@@ -68,9 +73,7 @@ export default function OrderSummary({ selectedItems, totalPrice }: OrderSummary
             >
                 <div className="px-6 flex flex-col items-center space-y-4">
                     <TbHandStop className="w-20 h-20 text-red-500" />
-                    <p className="text-xl font-medium text-center">
-                        Оформление заказа временно недоступно
-                    </p>
+                    <p className="text-xl font-medium text-center">{t.checkoutUnavailable}</p>
                 </div>
             </CustomDialog>
         </div>

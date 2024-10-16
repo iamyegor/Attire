@@ -5,7 +5,7 @@ import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 
 export function useLoadFavorites(queryKey: string[]) {
-    const { data, isLoading, isSuccess, fetchNextPage } = useInfiniteQuery({
+    const { data, isLoading, isSuccess, fetchNextPage, error } = useInfiniteQuery({
         queryKey,
         queryFn: fetchFavorites,
         initialPageParam: 1,
@@ -13,6 +13,8 @@ export function useLoadFavorites(queryKey: string[]) {
         gcTime: 0,
         retry: false,
     });
+
+    console.log({ error });
 
     async function fetchFavorites({ pageParam }: { pageParam: number }) {
         const { data } = await api.get<FavoritesResponse>(

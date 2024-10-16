@@ -1,5 +1,6 @@
 using System.Net;
 using Api.Mappings;
+using Infrastructure.Utils;
 using MailKit.Security;
 using Serilog;
 using Serilog.Events;
@@ -46,13 +47,18 @@ public static class DependencyInjection
     {
         string outlookPassword = Environment.GetEnvironmentVariable("SERILOG_EMAIL_PASSWORD")!;
 
-        Log.Logger = new LoggerConfiguration()
+        LoggerConfiguration loggerConfiguration = new LoggerConfiguration();
+
+        loggerConfiguration
             .MinimumLevel.Information()
             .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
             .Enrich.FromLogContext()
             .WriteTo.Console()
-            .WriteTo.File(path: "/logs/log-.log", rollingInterval: RollingInterval.Day)
-            .WriteTo.Email(
+            .WriteTo.File(path: "/logs/log-.log", rollingInterval: RollingInterval.Day);
+
+        if (!ApplicationEnvirontment.IsDevelopment())
+        {
+            loggerConfiguration.WriteTo.Email(
                 options: new EmailSinkOptions
                 {
                     From = "astery227@gmail.com",
@@ -61,14 +67,16 @@ public static class DependencyInjection
                     Port = 587,
                     ConnectionSecurity = SecureSocketOptions.StartTls,
                     Credentials = new NetworkCredential("astery227@gmail.com", outlookPassword),
-                    Subject = new MessageTemplateTextFormatter("Error In Attire Auth"),
+                    Subject = new MessageTemplateTextFormatter("Attire Main Error"),
                     Body = new MessageTemplateTextFormatter(
                         "{Timestamp} [{Level}] {Message}{NewLine}{Exception}"
                     )
                 },
                 restrictedToMinimumLevel: LogEventLevel.Error
-            )
-            .CreateLogger();
+            );
+        }
+
+        Log.Logger = loggerConfiguration.CreateLogger();
 
         Serilog.Debugging.SelfLog.Enable(Console.Out);
         host.UseSerilog();

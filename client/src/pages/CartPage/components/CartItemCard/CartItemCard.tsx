@@ -7,6 +7,8 @@ import CartItemActions from "@/pages/CartPage/components/CartItemCard/CartItemAc
 import productImageFullPath from "@/utils/productImageFullPath.ts";
 import ChangeCartQuantityData from "@/types/ChangeCartQuantityData.ts";
 import LinkCopiedNotification from "@/pages/CartPage/components/LinkCopiedNotification.tsx";
+import formatPrice from "@/utils/formatPrice";
+import useCartItemTranslation from "./hooks/useCartItemTranslation";
 
 interface CartItemProps {
     item: CartItem;
@@ -24,6 +26,7 @@ export default function CartItemCard({
     deleteCartItem,
 }: CartItemProps) {
     const [linkCopied, setLinkCopied] = useState(false);
+    const t = useCartItemTranslation();
 
     async function handleLinkCopied() {
         setLinkCopied(true);
@@ -53,7 +56,7 @@ export default function CartItemCard({
                 <div className="flex flex-col justify-between flex-grow">
                     <div className="space-y-1">
                         <p className="block md:hidden font-medium text-medium">
-                            {item.productPrice * item.quantity} ₽
+                            {formatPrice(item.productPrice * item.quantity)}
                         </p>
                         <Link
                             to={`/products/${item.productId}`}
@@ -62,16 +65,18 @@ export default function CartItemCard({
                             {item.productTitle}
                         </Link>
                         <p className="text-[#5b5b5b] line-clamp-2">
-                            артикул <span className="font-medium">{item.sku}</span>
+                            {t.sku} <span className="font-medium">{item.sku}</span>
                         </p>
                         <div className="flex items-center space-x-1.5">
-                            <span>{item.size}</span>
+                            <span>
+                                {t.size} {item.size}
+                            </span>
                             <span>|</span>
                             <div
                                 className={`w-4 h-4 rounded-full ring-1 ring-offset-1 ring-neutral-300`}
                                 style={{ backgroundColor: item.color.hex }}
                             ></div>
-                            <span>{item.color.name}</span>
+                            {window.uiLanguage === "ru" && <span>{item.color.name}</span>}
                         </div>
                     </div>
                     <div className="hidden md:flex space-x-1 justify-between pt-2">
@@ -85,7 +90,7 @@ export default function CartItemCard({
                 <div className="hidden md:flex flex-col items-end space-y-2 h-full">
                     <CartItemQuantityControl item={item} changeCartQuantity={changeCartQuantity} />
                     <span className="font-medium text-black">
-                        {item.productPrice * item.quantity} ₽
+                        {formatPrice(item.productPrice * item.quantity)}
                     </span>
                 </div>
             </div>

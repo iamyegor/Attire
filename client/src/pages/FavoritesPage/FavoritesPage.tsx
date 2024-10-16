@@ -3,11 +3,13 @@ import ProductCardSkeleton from "@/components/ui/ProductCardSkeleton.tsx";
 import { useLoadFavorites } from "@/pages/FavoritesPage/hooks/useLoadFavorites.tsx";
 import { useRemoveFromFavorites } from "@/pages/FavoritesPage/hooks/useRemoveFromFavorites.tsx";
 import ProductCard from "@/pages/HomePage/Components/Section/ProductCard/ProductCard";
+import useFavoritesTranslation from "./hooks/useFavoritesTranslation";
 
 export default function FavoritesPage() {
     const queryKey = ["favorites"];
     const { removeFromFavorites } = useRemoveFromFavorites(queryKey);
     const { products, isLoading, isSuccess, ref } = useLoadFavorites(queryKey);
+    const t = useFavoritesTranslation();
 
     function renderErrorState(message: string) {
         return (
@@ -20,15 +22,14 @@ export default function FavoritesPage() {
 
     return (
         <div className="w-full sm:container mx-auto pb-10 h-full">
-            {isSuccess && products.length === 0 && renderErrorState("В избранном пока ничего нет")}
-            {!isLoading &&
-                !isSuccess &&
-                renderErrorState("Произошла ошибка при загрузке избранных товаров")}
+            {isSuccess && products.length === 0 && renderErrorState(t.emptyFavorites)}
+            {!isLoading && !isSuccess && renderErrorState(t.errorLoading)}
             <div className="sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {products.length > 0 ? (
                     <>
                         {products.map((product) => (
                             <ProductCard
+                                key={product.id}
                                 product={product}
                                 likeProduct={() => {}}
                                 unlikeProduct={removeFromFavorites}

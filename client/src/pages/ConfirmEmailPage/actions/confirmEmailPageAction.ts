@@ -9,7 +9,7 @@ export default async function confirmEmailPageAction({ request }: any) {
     const code: string = await getCodeFromForm(request, 5);
 
     if (code.length != 5) {
-        return FeedbackMessage.createError("Код должен быть длиной 5 символов");
+        return FeedbackMessage.createError(getConfirmEmailErrorTranslation());
     }
 
     try {
@@ -20,5 +20,13 @@ export default async function confirmEmailPageAction({ request }: any) {
 
         const errorMessage: string = extractVerifyEmailError(error);
         return FeedbackMessage.createError(errorMessage);
+    }
+}
+
+function getConfirmEmailErrorTranslation() {
+    if (window.uiLanguage === "ru") {
+        return "Код должен быть длиной 5 символов";
+    } else {
+        return "Code must be 5 characters long";
     }
 }

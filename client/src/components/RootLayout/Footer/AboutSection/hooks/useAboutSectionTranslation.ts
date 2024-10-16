@@ -9,7 +9,7 @@ const aboutSectionTranslations = [
         phoneNumber: "8 800 777-4-999",
         workingHours: "7:00 AM – 10:00 PM MSK",
         developedBy: "Developed by",
-        developer: { name: "Yegor", link: "https://websitecraft.tech" },
+        developer: { name: "Denis", link: "https://upwork.com" },
     },
     {
         locale: "ru",
