@@ -1,7 +1,8 @@
 import Color from "@/types/Color.ts";
 import ColorButton from "@/components/ui/ColorButton.tsx";
-import SizeChart from "@/pages/ProductDetailsPage/components/Selectors/SizeChart.tsx";
+import SizeChart from "@/pages/ProductDetailsPage/components/Selectors/SizeChart/SizeChart";
 import SelectionButton from "@/pages/CatalogPage/components/FilterComponent/FilterDrawer/SelectionButton.tsx";
+import useSelectorsTranslation from "./hooks/useSelectorsTranslation";
 
 interface SelectorsProps {
     colors: Color[];
@@ -20,6 +21,8 @@ export default function Selectors({
     selectedSize,
     setSelectedSize,
 }: SelectorsProps) {
+    const translations = useSelectorsTranslation();
+
     return (
         <>
             <div className="flex gap-x-3.5">
@@ -33,7 +36,7 @@ export default function Selectors({
                 ))}
             </div>
             <div className="flex items-center justify-between mt-4">
-                <p className="font-medium text-lg">Размер</p>
+                <p className="font-medium text-lg">{translations.size}</p>
                 <SizeChart />
             </div>
             <div className="flex space-x-2">

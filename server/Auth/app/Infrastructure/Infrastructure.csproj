@@ -41,13 +41,10 @@
         <None Update="Emails\Email\email.html">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Update="Emails\ui\email_head.html">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
         <None Update="Emails\ui\password-reset.html">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Update="Emails\ui\email_body.html">
+        <None Update="Emails\ui\confirm-email.html">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>

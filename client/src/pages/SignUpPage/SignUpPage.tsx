@@ -1,22 +1,24 @@
-import { useState } from "react";
-import Checkbox from "@/pages/CartPage/components/Checkbox.tsx";
-import AuthPasswordInput from "@/pages/SigninPage/components/AuthPasswordInput.tsx";
-import { Form, Link, useActionData } from "react-router-dom";
-import SignUpPageInput from "@/pages/SignUpPage/components/SignUpPageInput.tsx";
-import FieldError from "@/pages/SigninPage/types/FieldError.ts";
 import ErrorMessageComponent from "@/components/ui/ErrorMessageComponent.tsx";
 import SubmittingButton from "@/components/ui/SubmittingButton.tsx";
+import Checkbox from "@/pages/CartPage/components/Checkbox.tsx";
+import SignUpPageInput from "@/pages/SignUpPage/components/SignUpPageInput.tsx";
+import AuthPasswordInput from "@/pages/SigninPage/components/AuthPasswordInput/AuthPasswordInput";
+import FieldError from "@/pages/SigninPage/types/FieldError.ts";
+import { useState } from "react";
+import { Form, Link, useActionData } from "react-router-dom";
+import useSignUpTranslation from "./hooks/useSignUpTranslation";
 
 export default function SignUpPage() {
     const [agree, setAgree] = useState(false);
     const [subscribe, setSubscribe] = useState(false);
     const fieldError = useActionData() as FieldError | null;
+    const t = useSignUpTranslation();
 
     return (
-        <div className="relative mx-auto px-6 pb-8 max-w-md bg-white rounded-2xl space-y-6">
+        <div className="relative mx-auto py-5 px-6 pb-20 max-w-md bg-white rounded-2xl space-y-6">
             <div className="text-center space-y-4">
-                <h1 className="text-3xl font-semibold text-gray-900">Зарегистрироваться</h1>
-                <p className="text-base text-gray-500 mt-1">Создайте свой новый аккаунт</p>
+                <h1 className="text-3xl font-semibold text-gray-900">{t.title}</h1>
+                <p className="text-base text-gray-500 mt-1">{t.subtitle}</p>
             </div>
             <Form method="post" className="space-y-6">
                 <div className="space-y-5">
@@ -24,8 +26,8 @@ export default function SignUpPage() {
                         <SignUpPageInput
                             id="name"
                             name="name"
-                            label="Ваше настоящее имя"
-                            placeholder="Иван"
+                            label={t.name}
+                            placeholder={t.namePlaceholder}
                         />
                         <ErrorMessageComponent errorMessage={fieldError?.forField("name")} />
                     </div>
@@ -34,14 +36,14 @@ export default function SignUpPage() {
                             id="email"
                             name="email"
                             type="email"
-                            label="Почта"
+                            label={t.email}
                             placeholder="email@example.com"
                         />
                         <ErrorMessageComponent errorMessage={fieldError?.forField("email")} />
                     </div>
                     <div className="space-y-2">
                         <label htmlFor="password" className="block font-medium text-gray-700">
-                            Пароль
+                            {t.password}
                         </label>
                         <AuthPasswordInput id="password" />
                         <ErrorMessageComponent errorMessage={fieldError?.forField("password")} />
@@ -51,7 +53,7 @@ export default function SignUpPage() {
                             htmlFor="passwordConfirmation"
                             className="block font-medium text-gray-700"
                         >
-                            Подтвердите пароль
+                            {t.confirmPassword}
                         </label>
                         <AuthPasswordInput id="passwordConfirmation" />
                         <ErrorMessageComponent
@@ -62,13 +64,9 @@ export default function SignUpPage() {
 
                 <div className="space-y-4">
                     <div className="flex items-center space-x-3">
-                        <Checkbox
-                            id="agree"
-                            isChecked={agree}
-                            onClick={() => setAgree(!agree)}
-                        />
+                        <Checkbox id="agree" isChecked={agree} onClick={() => setAgree(!agree)} />
                         <label htmlFor="agree" className="text-gray-700">
-                            Согласие на обработку персональных данных
+                            {t.agree}
                         </label>
                     </div>
                     <div className="flex items-center space-x-3">
@@ -78,18 +76,18 @@ export default function SignUpPage() {
                             onClick={() => setSubscribe(!subscribe)}
                         />
                         <label htmlFor="subscribe" className="text-gray-700">
-                            Получать уведомления об акциях и скидках
+                            {t.subscribe}
                         </label>
                     </div>
                 </div>
 
-                <SubmittingButton text="Создать аккаунт" />
+                <SubmittingButton text={t.createAccount} />
             </Form>
             <div className="text-center space-y-2">
                 <p className="text-sm text-gray-700">
-                    Уже зарегистрированы?{" "}
+                    {t.alreadyRegistered}{" "}
                     <Link to="/sign-in" className="text-blue-500 hover:underline">
-                        Войдите в аккаунт
+                        {t.signIn}
                     </Link>
                 </p>
             </div>

@@ -2,31 +2,28 @@ import EMAIL_REGEX from "@/utils/EMAIL_REGEX.ts";
 import throwOnIncorrectError from "@/utils/throwOnIncorrectError.ts";
 import FeedbackMessage from "@/utils/FeedbackMessage.ts";
 import authApi from "@/lib/authApi.ts";
+import { getPasswordResetActionMessages } from "../utils/getPasswordResetActionMessages";
 
 export default async function requestPasswordResetAction({ request }: any) {
     const formData = await request.formData();
     const email = formData.get("email") as string;
+    const locale = window.uiLanguage || "en";
+    const messages = getPasswordResetActionMessages(locale);
 
     if (!EMAIL_REGEX.test(email)) {
-        return FeedbackMessage.createError("Некорректный формат почты");
+        return FeedbackMessage.createError(messages.invalidEmailFormat);
     }
 
     try {
         await authApi.post("auth/request-password-reset", { email });
-        return FeedbackMessage.createSuccess(
-            "Если пользователь с такой почтой существует, на нее было отправлено письмо с инструкциями по сбросу пароля",
-        );
+        return FeedbackMessage.createSuccess(messages.successMessage);
     } catch (err) {
         const error = throwOnIncorrectError(err);
 
         if (error.response!.data.errorCode === "password.reset.is.already.requested") {
-            return FeedbackMessage.createError(
-                "Сброс пароля уже запрошен, проверьте вашу почту и папку спам",
-            );
+            return FeedbackMessage.createError(messages.alreadyRequestedError);
         }
 
-        return FeedbackMessage.createError(
-            "Ошибка при запросе сброса пароля, проверьте, что пользователь с такой почтой существует и попробуйте снова",
-        );
+        return FeedbackMessage.createError(messages.generalError);
     }
 }

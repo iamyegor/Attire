@@ -1,12 +1,13 @@
-import BlueBackButton from "@/assets/blue-arrow-circle-left.png";
 import React, { useState } from "react";
-import { CurrentAddressPage } from "../types/CurrentAddressPage";
-import { Address } from "../types/Address";
+import BlueBackButton from "@/assets/blue-arrow-circle-left.png";
+import { CurrentAddressPage } from "../../types/CurrentAddressPage";
+import { Address } from "../../types/Address";
 import Input from "@/components/ui/Input";
 import { SuccessOr } from "@/types/results/SuccessOr";
 import ErrorMessage from "@/types/errors/ErrorMessage";
 import { EmptyResult } from "@/types/results/EmptyResult";
-import fetchChangeAddress from "@/utils/services/profile/fetchChangeAddress.ts";
+import fetchChangeAddress from "@/utils/services/profile/fetchChangeAddress";
+import useAddressFormTranslation from "./hooks/useAddressFormTranslation";
 
 function ChangeUserAddressForm({
     initialAddress,
@@ -19,22 +20,23 @@ function ChangeUserAddressForm({
 }) {
     const [changedAddress, setChangedAddress] = useState<Address>(initialAddress);
     const [error, setError] = useState<string>();
+    const t = useAddressFormTranslation();
 
     return (
         <div className="max-w-[560px]">
             <div className="flex justify-between items-center mb-[30px]">
-                <h3 className="text-[24px] font-semibold">Адрес доставки</h3>
+                <h3 className="text-[24px] font-semibold">{t.title}</h3>
                 <button
                     className="w-[30px] h-[30px] rounded-full"
                     onClick={() => setCurrentPage("readPage")}
                 >
-                    <img className="w-full" src={BlueBackButton} alt="Назад" />
+                    <img className="w-full" src={BlueBackButton} alt={t.back} />
                 </button>
             </div>
 
             <div>
                 <div className="mb-[20px]">
-                    <div className="mb-[12px]">Населенный пункт</div>
+                    <div className="mb-[12px]">{t.city}</div>
                     <Input
                         value={changedAddress.city}
                         onChange={(e) =>
@@ -43,10 +45,10 @@ function ChangeUserAddressForm({
                                 city: e.target.value,
                             }))
                         }
-                        placeholder="Введите населенный пункт"
+                        placeholder={t.cityPlaceholder}
                         validate={(e) => {
                             if (e.target.value.trim() === "") {
-                                return EmptyResult.Fail("Вы не заполнили населенный пункт");
+                                return EmptyResult.Fail(t.errors.emptyCity);
                             }
                             return EmptyResult.Ok();
                         }}
@@ -54,7 +56,7 @@ function ChangeUserAddressForm({
                 </div>
 
                 <div className="mb-[20px]">
-                    <div className="mb-[12px]">Почтовый индекс</div>
+                    <div className="mb-[12px]">{t.postIndex}</div>
                     <Input
                         value={changedAddress.postIndex}
                         onChange={(e) =>
@@ -63,13 +65,13 @@ function ChangeUserAddressForm({
                                 postIndex: e.target.value,
                             }))
                         }
-                        placeholder="Введите почтовый индекс"
+                        placeholder={t.postIndexPlaceholder}
                         validate={(e) => {
                             if (e.target.value.trim() === "") {
-                                return EmptyResult.Fail("Вы не заполнили почтовый индекс");
+                                return EmptyResult.Fail(t.errors.emptyPostIndex);
                             }
                             if (!/^\d{6}$/.test(e.target.value.trim())) {
-                                return EmptyResult.Fail("Вы некорректно заполнили почтовый индекс");
+                                return EmptyResult.Fail(t.errors.invalidPostIndex);
                             }
                             return EmptyResult.Ok();
                         }}
@@ -77,7 +79,7 @@ function ChangeUserAddressForm({
                 </div>
 
                 <div className="mb-[20px]">
-                    <div className="mb-[12px]">Улица</div>
+                    <div className="mb-[12px]">{t.street}</div>
                     <Input
                         value={changedAddress.street}
                         onChange={(e) =>
@@ -86,10 +88,10 @@ function ChangeUserAddressForm({
                                 street: e.target.value,
                             }))
                         }
-                        placeholder="Введите улицу"
+                        placeholder={t.streetPlaceholder}
                         validate={(e) => {
                             if (e.target.value.trim() === "") {
-                                return EmptyResult.Fail("Вы не заполнили улицу");
+                                return EmptyResult.Fail(t.errors.emptyStreet);
                             }
                             return EmptyResult.Ok();
                         }}
@@ -97,7 +99,7 @@ function ChangeUserAddressForm({
                 </div>
 
                 <div className="mb-[20px]">
-                    <div className="mb-[12px]">Дом</div>
+                    <div className="mb-[12px]">{t.house}</div>
                     <Input
                         value={changedAddress.house}
                         onChange={(e) =>
@@ -106,10 +108,10 @@ function ChangeUserAddressForm({
                                 house: e.target.value,
                             }))
                         }
-                        placeholder="Введите дом"
+                        placeholder={t.housePlaceholder}
                         validate={(e) => {
                             if (e.target.value.trim() === "") {
-                                return EmptyResult.Fail("Вы не заполнили дом");
+                                return EmptyResult.Fail(t.errors.emptyHouse);
                             }
                             return EmptyResult.Ok();
                         }}
@@ -117,7 +119,7 @@ function ChangeUserAddressForm({
                 </div>
 
                 <div className="mb-[50px]">
-                    <div className="mb-[12px]">Квартира</div>
+                    <div className="mb-[12px]">{t.flat}</div>
                     <Input
                         value={changedAddress.flat}
                         onChange={(e) =>
@@ -126,10 +128,10 @@ function ChangeUserAddressForm({
                                 flat: e.target.value,
                             }))
                         }
-                        placeholder="Введите квартира"
+                        placeholder={t.flatPlaceholder}
                         validate={(e) => {
                             if (e.target.value.trim() === "") {
-                                return EmptyResult.Fail("Вы не заполнили квартиру");
+                                return EmptyResult.Fail(t.errors.emptyFlat);
                             }
                             return EmptyResult.Ok();
                         }}
@@ -155,7 +157,7 @@ function ChangeUserAddressForm({
                     }}
                     className="blue-btn"
                 >
-                    Сохранить изменения
+                    {t.saveChanges}
                 </button>
             </div>
         </div>

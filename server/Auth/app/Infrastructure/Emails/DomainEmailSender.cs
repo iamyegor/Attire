@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Text;
 using Domain.User.ValueObjects;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
@@ -25,17 +26,12 @@ public class DomainEmailSender
 
     public async Task SendEmailVerificationCode(string email, int code)
     {
-        string htmlBodyContent = await File.ReadAllTextAsync(
-            Path.Combine(_htmlFolderPath, "email_body.html")
+        string html = await File.ReadAllTextAsync(
+            Path.Combine(_htmlFolderPath, "confirm-email.html")
         );
 
-        string htmlHeadContent = await File.ReadAllTextAsync(
-            Path.Combine(_htmlFolderPath, "email_head.html")
-        );
-
-        string formattedBody = string.Format(htmlBodyContent, code);
-        string html = string.Concat(htmlHeadContent, formattedBody);
-        await _emailSender.SendAsync(html, email);
+        string formattedHtml = html.Replace("code", code.ToString());
+        await _emailSender.SendAsync(formattedHtml, email);
     }
 
     public async Task SendPasswordReset(PasswordResetToken token, string email)
@@ -48,9 +44,11 @@ public class DomainEmailSender
             ? "http://localhost:80"
             : Environment.GetEnvironmentVariable("SITE_URL")!;
 
-        address += "/";
+        StringBuilder htmlBuilder = new StringBuilder(htmlContent);
+        htmlBuilder.Replace("{address}", address);
+        htmlBuilder.Replace("{token}", token.Value.ToString());
 
-        string emailBody = string.Format(htmlContent, address, token.Value);
+        string emailBody = htmlBuilder.ToString();
         await _emailSender.SendAsync(emailBody, email);
     }
 }

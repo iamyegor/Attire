@@ -73,11 +73,3 @@ public class UserController : ApplicationController
     }
 }
 
-public static class ServiceCollectionExtension
-{
-    public static void AddMyThings(this IServiceCollection services, IConfiguration configuration)
-    {
-        services.Configure<MyThingsConfig>(configuration.GetSection(MyThings.SectionName));
-        // ... other configurations go here
-    }
-}

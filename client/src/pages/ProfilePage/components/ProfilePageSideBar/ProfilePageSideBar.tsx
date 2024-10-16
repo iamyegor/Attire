@@ -1,8 +1,10 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import fetchLogout from "@/utils/services/auth/fetchLogout.ts";
+import useProfileSidebarTranslation from "./hooks/useProfileSidebarTranslation";
 
 function ProfilePageSideBar() {
     const nav = useNavigate();
+    const t = useProfileSidebarTranslation();
 
     return (
         <div className="">
@@ -16,7 +18,7 @@ function ProfilePageSideBar() {
                     }
                     end
                 >
-                    История заказов
+                    {t.orderHistory}
                 </NavLink>
 
                 <NavLink
@@ -28,7 +30,7 @@ function ProfilePageSideBar() {
                     }
                     end
                 >
-                    Адрес доставки
+                    {t.deliveryAddress}
                 </NavLink>
 
                 <NavLink
@@ -40,7 +42,7 @@ function ProfilePageSideBar() {
                     }
                     end
                 >
-                    Личные данные
+                    {t.personalData}
                 </NavLink>
                 <button
                     onClick={async () => {
@@ -50,7 +52,7 @@ function ProfilePageSideBar() {
                     }}
                     className="bg-[#EDEDED] py-[6px] px-[10px] rounded-lg block"
                 >
-                    Выход
+                    {t.logout}
                 </button>
             </div>
         </div>

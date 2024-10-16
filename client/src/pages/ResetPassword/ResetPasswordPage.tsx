@@ -1,7 +1,7 @@
-import AuthPasswordInput from "@/pages/SigninPage/components/AuthPasswordInput.tsx";
 import ErrorMessageComponent from "@/components/ui/ErrorMessageComponent.tsx";
-import { Form, useActionData } from "react-router-dom";
 import SubmittingButton from "@/components/ui/SubmittingButton.tsx";
+import AuthPasswordInput from "@/pages/SigninPage/components/AuthPasswordInput/AuthPasswordInput";
+import { Form, useActionData } from "react-router-dom";
 
 export default function ResetPasswordPage() {
     const errorMessage = useActionData() as string | null;

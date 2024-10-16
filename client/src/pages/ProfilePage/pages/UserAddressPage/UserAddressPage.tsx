@@ -1,8 +1,8 @@
-import { useLoadAddress } from "./hooks/useLoadAddress";
+import AddressData from "@/pages/ProfilePage/pages/UserAddressPage/pages/AddressData/AddressData";
 import { useState } from "react";
+import { useLoadAddress } from "./hooks/useLoadAddress";
+import ChangeUserAddressForm from "./pages/ChangeUserAddressForm/ChangeUserAddressFormPage";
 import { CurrentAddressPage } from "./types/CurrentAddressPage";
-import ChangeUserAddressForm from "./pages/ChangeUserAddressFormPage";
-import AddressData from "@/pages/ProfilePage/pages/UserAddressPage/pages/AddressData.tsx";
 
 function UserAddressPage() {
     const [currentPage, setCurrentPage] = useState<CurrentAddressPage>("readPage");

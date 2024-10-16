@@ -1,6 +1,7 @@
 import React from "react";
-import { Address } from "../types/Address";
-import { CurrentAddressPage } from "../types/CurrentAddressPage";
+import { Address } from "../../types/Address";
+import { CurrentAddressPage } from "../../types/CurrentAddressPage";
+import useAddressDataTranslation from "./hooks/useAddressDataTranslation";
 
 function AddressData({
     address,
@@ -9,19 +10,21 @@ function AddressData({
     address: Address;
     setCurrentPage: React.Dispatch<React.SetStateAction<CurrentAddressPage>>;
 }) {
+    const t = useAddressDataTranslation();
+
     return (
         <div className="space-y-8 w-min">
-            <h3 className="text-[24px] font-semibold whitespace-nowrap">Адрес доставки</h3>
+            <h3 className="text-[24px] font-semibold whitespace-nowrap">{t.deliveryAddress}</h3>
 
             {address?.city ? (
                 <div className="text-[16px] space-y-3">
-                    <div>{"Населенный пункт: " + address?.city}</div>
-                    <div>{"Почтовый индекс: " + address?.postIndex}</div>
-                    <div>{"Улица: " + address?.street}</div>
-                    <div>{"Дом " + address?.house}</div>
-                    <div>{"Квартира " + address?.flat}</div>
+                    <div>{`${t.city}: ${address?.city}`}</div>
+                    <div>{`${t.postIndex}: ${address?.postIndex}`}</div>
+                    <div>{`${t.street}: ${address?.street}`}</div>
+                    <div>{`${t.house} ${address?.house}`}</div>
+                    <div>{`${t.flat} ${address?.flat}`}</div>
                     <button className="text-blue-500" onClick={() => setCurrentPage("changeForm")}>
-                        Изменить адрес доставки
+                        {t.changeAddress}
                     </button>
                 </div>
             ) : (
@@ -29,7 +32,7 @@ function AddressData({
                     className="text-white bg-blue-500 w-full p-3 rounded-xl"
                     onClick={() => setCurrentPage("changeForm")}
                 >
-                    Добавить адрес
+                    {t.addAddress}
                 </button>
             )}
         </div>

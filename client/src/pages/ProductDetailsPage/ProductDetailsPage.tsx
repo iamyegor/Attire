@@ -3,7 +3,7 @@ import Category from "@/components/RootLayout/Header/BurgerMenu/types/Category.t
 import Type from "@/components/RootLayout/Header/BurgerMenu/types/Type.ts";
 import Breadcrumbs from "@/pages/CatalogPage/components/Breadcrumbs/Breadcrumbs";
 import ProductDetailsImageGallery from "@/pages/ProductDetailsPage/components/ImageGallery/ProductDetailsImageGallery.tsx";
-import ProductDetailsActions from "@/pages/ProductDetailsPage/components/ProductDetailsActions.tsx";
+import ProductDetailsActions from "@/pages/ProductDetailsPage/components/ProductDetailsActions/ProductDetailsActions";
 import ProductDetailsFooter from "@/pages/ProductDetailsPage/components/ProductDetailsFooter/ProductDetailsFooter.tsx";
 import ProductMainInfo from "@/pages/ProductDetailsPage/components/ProductMainInfo.tsx";
 import ProductSecondaryInfo from "@/pages/ProductDetailsPage/components/ProductSecondaryInfo.tsx";
@@ -16,6 +16,7 @@ import { useLikeProductDetails } from "@/pages/ProductDetailsPage/hooks/useLikeP
 import { useLoadProductDetails } from "@/pages/ProductDetailsPage/hooks/useLoadProductDetails.ts";
 import { useSelectedProductDetails } from "@/pages/ProductDetailsPage/hooks/useSelectedProductDetails.ts";
 import { useUnlikeProductDetails } from "@/pages/ProductDetailsPage/hooks/useUnlikeProductDetails.ts";
+import useProductDetailsTranslation from "@/pages/ProductDetailsPage/hooks/useProductDetailsTranslation";
 import "ldrs/lineSpinner";
 import { useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
@@ -46,6 +47,8 @@ export default function ProductDetailsPage() {
         setLoginModalType("like"),
     );
 
+    const t = useProductDetailsTranslation();
+
     function addToCart() {
         if (!selectedColor || !selectedSize) return;
 
@@ -70,7 +73,7 @@ export default function ProductDetailsPage() {
         return (
             <div className="flex space-y-2 flex-col w-full h-full justify-center items-center text-3xl">
                 <p>¯\_(ツ)_/¯</p>
-                <p className="font-medium">Не удалось загрузить товар</p>
+                <p className="font-medium">{t.failedToLoad}</p>
             </div>
         );
     }
@@ -108,7 +111,7 @@ export default function ProductDetailsPage() {
                         isLiked={productDetails.liked}
                     />
                     <ProductSecondaryInfo
-                        deliveryText="Бесплатная доставка от 0 ₽"
+                        deliveryText={t.freeDelivery}
                         description={productDetails.description}
                     />
                 </div>

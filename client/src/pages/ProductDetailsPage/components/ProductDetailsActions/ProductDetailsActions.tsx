@@ -1,7 +1,8 @@
 import LikeButton from "@/components/ui/LikeButton.tsx";
-import { Link } from "react-router-dom";
-import classNames from "classnames";
 import LoadingSpinner from "@/components/ui/LoadingSpinner.tsx";
+import classNames from "classnames";
+import { Link } from "react-router-dom";
+import useProductDetailsActionsTranslation from "./hooks/useProductDetailsActionsTranslation";
 
 interface CartActionsProps {
     quantityInCart: number;
@@ -26,6 +27,8 @@ export default function ProductDetailsActions({
     likeProduct,
     unlikeProduct,
 }: CartActionsProps) {
+    const t = useProductDetailsActionsTranslation();
+
     function toggleLike() {
         if (!isLiked) {
             likeProduct();
@@ -56,11 +59,7 @@ export default function ProductDetailsActions({
                     )}
                     disabled={addingToCartPending}
                 >
-                    {addingToCartPending ? (
-                        <LoadingSpinner height="25" width="25" />
-                    ) : (
-                        "Добавить в корзину"
-                    )}
+                    {addingToCartPending ? <LoadingSpinner height="25" width="25" /> : t.addToCart}
                 </button>
             ) : (
                 <div className="flex items-center space-x-2">
@@ -68,7 +67,7 @@ export default function ProductDetailsActions({
                         to="/cart"
                         className="px-6 py-2 bg-blue-500 text-white rounded-full shadow hover:bg-blue-600 transition-all"
                     >
-                        В корзину
+                        {t.goToCart}
                     </Link>
                     <button
                         onClick={handleMinusClick}

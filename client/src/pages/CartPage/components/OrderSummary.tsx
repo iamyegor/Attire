@@ -1,7 +1,7 @@
 import TruckSvg from "@/assets/truck.svg?react";
-import { useState } from "react";
-import CustomDialog from "@/components/ui/CustomDialog.tsx";
+import CustomDialog from "@/components/CustomDialog/CustomDialog";
 import classNames from "classnames";
+import { useState } from "react";
 import { TbHandStop } from "react-icons/tb";
 
 interface OrderSummaryProps {

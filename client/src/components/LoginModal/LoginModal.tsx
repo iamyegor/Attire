@@ -1,5 +1,5 @@
 import UserSvg from "@/assets/user.svg?react";
-import CustomDialog from "@/components/ui/CustomDialog.tsx";
+import CustomDialog from "@/components/CustomDialog/CustomDialog";
 import LoginModalSignInButton from "./components/LoginModalSignInButton";
 import useLoginModalTranslation from "./hooks/useLoginModalTranslation";
 

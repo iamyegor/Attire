@@ -2,7 +2,8 @@ import Stars from "@/pages/ProductDetailsPage/components/ProductDetailsFooter/Re
 import StarRating from "@/pages/ProductDetailsPage/components/ProductDetailsFooter/Reviews/StarRating.tsx";
 import ReviewsInfo from "@/pages/ProductDetailsPage/components/ProductDetailsFooter/Reviews/types/ReviewsInfo.ts";
 import { useState } from "react";
-import ReviewErrorDialog from "@/pages/ProductDetailsPage/components/ProductDetailsFooter/Reviews/ReviewErrorDialog.tsx";
+import ReviewErrorDialog from "@/pages/ProductDetailsPage/components/ProductDetailsFooter/Reviews/ReviewErrorDialog/ReviewErrorDialog";
+import useReviewTranslation from "./hooks/useReviewTranslation";
 
 interface ReviewSummaryProps {
     reviewsInfo: ReviewsInfo | null;
@@ -10,6 +11,7 @@ interface ReviewSummaryProps {
 
 export default function ReviewSummary({ reviewsInfo }: ReviewSummaryProps) {
     const [reviewErrorDialogOpen, setReviewErrorDialogOpen] = useState(false);
+    const t = useReviewTranslation();
 
     return (
         <div className="flex flex-col w-full lg:flex-1 max-w-full lg:max-w-[350px] space-y-5 order-1 lg:order-2 mb-5 lg:mb-0">
@@ -21,7 +23,7 @@ export default function ReviewSummary({ reviewsInfo }: ReviewSummaryProps) {
                 className="bg-blue-500 text-white p-3 rounded-lg"
                 onClick={() => setReviewErrorDialogOpen(true)}
             >
-                Оставить отзыв
+                {t.leaveReview}
             </button>
             <div>
                 {reviewsInfo?.averageRating && (
@@ -33,27 +35,27 @@ export default function ReviewSummary({ reviewsInfo }: ReviewSummaryProps) {
                             </p>
                         </div>
                         <StarRating
-                            label="5 звезд"
+                            label={t.fiveStars}
                             count={reviewsInfo.numberOf5Stars}
                             totalStars={reviewsInfo.allStarsNumber}
                         />
                         <StarRating
-                            label="4 звезды"
+                            label={t.fourStars}
                             count={reviewsInfo.numberOf4Stars}
                             totalStars={reviewsInfo.allStarsNumber}
                         />
                         <StarRating
-                            label="3 звезды"
+                            label={t.threeStars}
                             count={reviewsInfo.numberOf3Stars}
                             totalStars={reviewsInfo.allStarsNumber}
                         />
                         <StarRating
-                            label="2 звезды"
+                            label={t.twoStars}
                             count={reviewsInfo.numberOf2Stars}
                             totalStars={reviewsInfo.allStarsNumber}
                         />
                         <StarRating
-                            label="1 звездa"
+                            label={t.oneStar}
                             count={reviewsInfo.numberOf1Stars}
                             totalStars={reviewsInfo.allStarsNumber}
                         />

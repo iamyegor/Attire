@@ -35,7 +35,7 @@ export default function AttireProvider({ children }: { children: React.ReactNode
             setWomenCategories(translatedCategories.womenCategories);
             setNewCategories(translatedCategories.newCategories);
         }
-    }, [menCategoriesRu, womenCategoriesRu, newCategoriesRu, window.uiLanguage]);
+    }, [menCategoriesRu.length, womenCategoriesRu.length, newCategoriesRu.length, window.uiLanguage]);
 
     return (
         <AttireContext.Provider value={{ menCategories, womenCategories, newCategories }}>

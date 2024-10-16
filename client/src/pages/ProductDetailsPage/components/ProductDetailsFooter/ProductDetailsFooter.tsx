@@ -1,14 +1,16 @@
 import { ProductDetails } from "@/pages/ProductDetailsPage/types/ProductDetails.ts";
 import { useState } from "react";
-import AboutProduct from "@/pages/ProductDetailsPage/components/ProductDetailsFooter/AboutProduct.tsx";
+import AboutProduct from "@/pages/ProductDetailsPage/components/ProductDetailsFooter/AboutProduct/AboutProduct";
 import Reviews from "@/pages/ProductDetailsPage/components/ProductDetailsFooter/Reviews/Reviews.tsx";
+import useProductDetailsFooterTranslation from "./hooks/useProductDetailsFooterTranslation";
 
 interface ProductDetailsFooterProps {
     productDetails: ProductDetails;
 }
 
 export default function ProductDetailsFooter({ productDetails }: ProductDetailsFooterProps) {
-    const [selectedView, setSelectedView] = useState("О товаре");
+    const t = useProductDetailsFooterTranslation();
+    const [selectedView, setSelectedView] = useState(t.about);
 
     function button(text: string) {
         return (
@@ -24,10 +26,10 @@ export default function ProductDetailsFooter({ productDetails }: ProductDetailsF
     return (
         <div className="px-4 space-y-2">
             <div className="flex space-x-3">
-                {button("О товаре")}
-                {button("Отзывы")}
+                {button(t.about)}
+                {button(t.reviews)}
             </div>
-            {selectedView == "О товаре" ? (
+            {selectedView === t.about ? (
                 <AboutProduct productDetails={productDetails} />
             ) : (
                 <Reviews productId={productDetails.id} />
