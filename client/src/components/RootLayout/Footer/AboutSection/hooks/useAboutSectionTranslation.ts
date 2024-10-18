@@ -9,7 +9,10 @@ const aboutSectionTranslations = [
         phoneNumber: "8 800 777-4-999",
         workingHours: "7:00 AM – 10:00 PM MSK",
         developedBy: "Developed by",
-        developer: { name: "Denis", link: "https://upwork.com" },
+        developer: {
+            name: "Denis",
+            link: "https://www.upwork.com/freelancers/~01069602500635941a?mp_source=share",
+        },
     },
     {
         locale: "ru",

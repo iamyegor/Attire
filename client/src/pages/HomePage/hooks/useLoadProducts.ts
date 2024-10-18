@@ -16,11 +16,11 @@ export function useLoadProducts(
     });
 
     const { ref, inView } = useInView();
-async function fetchProducts({ pageParam }: { pageParam: number }): Promise<ProductsResponse> {
+
+    async function fetchProducts({ pageParam }: { pageParam: number }): Promise<ProductsResponse> {
         const { data } = await api.get<ProductsResponse>(getEndpoint(pageParam));
         return data;
     }
-    
 
     useEffect(() => {
         if (inView) {
@@ -28,14 +28,12 @@ async function fetchProducts({ pageParam }: { pageParam: number }): Promise<Prod
         }
     }, [JSON.stringify(data), inView, fetchNextPage]);
 
-    const products = (() => data?.pages.flatMap((page) => page.products))() ?? [];
+    let products = (() => data?.pages.flatMap((page) => page.products))() ?? [];
     if (window.uiLanguage === "en") {
-        return {
-            products: products.map((product) => ({
-                ...product,
-                title: product.titleEn,
-            })),
-        };
+        products = products.map((product) => ({
+            ...product,
+            title: product.titleEn,
+        }));
     }
 
     return {

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-const breadcrumbsTranslations = [
+const translations = [
     {
         locale: "en",
         home: "Home",
@@ -17,15 +17,13 @@ const breadcrumbsTranslations = [
     },
 ];
 
-export type BreadcrumbsTranslation = (typeof breadcrumbsTranslations)[0];
-
 export default function useBreadcrumbsTranslation() {
     const currentLanguage = window.uiLanguage;
 
-    return useMemo(() => {
-        return (
-            breadcrumbsTranslations.find((translation) => translation.locale === currentLanguage) ??
-            breadcrumbsTranslations[0]
-        );
-    }, [currentLanguage]);
+    return useMemo(
+        () =>
+            translations.find((translation) => translation.locale === currentLanguage) ??
+            translations[0],
+        [currentLanguage],
+    );
 }
