@@ -34,6 +34,9 @@ public static class MassTransitServicesExtensions
                         host = Environment.GetEnvironmentVariable("RABBITMQ_HOST")!;
                         username = Environment.GetEnvironmentVariable("RABBITMQ_USER")!;
                         password = Environment.GetEnvironmentVariable("RABBITMQ_PASSWORD")!;
+                        Console.WriteLine($"Using RabbitMq host: {host}");
+                        Console.WriteLine($"Using RabbitMq username: {username}");
+                        Console.WriteLine($"Using RabbitMq password: {password}");
                     }
 
                     configurator.Host(
