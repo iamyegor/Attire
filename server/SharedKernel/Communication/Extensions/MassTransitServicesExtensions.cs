@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Infrastructure.Utils;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,36 +14,41 @@ public static class MassTransitServicesExtensions
         Assembly? assembly = null
     )
     {
-        services.AddMassTransit(
-            busConfigurator =>
+        services.AddMassTransit(busConfigurator =>
+        {
+            busConfigurator.SetKebabCaseEndpointNameFormatter();
+
+            if (assembly != null)
             {
-                busConfigurator.SetKebabCaseEndpointNameFormatter();
-
-                if (assembly != null)
-                {
-                    busConfigurator.AddConsumers(assembly);
-                }
-
-                busConfigurator.UsingRabbitMq(
-                    (context, configurator) =>
-                    {
-                        string username = config["RabbitMq:Username"]!;
-                        string password = config["RabbitMq:Password"]!;
-
-                        configurator.Host(
-                            new Uri(config["RabbitMq:Host"]!),
-                            hostConfigurator =>
-                            {
-                                hostConfigurator.Username(username);
-                                hostConfigurator.Password(password);
-                            }
-                        );
-
-                        configurator.ConfigureEndpoints(context);
-                    }
-                );
+                busConfigurator.AddConsumers(assembly);
             }
-        );
+
+            busConfigurator.UsingRabbitMq(
+                (context, configurator) =>
+                {
+                    string host = config["RabbitMq:Host"]!;
+                    string username = config["RabbitMq:Username"]!;
+                    string password = config["RabbitMq:Password"]!;
+                    if (!ApplicationEnvirontment.IsDevelopment())
+                    {
+                        host = Environment.GetEnvironmentVariable("RABBITMQ_HOST")!;
+                        username = Environment.GetEnvironmentVariable("RABBITMQ_USER")!;
+                        password = Environment.GetEnvironmentVariable("RABBITMQ_PASSWORD")!;
+                    }
+
+                    configurator.Host(
+                        new Uri(host),
+                        hostConfigurator =>
+                        {
+                            hostConfigurator.Username(username);
+                            hostConfigurator.Password(password);
+                        }
+                    );
+
+                    configurator.ConfigureEndpoints(context);
+                }
+            );
+        });
 
         return services;
     }
