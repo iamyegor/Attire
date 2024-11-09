@@ -8,6 +8,7 @@ COPY . .
 COPY ["app/Infrastructure/Data/Migrations/", "Migrator/Migrations/"]
 
 WORKDIR /src/Migrator
+RUN dotnet build Migrator.csproj
 RUN dotnet publish Migrator.csproj -c Release -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/runtime:8.0
