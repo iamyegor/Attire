@@ -6,6 +6,7 @@ RUN dotnet restore Migrator/Migrator.csproj
 
 COPY . .
 COPY ["app/Infrastructure/Data/Migrations/", "Migrator/Migrations/"]
+RUN ls -l Migrator/Migrations
 
 WORKDIR /src/Migrator
 RUN dotnet build Migrator.csproj
