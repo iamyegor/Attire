@@ -9,7 +9,6 @@ COPY ["app/Infrastructure/Data/Migrations/", "Migrator/Migrations/"]
 RUN find Migrator/Migrations -type f -name "*.cs" -exec sed -i 's/using Infrastructure.Data;/using Migrator;/g' {} +
 
 WORKDIR /src/Migrator
-RUN dotnet build Migrator.csproj
 RUN dotnet publish Migrator.csproj -c Release -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/runtime:8.0

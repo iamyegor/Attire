@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Data;
+namespace Migrator;
 
 public class ApplicationContext : DbContext
 {

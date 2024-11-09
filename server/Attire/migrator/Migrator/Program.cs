@@ -1,5 +1,5 @@
-﻿using Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Migrator;
 
 ApplicationContext dbContext = new ApplicationContext();
 dbContext.Database.Migrate();
