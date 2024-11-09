@@ -6,10 +6,18 @@ RUN dotnet restore Migrator/Migrator.csproj
 
 COPY . .
 COPY ["app/Infrastructure/Data/Migrations/", "Migrator/Migrations/"]
-RUN echo "Files being processed:" && \
+
+RUN echo "=== Files to be processed ===" && \
     find Migrator/Migrations -type f -name "*.cs" -ls && \
-    find Migrator/Migrations -type f -name "*.cs" -exec sed -i 's/using Infrastructure.Data;/using Migrator;/g' {} + && \
-    echo "Replacement complete. Modified files:"
+    echo "=== Content before changes ===" && \
+    find Migrator/Migrations -type f -name "*.cs" -exec cat {} \;
+
+# Perform the replacement
+RUN find Migrator/Migrations -type f -name "*.cs" -exec sed -i 's/using Infrastructure.Data;/using Migrator;/g' {} +
+
+# Print files after changes
+RUN echo "=== Content after changes ===" && \
+    find Migrator/Migrations -type f -name "*.cs" -exec cat {} \;
 
 WORKDIR /src/Migrator
 RUN dotnet publish Migrator.csproj -c Release -o /app/publish
