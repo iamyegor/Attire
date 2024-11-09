@@ -4,9 +4,9 @@ WORKDIR /src
 COPY ["migrator/Migrator/Migrator.csproj", "Migrator/"]
 RUN dotnet restore Migrator/Migrator.csproj
 
-COPY . .
+COPY ["migrator/Migrator/", "Migrator/"]
 COPY ["app/Infrastructure/Data/Migrations/", "Migrator/Migrations/"]
-RUN ls -l Migrator/Migrations
+RUN find Migrator/Migrations -type f -name "*.cs" -exec sed -i 's/using Infrastructure.Data;/using Migrator;/g' {} +
 
 WORKDIR /src/Migrator
 RUN dotnet build Migrator.csproj
