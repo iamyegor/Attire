@@ -1,11 +1,11 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-COPY ["Attire/migrator/Migrator/Migrator.csproj", "Migrator/"]
+COPY ["migrator/Migrator/Migrator.csproj", "Migrator/"]
 RUN dotnet restore Migrator/Migrator.csproj
 
 COPY . .
-COPY ["Attire/app/Infrastructure/Data/Migrations/", "Migrator/Migrations/"]
+COPY ["app/Infrastructure/Data/Migrations/", "Migrator/Migrations/"]
 RUN echo "Files being processed:" && \
     find Migrator/Migrations -type f -name "*.cs" -ls && \
     find Migrator/Migrations -type f -name "*.cs" -exec sed -i 's/using Infrastructure.Data;/using Migrator;/g' {} + && \
