@@ -2,6 +2,7 @@ import { Alert, Snackbar } from "@mui/material";
 import CopySvg from "@/assets/copy.svg?react";
 
 import React from "react";
+import useAttireContext from "@/context/useAttireContext";
 
 interface LinkCopiedNotificationProps {
     isOpen: boolean;
@@ -9,6 +10,7 @@ interface LinkCopiedNotificationProps {
 }
 
 export default function LinkCopiedNotification({ isOpen, onClose }: LinkCopiedNotificationProps) {
+    const { uiLanguage } = useAttireContext();
     if (!isOpen) {
         return null;
     }
@@ -33,7 +35,7 @@ export default function LinkCopiedNotification({ isOpen, onClose }: LinkCopiedNo
             >
                 <div className="flex items-center">
                     <CopySvg className="w-4 h-4 mr-3" />
-                    Ссылка скопирована
+                    {uiLanguage === "en" ? "Link copied" : "Ссылка скопирована"}
                 </div>
             </Alert>
         </Snackbar>

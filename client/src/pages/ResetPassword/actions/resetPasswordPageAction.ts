@@ -5,12 +5,28 @@ import validatePasswordResetData from "@/pages/ResetPassword/utils/validatePassw
 import fetchResetPassword from "@/utils/services/auth/fetchResetPassword.ts";
 import getSearchParam from "@/utils/getQueryParams.ts";
 
+const translations = [
+    {
+        locale: "en",
+        errorMessage: "Something went wrong. Please try again later",
+        incorrectLink: "Invalid link",
+        newPasswordSameAsCurrent: "New password is the same as the current password",
+    },
+    {
+        locale: "ru",
+        errorMessage: "Что-то пошло не так. Попробуйте позже",
+        incorrectLink: "Некорректная ссылка",
+        newPasswordSameAsCurrent: "Новый пароль совпадает со старым",
+    },
+];
+
 export default async function resetPasswordPageAction({
     request,
 }: any): Promise<string | Response> {
     const formData = await request.formData();
     const password = formData.get("password") as string;
     const confirmPassword = formData.get("confirmPassword") as string;
+    const t = translations.find((t) => t.locale === (window.uiLanguage ?? "en"))!;
 
     const validationResult: SuccessOr<string> = validatePasswordResetData({
         password,
@@ -23,7 +39,7 @@ export default async function resetPasswordPageAction({
     const token: string | null = getSearchParam(request.url, "token");
 
     if (!token) {
-        return "Некорректная ссылка";
+        return t.incorrectLink;
     }
 
     try {
@@ -34,13 +50,13 @@ export default async function resetPasswordPageAction({
 
         const { errorCode } = error.response!.data;
         if (errorCode == "password.reset.is.same.as.current") {
-            return "Новый пароль совпадает со старым";
+            return t.newPasswordSameAsCurrent;
         }
 
         if (errorCode == "password.reset.token.is.invalid") {
-            return "Некорректная ссылка";
+            return t.incorrectLink;
         }
 
-        return "Что-то пошло не так. Попробуйте позже";
+        return t.errorMessage;
     }
 }

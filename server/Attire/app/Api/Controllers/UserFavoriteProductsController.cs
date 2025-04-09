@@ -62,7 +62,7 @@ public class UserFavoriteProductsController : ApplicationController
         // Guid userId = Guid.Parse("b0b95618-3427-4183-8f2f-3eb7ecd8fda2");
         Guid userId = Guid.Parse(User.FindFirstValue(JwtClaims.UserId)!);
 
-        var query = new GetFavoriteProductsQuery(userId, page);
+        GetFavoriteProductsQuery query = new(userId, page);
 
         Result<GetFavoriteProductsPaginationResult, Error> result = await _sender.Send(query);
 

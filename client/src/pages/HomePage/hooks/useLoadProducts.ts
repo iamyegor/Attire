@@ -13,6 +13,7 @@ export function useLoadProducts(
         queryFn: fetchProducts,
         initialPageParam: 1,
         getNextPageParam: (lastPage) => lastPage.nextPageNumber,
+        retry: 1,
     });
 
     const { ref, inView } = useInView();

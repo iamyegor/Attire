@@ -10,11 +10,10 @@ const actionMessages = [
         locale: "en",
         invalidEmailFormat: "Invalid email format",
         successMessage:
-            "If a user with this email exists, we've sent password reset instructions to that address",
+            "If there's an account with this email, we've sent password reset instructions to it.",
         alreadyRequestedError:
             "Password reset has already been requested. Please check your email and spam folder",
-        generalError:
-            "Error requesting password reset. Please check if the user with this email exists and try again",
+        generalError: "Please check if the user with this email exists and try again",
     },
     {
         locale: "ru",

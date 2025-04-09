@@ -1,0 +1,75 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  HELM_COMMAND: helm upgrade attire attire-k8s --values attire-k8s/values.yaml
+  DOCKER_USERNAME: jasonstathamdev
+  DOCKER_REPO: attire
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - name: client
+            context: ./client
+            dockerfile: ./client/Dockerfile
+            tag: client
+          - name: attire-app
+            context: ./server
+            dockerfile: ./server/Attire/app/Dockerfile
+            tag: attire-app
+          - name: attire-migrator
+            context: ./server/Attire/migrator
+            dockerfile: ./server/Attire/migrator/Dockerfile
+            tag: attire-migrator
+          - name: auth-app
+            context: ./server
+            dockerfile: ./server/Auth/app/Dockerfile
+            tag: auth-app
+          - name: auth-migrator
+            context: ./server/Auth/migrator
+            dockerfile: ./server/Auth/migrator/Dockerfile
+            tag: auth-migrator
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ env.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ${{ matrix.context }}
+          file: ${{ matrix.dockerfile }}
+          push: true
+          tags: ${{ env.DOCKER_USERNAME }}/${{ env.DOCKER_REPO }}:${{ matrix.tag }}
+          cache-from: type=registry,ref=${{ env.DOCKER_USERNAME }}/${{ env.DOCKER_REPO }}:${{ matrix.tag }}-cache
+          cache-to: type=registry,ref=${{ env.DOCKER_USERNAME }}/${{ env.DOCKER_REPO }}:${{ matrix.tag }}-cache,mode=max
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to server
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.VM_IP }} >> ~/.ssh/known_hosts
+          ssh root@${{ secrets.VM_IP }} "${{ env.HELM_COMMAND }}"

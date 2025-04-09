@@ -16,6 +16,7 @@ export default function SignInPage() {
     return (
         <Form
             method="post"
+            replace={true}
             className="relative mx-auto p-6 max-w-md bg-white rounded-2xl space-y-8"
         >
             <div className="text-center">

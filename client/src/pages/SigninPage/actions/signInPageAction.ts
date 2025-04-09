@@ -23,8 +23,10 @@ export default async function signInPageAction({ request }: any) {
     } catch (e) {
         const error: AxiosError<ServerError> = throwOnIncorrectError(e);
 
+        const errorMessage =
+            window.uiLanguage === "en" ? "Invalid credentials" : "Неверные данные для входа";
         if (error.response!.data.errorCode === "user.invalid.login.or.password") {
-            return ErrorMessage.create("Неверный данные для входа.");
+            return ErrorMessage.create(errorMessage);
         }
     }
 }

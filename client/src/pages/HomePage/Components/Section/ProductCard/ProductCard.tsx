@@ -7,6 +7,7 @@ import LikeButton from "@/components/ui/LikeButton.tsx";
 import productImageFullPath from "@/utils/productImageFullPath.ts";
 import useProductCardTranslation from "./hooks/useProductCardTranslation";
 import formatPrice from "@/utils/formatPrice";
+import useAttireContext from "@/context/useAttireContext";
 
 interface ProductCardProps {
     product: Product;
@@ -23,6 +24,8 @@ export default function ProductCard({
     type = null,
     category = null,
 }: ProductCardProps) {
+    const { uiLanguage } = useAttireContext();
+
     function handleLikeButtonClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         e.preventDefault();
         if (product.liked) {
@@ -60,7 +63,7 @@ export default function ProductCard({
                     />
                 </div>
                 <p className="mt-1 text-gray-700 line-clamp-2 text-wrap text-left">
-                    {product.title}
+                    {uiLanguage === "en" ? product.titleEn : product.title}
                 </p>
             </div>
         </Link>

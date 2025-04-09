@@ -20,6 +20,7 @@ export default function ConfirmEmailPage() {
     return (
         <Form
             method="post"
+            replace={true}
             className="h-full flex flex-col justify-center items-center mx-auto px-6 max-w-lg bg-white rounded-2xl space-y-8"
         >
             <div className="space-y-4 text-center">
@@ -40,7 +41,7 @@ export default function ConfirmEmailPage() {
                     text={t.resendCode}
                 />
             </div>
-            <CountdownDisplay secondsLeft={secondsLeft} text={t.countdownText}/>
+            <CountdownDisplay secondsLeft={secondsLeft} text={t.countdownText} />
         </Form>
     );
 }

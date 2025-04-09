@@ -19,20 +19,31 @@ public class EmailSender
         MimeMessage email = new();
         email.From.Add(new MailboxAddress(_emailSettings.SenderName, _emailSettings.SenderEmail));
         email.To.Add(MailboxAddress.Parse(recipient));
-        email.Subject = "Код подтверждения Attire";
+        email.Subject = "Attire Confirmation Code";
 
-        BodyBuilder bodyBuilder = new BodyBuilder { HtmlBody = html };
+        BodyBuilder bodyBuilder = new() { HtmlBody = html };
         email.Body = bodyBuilder.ToMessageBody();
 
         using SmtpClient client = new();
-        await client.ConnectAsync(
-            _emailSettings.MailServer,
-            _emailSettings.MailPort,
-            SecureSocketOptions.StartTls
-        );
-        await client.AuthenticateAsync(_emailSettings.Username, _emailSettings.Password);
-        await client.SendAsync(email);
+        client.Timeout = 45000; // 45 seconds
 
-        await client.DisconnectAsync(true);
+        try
+        {
+
+            await client.ConnectAsync(
+                _emailSettings.MailServer,
+                _emailSettings.MailPort,
+                SecureSocketOptions.StartTls
+            );
+            await client.AuthenticateAsync(_emailSettings.Username, _emailSettings.Password);
+            await client.SendAsync(email);
+
+            await client.DisconnectAsync(true);
+        }
+        finally
+        {
+            if (client.IsConnected)
+                await client.DisconnectAsync(true);
+        }
     }
 }

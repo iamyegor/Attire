@@ -11,17 +11,6 @@ export default function AboutSection() {
                 <p className="font-semibold italic">{t.phoneNumber}</p>
                 <p className="text-neutral-400">{t.workingHours}</p>
             </div>
-
-            <p>
-                <span>{t.developedBy}</span>{" "}
-                <a
-                    className="font-sofa text-neutral-400 hover:text-neutral-100 transition"
-                    target="_blank"
-                    href={t.developer.link}
-                >
-                    {t.developer.name}
-                </a>
-            </p>
         </div>
     );
 }

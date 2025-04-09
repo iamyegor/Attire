@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-type Language = "en" | "ru";
+export type Language = "en" | "ru";
 
 declare global {
     interface Window {
@@ -9,10 +9,10 @@ declare global {
 }
 
 export default function useLanguageDetection() {
-    const [language, setLanguage] = useState<Language>("en");
+    const [uiLanguage, setUiLanguage] = useState<Language>("en");
 
     useEffect(() => {
-        const detectLanguage = () => {
+        function detectLanguage() {
             const primaryLanguage =
                 navigator.language ||
                 (Array.isArray(navigator.languages) ? navigator.languages[0] : "en");
@@ -24,12 +24,12 @@ export default function useLanguageDetection() {
 
             const detectedLanguage: Language = isRussianPreferred ? "ru" : "en";
 
-            setLanguage(detectedLanguage);
+            setUiLanguage(detectedLanguage);
             window.uiLanguage = detectedLanguage;
-        };
+        }
 
         detectLanguage();
     }, []);
 
-    return language;
+    return { uiLanguage };
 }

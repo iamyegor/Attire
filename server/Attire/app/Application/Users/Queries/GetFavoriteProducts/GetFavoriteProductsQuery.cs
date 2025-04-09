@@ -50,6 +50,7 @@ public class GetFavoriteProductsQueryHandler
                 i.path as image_path,
                 p.price,
                 p.title,
+                p.title_en,
                 p.is_new,
                 true as liked,
                 CASE

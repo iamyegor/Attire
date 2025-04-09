@@ -5,6 +5,7 @@ export default interface CartItem {
     imagePath: string;
     productId: string;
     productTitle: string;
+    productTitleEn: string;
     productPrice: number;
     sku: string;
     size: string;

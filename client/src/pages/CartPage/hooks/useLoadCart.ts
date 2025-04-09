@@ -17,5 +17,7 @@ export function useLoadCart(queryKey: string[]) {
         );
     }
 
+    console.log(data);
+
     return { cartItems: data || [], isLoading };
 }

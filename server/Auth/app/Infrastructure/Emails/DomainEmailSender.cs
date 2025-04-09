@@ -30,7 +30,7 @@ public class DomainEmailSender
             Path.Combine(_htmlFolderPath, "confirm-email.html")
         );
 
-        string formattedHtml = html.Replace("code", code.ToString());
+        string formattedHtml = html.Replace("{code}", code.ToString());
         await _emailSender.SendAsync(formattedHtml, email);
     }
 

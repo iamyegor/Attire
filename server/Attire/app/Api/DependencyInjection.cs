@@ -45,36 +45,14 @@ public static class DependencyInjection
 
     public static void AddSerilog(this ConfigureHostBuilder host)
     {
-        string outlookPassword = Environment.GetEnvironmentVariable("SERILOG_EMAIL_PASSWORD")!;
-
-        LoggerConfiguration loggerConfiguration = new LoggerConfiguration();
-
+        LoggerConfiguration loggerConfiguration = new();
         loggerConfiguration
             .MinimumLevel.Information()
             .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-            .Enrich.FromLogContext()
-            .WriteTo.Console()
-            .WriteTo.File(path: "/logs/log-.log", rollingInterval: RollingInterval.Day);
+            .Enrich.FromLogContext();
 
-        if (!ApplicationEnvirontment.IsDevelopment())
-        {
-            loggerConfiguration.WriteTo.Email(
-                options: new EmailSinkOptions
-                {
-                    From = "astery227@gmail.com",
-                    To = ["astery227@gmail.com", "yyegor@outlook.com"],
-                    Host = "smtp.gmail.com",
-                    Port = 587,
-                    ConnectionSecurity = SecureSocketOptions.StartTls,
-                    Credentials = new NetworkCredential("astery227@gmail.com", outlookPassword),
-                    Subject = new MessageTemplateTextFormatter("Attire Main Error"),
-                    Body = new MessageTemplateTextFormatter(
-                        "{Timestamp} [{Level}] {Message}{NewLine}{Exception}"
-                    )
-                },
-                restrictedToMinimumLevel: LogEventLevel.Error
-            );
-        }
+        if (ApplicationEnvirontment.IsDevelopment())
+            loggerConfiguration.WriteTo.Async(writeTo => writeTo.Console());
 
         Log.Logger = loggerConfiguration.CreateLogger();
 

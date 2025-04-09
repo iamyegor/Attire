@@ -5,7 +5,7 @@ import fetchIsAuthenticated from "@/utils/services/auth/fetchIsAuthenticated.ts"
 export default async function isAuthenticatedLoader() {
     try {
         await fetchIsAuthenticated();
-        redirect("/");
+        return redirect("/");
     } catch {
         return null;
     }

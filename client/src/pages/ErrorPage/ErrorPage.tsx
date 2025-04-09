@@ -30,7 +30,7 @@ export default function ErrorPage() {
                         data-testid="ErrorPage.ReloadButton"
                         className="bg-blue-500 w-full sm:w-min whitespace-nowrap hover:bg-blue-600 text-white font-medium py-3 px-2 sm:px-6 rounded-xl"
                     >
-                        Перезагрузить страницу
+                        {window.uiLanguage === "en" ? "Reload page" : "Перезагрузить страницу"}
                     </button>
                 </div>
             </div>

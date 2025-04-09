@@ -20,7 +20,7 @@ export default function SignUpPage() {
                 <h1 className="text-3xl font-semibold text-gray-900">{t.title}</h1>
                 <p className="text-base text-gray-500 mt-1">{t.subtitle}</p>
             </div>
-            <Form method="post" className="space-y-6">
+            <Form method="post" replace={true} className="space-y-6">
                 <div className="space-y-5">
                     <div className="space-y-2">
                         <SignUpPageInput

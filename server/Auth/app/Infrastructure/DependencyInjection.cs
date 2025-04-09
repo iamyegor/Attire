@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using SharedKernel.Auth;
 using SharedKernel.Communication.Extensions;
+using Throw;
 
 namespace Infrastructure;
 
@@ -58,7 +59,7 @@ public static class DependencyInjection
         services.Configure<EmailSettings>(config.GetSection(nameof(EmailSettings)));
         services.PostConfigure<EmailSettings>(settings =>
         {
-            settings.Password = Environment.GetEnvironmentVariable("EmailPassword")!;
+            settings.Password = Environment.GetEnvironmentVariable("EMAIL_PASSWORD").ThrowIfNull();
         });
 
         services.AddTransient<DomainEmailSender>();
@@ -71,7 +72,7 @@ public static class DependencyInjection
             return new SmtpClient(emailSettings.MailServer, emailSettings.MailPort)
             {
                 Credentials = new NetworkCredential(emailSettings.Username, emailSettings.Password),
-                EnableSsl = true
+                EnableSsl = true,
             };
         });
 

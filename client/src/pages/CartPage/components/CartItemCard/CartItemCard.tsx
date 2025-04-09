@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CartItem from "@/pages/CartPage/types/CartItem.ts";
 import { Link } from "react-router-dom";
 import Checkbox from "@/pages/CartPage/components/Checkbox.tsx";
@@ -9,6 +9,7 @@ import ChangeCartQuantityData from "@/types/ChangeCartQuantityData.ts";
 import LinkCopiedNotification from "@/pages/CartPage/components/LinkCopiedNotification.tsx";
 import formatPrice from "@/utils/formatPrice";
 import useCartItemTranslation from "./hooks/useCartItemTranslation";
+import useAttireContext from "@/context/useAttireContext";
 
 interface CartItemProps {
     item: CartItem;
@@ -25,6 +26,7 @@ export default function CartItemCard({
     changeCartQuantity,
     deleteCartItem,
 }: CartItemProps) {
+    const { uiLanguage } = useAttireContext();
     const [linkCopied, setLinkCopied] = useState(false);
     const t = useCartItemTranslation();
 
@@ -48,7 +50,7 @@ export default function CartItemCard({
                     />
                     <img
                         src={productImageFullPath(item.imagePath)}
-                        alt={item.productTitle}
+                        alt={uiLanguage === "en" ? "Product image" : "Изображение товара"}
                         className="h-full rounded-lg select-none object-cover"
                         draggable={false}
                     />
@@ -62,7 +64,7 @@ export default function CartItemCard({
                             to={`/products/${item.productId}`}
                             className="line-clamp-2 font-medium"
                         >
-                            {item.productTitle}
+                            {uiLanguage === "en" ? item.productTitleEn : item.productTitle}
                         </Link>
                         <p className="text-[#5b5b5b] line-clamp-2">
                             {t.sku} <span className="font-medium">{item.sku}</span>
