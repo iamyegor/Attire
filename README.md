@@ -1,5 +1,8 @@
 # Modern Full-Stack E-commerce Platform
 
+[![CI/CD Status](https://github.com/iamyegor/Attire/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/iamyegor/Attire/actions/workflows/ci-cd.yml)
+[![.NET Core](https://img.shields.io/badge/.NET-Core-512BD4?logo=dotnet)](https://dotnet.microsoft.com/)
+[![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black)](https://reactjs.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Overview
@@ -21,12 +24,12 @@ The platform features:
     *   Structured logging with Serilog.
 *   **Frontend:**
     *   Built with React and TypeScript for type safety.
-    *   Advanced server state management using **React Query**.
-    *   **Optimistic UI Updates** for enhanced user experience.
+    *   Advanced server state management using React Query.
+    *   Optimistic UI Updates for enhanced user experience.
     *   Infinite Scrolling implementation.
     *   Responsive design using Material UI (MUI).
 *   **DevOps & Infrastructure:**
-    *   Application fully containerized using **Docker**.
-    *   Deployed and orchestrated via **Kubernetes**.
-    *   Automated **CI/CD pipeline** using GitHub Actions.
+    *   Application fully containerized using Docker.
+    *   Deployed and orchestrated via Kubernetes.
+    *   Automated CI/CD pipeline using GitHub Actions.
     *   Hosted on a Debian 12 VM.
