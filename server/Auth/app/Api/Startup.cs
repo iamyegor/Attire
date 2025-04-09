@@ -11,7 +11,6 @@ public static class Startup
 
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
-        Env.Load(".asp-env");
         builder.Host.AddSerilog();
 
         builder
