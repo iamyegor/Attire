@@ -24,7 +24,7 @@ export default function AttireProvider({ children }: { children: React.ReactNode
         if (uiLanguage === "ru") {
             setMenCategories(menCategoriesRu);
             setWomenCategories(womenCategoriesRu);
-            setNewCategories(newCategoriesRu);
+            // setNewCategories(newCategoriesRu);
         } else {
             const translatedCategories = translateCatergoriesToEnglish({
                 menCategoriesRu,
@@ -34,12 +34,14 @@ export default function AttireProvider({ children }: { children: React.ReactNode
 
             setMenCategories(translatedCategories.menCategories);
             setWomenCategories(translatedCategories.womenCategories);
-            setNewCategories(translatedCategories.newCategories);
+            // setNewCategories(translatedCategories.newCategories);
         }
     }, [menCategoriesRu.length, womenCategoriesRu.length, newCategoriesRu.length, uiLanguage]);
 
     return (
-        <AttireContext.Provider value={{ menCategories, womenCategories, newCategories, uiLanguage }}>
+        <AttireContext.Provider
+            value={{ menCategories, womenCategories, newCategories, uiLanguage }}
+        >
             {children}
         </AttireContext.Provider>
     );
