@@ -1,7 +1,5 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigrationChanger", "MigrationChanger\MigrationChanger.csproj", "{88A1AF1B-5B2D-40A8-9FB4-82FF84B45121}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Migrator", "Migrator\Migrator.csproj", "{70469996-90A6-4DF5-A3A1-A48D19C0B709}"
 EndProject
 Global

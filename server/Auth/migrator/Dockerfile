@@ -1,15 +1,16 @@
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
-COPY Migrator/Migrator.csproj Migrator/
+COPY ["migrator/Migrator/Migrator.csproj", "Migrator/"]
 RUN dotnet restore Migrator/Migrator.csproj
 
-COPY . .
+COPY ["migrator/Migrator/", "Migrator/"]
+COPY ["app/Infrastructure/Data/Migrations/", "Migrator/Migrations/"]
 
 WORKDIR /src/Migrator
 RUN dotnet publish Migrator.csproj -c Release -o /app/publish
 
-FROM mcr.microsoft.com/dotnet/runtime:8.0
+FROM mcr.microsoft.com/dotnet/runtime:9.0
 WORKDIR /app
 
 COPY --from=build /app/publish .

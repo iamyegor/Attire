@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Migrator;
+﻿using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
-ApplicationContext dbContext = new ApplicationContext();
+ApplicationContext dbContext = new();
 dbContext.Database.Migrate();
 
 Console.WriteLine("Database is migrated");

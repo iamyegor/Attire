@@ -26,7 +26,7 @@ jobs:
             dockerfile: ./server/Attire/app/Dockerfile
             tag: attire-app
           - name: attire-migrator
-            context: ./server/Attire/migrator
+            context: ./server/Attire
             dockerfile: ./server/Attire/migrator/Dockerfile
             tag: attire-migrator
           - name: auth-app
@@ -34,7 +34,7 @@ jobs:
             dockerfile: ./server/Auth/app/Dockerfile
             tag: auth-app
           - name: auth-migrator
-            context: ./server/Auth/migrator
+            context: ./server/Auth
             dockerfile: ./server/Auth/migrator/Dockerfile
             tag: auth-migrator
 
