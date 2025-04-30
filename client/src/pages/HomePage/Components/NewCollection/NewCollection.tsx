@@ -1,4 +1,4 @@
-import newCollectionImage from "@/assets/new-collection.png";
+import newCollectionImage from "@/assets/new-collection.webp";
 import { NavLink } from "react-router-dom";
 import useNewCollectionTranslation from "./hooks/useNewCollectionTranslation";
 
@@ -14,6 +14,7 @@ export default function NewCollection() {
                 className="w-full h-full object-cover rounded-md"
                 src={newCollectionImage}
                 alt={t?.newCollection}
+                loading="lazy"
             />
             <div className="absolute inset-0 flex items-center justify-center">
                 <span className="font-medium text-3xl xs:text-4xl sm:text-6xl text-center text-white px-4 py-2 rounded-lg">

@@ -49,6 +49,8 @@ export default function ProductCard({
                 alt={product.title}
                 style={{ userSelect: "none" }}
                 draggable={false}
+                loading="lazy"
+                decoding="async"
             />
             <div
                 className="p-3 px-0 flex flex-col justify-start h-[105px]"
