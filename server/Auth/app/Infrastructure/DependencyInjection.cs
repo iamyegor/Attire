@@ -1,5 +1,3 @@
-using System.Net;
-using System.Net.Mail;
 using Infrastructure.Auth.Authentication;
 using Infrastructure.Auth.VkAuth;
 using Infrastructure.Cookies;
@@ -59,22 +57,11 @@ public static class DependencyInjection
         services.Configure<EmailSettings>(config.GetSection(nameof(EmailSettings)));
         services.PostConfigure<EmailSettings>(settings =>
         {
-            settings.Password = Environment.GetEnvironmentVariable("EMAIL_PASSWORD").ThrowIfNull();
+            settings.ApiKey = Environment.GetEnvironmentVariable("BREVO_API_KEY").ThrowIfNull();
         });
 
         services.AddTransient<DomainEmailSender>();
         services.AddTransient<EmailSender>();
-        services.AddTransient(serviceProvider =>
-        {
-            EmailSettings emailSettings = serviceProvider
-                .GetRequiredService<IOptions<EmailSettings>>()
-                .Value;
-            return new SmtpClient(emailSettings.MailServer, emailSettings.MailPort)
-            {
-                Credentials = new NetworkCredential(emailSettings.Username, emailSettings.Password),
-                EnableSsl = true,
-            };
-        });
 
         return services;
     }

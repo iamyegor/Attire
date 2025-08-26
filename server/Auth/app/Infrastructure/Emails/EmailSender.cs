@@ -1,7 +1,8 @@
-using MailKit.Net.Smtp;
-using MailKit.Security;
+using System.Collections.Generic;
+using brevo_csharp.Api;
+using brevo_csharp.Model;
 using Microsoft.Extensions.Options;
-using MimeKit;
+using Configuration = brevo_csharp.Client.Configuration;
 
 namespace Infrastructure.Emails;
 
@@ -14,36 +15,32 @@ public class EmailSender
         _emailSettings = emailSettings.Value;
     }
 
-    public async Task SendAsync(string html, string recipient)
+    public async System.Threading.Tasks.Task SendAsync(string html, string recipient)
     {
-        MimeMessage email = new();
-        email.From.Add(new MailboxAddress(_emailSettings.SenderName, _emailSettings.SenderEmail));
-        email.To.Add(MailboxAddress.Parse(recipient));
-        email.Subject = "Attire Confirmation Code";
+        if (!Configuration.Default.ApiKey.ContainsKey("api-key"))
+        {
+            Configuration.Default.ApiKey.Add("api-key", _emailSettings.ApiKey);
+        }
 
-        BodyBuilder bodyBuilder = new() { HtmlBody = html };
-        email.Body = bodyBuilder.ToMessageBody();
-
-        using SmtpClient client = new();
-        client.Timeout = 45000; // 45 seconds
+        var api = new TransactionalEmailsApi();
+        var email = new SendSmtpEmail(
+            sender: new SendSmtpEmailSender
+            {
+                Name = _emailSettings.SenderName,
+                Email = _emailSettings.SenderEmail,
+            },
+            to: new List<SendSmtpEmailTo> { new(email: recipient, name: null) },
+            subject: "Attire Confirmation Code",
+            htmlContent: html
+        );
 
         try
         {
-
-            await client.ConnectAsync(
-                _emailSettings.MailServer,
-                _emailSettings.MailPort,
-                SecureSocketOptions.StartTls
-            );
-            await client.AuthenticateAsync(_emailSettings.Username, _emailSettings.Password);
-            await client.SendAsync(email);
-
-            await client.DisconnectAsync(true);
+            await api.SendTransacEmailAsync(email);
         }
-        finally
+        catch (MissingMethodException)
         {
-            if (client.IsConnected)
-                await client.DisconnectAsync(true);
+            await System.Threading.Tasks.Task.Run(() => api.SendTransacEmail(email));
         }
     }
 }
