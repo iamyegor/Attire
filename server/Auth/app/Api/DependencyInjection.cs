@@ -1,11 +1,7 @@
-using System.Net;
 using Api.Mappings;
-using Infrastructure.Utils;
-using MailKit.Security;
 using Serilog;
+using Serilog.Debugging;
 using Serilog.Events;
-using Serilog.Formatting.Display;
-using Serilog.Sinks.Email;
 
 namespace Api;
 
@@ -45,18 +41,26 @@ public static class DependencyInjection
 
     public static void AddSerilog(this ConfigureHostBuilder host)
     {
-        LoggerConfiguration loggerConfiguration = new();
-        loggerConfiguration
-            .MinimumLevel.Information()
-            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-            .Enrich.FromLogContext();
+        SelfLog.Enable(Console.Out);
 
-        if (ApplicationEnvirontment.IsDevelopment())
-            loggerConfiguration.WriteTo.Async(writeTo => writeTo.Console());
+        host.UseSerilog((ctx, services, lc) =>
+        {
+            lc.MinimumLevel.Information()
+              .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+              .Enrich.FromLogContext();
 
-        Log.Logger = loggerConfiguration.CreateLogger();
-
-        Serilog.Debugging.SelfLog.Enable(Console.Out);
-        host.UseSerilog();
+            if (ctx.HostingEnvironment.IsDevelopment())
+            {
+                lc.WriteTo.Console();
+            }
+            else
+            {
+                lc.WriteTo.Console();
+                lc.WriteTo.File(
+                    path: "/logs/log-.txt",
+                    rollingInterval: RollingInterval.Day
+                );
+            }
+        });
     }
 }
